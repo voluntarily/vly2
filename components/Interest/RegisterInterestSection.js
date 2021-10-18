@@ -58,7 +58,7 @@ const RegisterInterestSection = ({ meid, opid }) => {
       await dispatch(reduxApi.actions.interests.get({ op: opid, me: meid, cacheBreak: cuid() }))
     }
     getInterests()
-  }, [opid, meid])
+  }, [opid, meid, dispatch])
   // If we haven't finished making the API request to the server yet...
   if (!interests.sync) {
     return (<Loading label='interests' entity={interests} />)

@@ -1,7 +1,6 @@
 import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { FullPage } from '../../../components/VTheme/VTheme'
-import securePage from '../../../hocs/securePage'
 import Markdown from 'markdown-to-jsx'
 import styled from 'styled-components'
 import safety from './safety-md-en.js'
@@ -29,11 +28,11 @@ class VerificationSafetyPage extends Component {
   render () {
     return (
       <FullPage>
-        <Helmet>
+        <Head>
           <title>Voluntarily - Trust and Safety</title>
-        </Helmet>
+        </Head>
         <TermsSection>
-          <Markdown children={safety()} />
+          <Markdown>{safety()}</Markdown>
           <Button shape='round' type='primary' onClick={() => Router.push('/api/verify')}>{safetyConfirmationLabel}</Button>
         </TermsSection>
       </FullPage>
@@ -41,4 +40,4 @@ class VerificationSafetyPage extends Component {
   }
 }
 export const VerificationSafetyPageTest = VerificationSafetyPage
-export default securePage(VerificationSafetyPage)
+export default VerificationSafetyPage

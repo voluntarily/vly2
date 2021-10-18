@@ -13,18 +13,18 @@ import { getUnsubscribeLink } from '../person.lib'
 test.before(t => {
   process.env.mockEmails = true
   // not using mongo or server here so faking ids
-  people.map(p => {
+  people.forEach(p => {
     p._id = objectid().toString()
     p.href = `${config.appUrl}/${p._id}`
   })
   const me = people[0]
   const to = people[1] // the interested person
 
-  orgs.map(org => { org._id = objectid().toString() })
+  orgs.forEach(org => { org._id = objectid().toString() })
   const offerOrg = orgs[0]
 
   // Set myself as the requestor for all of the opportunities, and fake ids
-  ops.map((op, index) => {
+  ops.forEach((op, index) => {
     op._id = objectid().toString()
     op.requestor = me
     op.offerOrg = offerOrg

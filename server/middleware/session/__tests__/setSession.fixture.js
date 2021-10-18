@@ -1,4 +1,4 @@
-var jwt = require('jsonwebtoken')
+const jwt = require('jsonwebtoken')
 const { Role } = require('../../../services/authorize/role')
 
 const jwtData = {

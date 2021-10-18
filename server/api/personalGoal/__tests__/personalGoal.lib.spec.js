@@ -8,7 +8,7 @@ import {
   evaluatePersonalGoals
 } from '../personalGoal.lib'
 
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import Goal from '../../goal/goal'
 import goals from '../../goal/__tests__/goal.fixture'
 import Organisation from '../../organisation/organisation'
@@ -17,14 +17,9 @@ import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import { GoalGroup } from '../../goal/goalGroup'
 
-test.before('before connect to database', async (t) => {
-  try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
-  } catch (e) {
-    console.error('personalGoal.spec.js - error in test setup', e)
-  }
-
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create organisations: ${err}`)
   t.context.org = t.context.orgs[0]
@@ -37,10 +32,6 @@ test.before('before connect to database', async (t) => {
 
 test.afterEach.always(async (t) => {
   await PersonalGoal.deleteMany()
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.serial('Should add a personalGoal when they are not there already', async t => {
@@ -81,7 +72,7 @@ test.serial('Should add a personalGoal when they are not there already', async t
   t.is(personalGoal.status, PersonalGoalStatus.ACTIVE)
 
   // clean up - check record is removed
-  await personalGoal.remove()
+  await personalGoal.deleteOne()
   personalGoal = await PersonalGoal.findOne(personalGoalQuery).exec()
   t.falsy(personalGoal)
 })
@@ -129,7 +120,7 @@ test.serial('Evaluate the personal goals - hidden and unhide', async t => {
   t.is(apg.status, PersonalGoalStatus.QUEUED)
 
   // clean up - check record is removed
-  await apg.remove()
+  await apg.deleteOne()
   apg = await PersonalGoal.findById(apg._id).exec()
   t.falsy(apg)
 })
@@ -160,7 +151,7 @@ test.serial('Evaluate the personal goals - complete to closed ', async t => {
   t.is(apg.status, PersonalGoalStatus.CLOSED)
 
   // clean up - check record is removed
-  await apg.remove()
+  await apg.deleteOne()
   apg = await PersonalGoal.findById(apg._id).exec()
   t.falsy(apg)
 })
@@ -180,7 +171,7 @@ test.serial('Evaluate the personal goals - true completes', async t => {
   apg = await PersonalGoal.findById(apg._id).exec()
   t.is(apg.status, PersonalGoalStatus.COMPLETED)
   // clean up - check record is removed
-  await apg.remove()
+  await apg.deleteOne()
   apg = await PersonalGoal.findById(apg._id).exec()
   t.falsy(apg)
 })
@@ -199,7 +190,7 @@ test.serial('Evaluate the personal goals - throw failure', async t => {
     await evaluatePersonalGoals(t.context.alice._id)
   }, { message: 'testing' })
   // clean up - check record is removed
-  await apg.remove()
+  await apg.deleteOne()
   apg = await PersonalGoal.findById(apg._id).exec()
   t.falsy(apg)
 })

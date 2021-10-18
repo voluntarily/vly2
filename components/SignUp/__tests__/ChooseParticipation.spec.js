@@ -17,7 +17,6 @@ test('ChooseParticipation renders properly', t => {
       <p>Test child</p>
     </ChooseParticipation>
   )
-  t.is(wrapper.find('img').first().props().src, '/static/img/sign-up/chooseparticipation.svg')
   t.is(wrapper.find('ToggleLi').length, 2)
   const ask = wrapper.find('ToggleLi').first()
   const offer = wrapper.find('ToggleLi').last()

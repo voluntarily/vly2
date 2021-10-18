@@ -1,4 +1,4 @@
-import publicPage from '../../hocs/publicPage'
+
 import { FullPage } from '../../components/VTheme/VTheme'
 import { stories, StoryDetail, StoryStackWithNew, StoryForm, EditableStory } from '../../components/examples/edits'
 
@@ -21,4 +21,4 @@ const TestEdits = () =>
 
   </FullPage>
 
-export default publicPage(TestEdits)
+export default TestEdits

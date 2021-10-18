@@ -51,7 +51,7 @@ const getLocationRecommendations = async (me) => {
   if (userIsInTerritory) {
     const closestOpportunities = []
     const otherOpportunities = []
-    locationOps.map((op) => {
+    locationOps.forEach((op) => {
       (arrayIntersects(me.locations, op.locations)
         ? closestOpportunities
         : otherOpportunities
@@ -78,15 +78,15 @@ const getSkillsRecommendations = async (me) => {
   }
 
   // Split composite tags into singular words
-  var splitTags = tagsToMatch.flatMap((tag) => {
+  let splitTags = tagsToMatch.flatMap((tag) => {
     return stopword.removeStopwords(tag.split(' '))
   })
   // Tags with special characters are not stemmed
-  var format = new RegExp(/[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/)
+  const format = /[!@#$%^&*()_+\-=[\]{};':"\\|,.<>/?]+/
 
   // Find all aliases of the user's tags
-  var aliasesJSON = await AliasSet.find({ tag: { $in: splitTags } })
-  var aliases = []
+  const aliasesJSON = await AliasSet.find({ tag: { $in: splitTags } })
+  const aliases = []
   aliasesJSON.forEach((aliasSet) => {
     aliasSet.aliases.forEach((alias) => {
       aliases.push(alias)
@@ -95,7 +95,7 @@ const getSkillsRecommendations = async (me) => {
 
   // Stem the tags to contain the root of a word
   splitTags = splitTags.concat(aliases)
-  var stemmedTags = splitTags
+  const stemmedTags = splitTags
     .filter((tag) => {
       if (format.test(tag)) {
         return false
@@ -108,9 +108,9 @@ const getSkillsRecommendations = async (me) => {
     })
 
   // Turn stemmed words into a regular expression
-  var regexTags = new RegExp(stemmedTags.join('|'), 'i')
+  const regexTags = new RegExp(stemmedTags.join('|'), 'i')
   // Join arrays of tags and tag word roots for search
-  var tagsToSearch = tagsToMatch.concat(aliases, regexTags)
+  const tagsToSearch = tagsToMatch.concat(aliases, regexTags)
 
   const opsWithMatchingTags = await Opportunity.find({
     tags: { $in: tagsToSearch },

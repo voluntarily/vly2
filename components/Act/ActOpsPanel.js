@@ -90,7 +90,7 @@ export const ActOpsPanel = ({ act, type, limit }) => {
         <div>
           <OpListSmall ops={ops} />
           {showMore &&
-            <Link href={`/acts/${act._id}?tab=${type}`}>
+            <Link href={`/acts/${act._id}?tab=${type}`} passHref>
               <Button shape='round' size='large' style={{ marginTop: '1rem', float: 'right' }}>
                 <FormattedMessage
                   id='ActOpsPanel.button.showAll'

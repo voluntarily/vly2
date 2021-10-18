@@ -1,5 +1,5 @@
 import ComingSoon from '../../../components/VTheme/ComingSoon'
-import publicPage from '../../../hocs/publicPage'
+
 import { FullPage } from '../../../components/VTheme/VTheme'
 
 const Safe = () =>
@@ -8,4 +8,4 @@ const Safe = () =>
     <ComingSoon />
   </FullPage>
 
-export default publicPage(Safe)
+export default Safe

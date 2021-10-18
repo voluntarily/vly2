@@ -1,4 +1,4 @@
-import publicPage from '../../hocs/publicPage'
+
 import { FullPage } from '../../components/VTheme/VTheme'
 import styled from 'styled-components'
 import { Stamp } from '../../components/VTheme/Stamp'
@@ -27,4 +27,4 @@ const TestPublicPage = ({ locale, session, isAuthenticated }) =>
     </Rect>
   </FullPage>
 
-export default publicPage(TestPublicPage)
+export default TestPublicPage

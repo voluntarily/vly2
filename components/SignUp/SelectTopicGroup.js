@@ -75,7 +75,7 @@ export const SelectTopicGroupButtons = ({ type, topicGroups, onChange }) =>
 export const SelectTopicGroup = (props) =>
   <HalfGrid style={{ paddingTop: 0 }}>
     <div id='leftCol'>
-      <img style={{ width: '100%' }} src='/static/img/sign-up/topic.svg' />
+      <img alt='topic' style={{ width: '100%' }} src='/static/img/sign-up/topic.svg' />
     </div>
     <div id='rightCol'>
       <SelectTopicGroupButtons {...props} />

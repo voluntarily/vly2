@@ -1,5 +1,6 @@
-// import { FormattedMessage } from 'react-intl'
-import { Avatar, Icon, Layout } from 'antd'
+import { UserOutlined, WarningOutlined } from '@ant-design/icons'
+
+import { Avatar, Layout } from 'antd'
 import Link from 'next/link'
 import React from 'react'
 import styled from 'styled-components'
@@ -39,7 +40,7 @@ const LogoContainer = styled.a`
 `
 const Logo = styled.img`
   height: 3rem;
-  width: 12rem;
+  width: 14rem;
   margin: 0.7rem;
 
   background-image: url('/static/vlogolong.svg');
@@ -91,10 +92,10 @@ const Header = () => {
   if (me.role.includes(Role.ADMIN) || me.role.includes(Role.SUPPORT)) state = MenuShowState.ADMIN
   return (
     <Layout.Header style={headerStyle}>
-      {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><Icon type='warning' /> {notice}</Notice>}
+      {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><WarningOutlined /> {notice}</Notice>}
       <MenuGrid>
         <div>
-          <Link href='/landing'>
+          <Link href='/landing' passHref>
             <LogoContainer>
               <Logo
                 src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
@@ -118,11 +119,11 @@ const Header = () => {
         </div>
         {isAuthenticated &&
           <StyledAvatar>
-            <Link href='/home'>
+            <Link href='/home' passHref>
               <Avatar
                 size='small'
                 src={me.imgUrlSm}
-                icon='user'
+                icon={<UserOutlined />}
                 alt='profile photo'
               />
             </Link>

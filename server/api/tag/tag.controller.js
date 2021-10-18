@@ -25,7 +25,7 @@ async function listTags (req, res) {
 
 async function deleteATag (req, res) {
   try {
-    var tagToDelete = req.params.tag
+    const tagToDelete = req.params.tag
 
     const q = { name: (req.query && req.query.name) || DefaultTagList }
     const tagList = await Tag.findOne(q, 'tags', { lean: true })
@@ -50,8 +50,8 @@ async function deleteATag (req, res) {
 
 const editATag = async (req, res) => {
   try {
-    var originalTag = req.params.tag
-    var newTag = req.body.edittedTag
+    const originalTag = req.params.tag
+    const newTag = req.body.edittedTag
 
     const q = { name: (req.query && req.query.name) || DefaultTagList }
     const tagList = await Tag.findOne(q, 'tags', { lean: true })

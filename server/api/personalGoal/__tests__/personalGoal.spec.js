@@ -1,7 +1,7 @@
 import test from 'ava'
 import request from 'supertest'
 import { appReady, server } from '../../../server'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import Goal from '../../goal/goal'
 import goals from '../../goal/__tests__/goal.fixture'
 import Person from '../../person/person'
@@ -10,10 +10,10 @@ import PersonalGoal from '../personalGoal'
 import { PersonalGoalStatus } from '../personalGoal.constants'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 
-test.before('before connect to database', async (t) => {
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
     await appReady
     t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
     t.context.goals = await Goal.create(goals).catch((e) => console.error('Unable to create goals', e))
@@ -61,10 +61,6 @@ test.before('before connect to database', async (t) => {
     ]
     t.context.personalGoals = await PersonalGoal.create(personalGoals).catch((e) => console.error('Unable to create personalGoals', e))
   } catch (e) { console.error('personalGoal.spec.js before error:', e) }
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.serial('Should not return any personal goals without a person id', async t => {

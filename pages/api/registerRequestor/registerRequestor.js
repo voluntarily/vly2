@@ -19,7 +19,7 @@ import moment from 'moment'
     - found but didn't match name - 400 Bad Request
 */
 function intersect (a, b) {
-  var t
+  let t
   if (b.length > a.length) {
     t = b
     b = a
@@ -30,7 +30,7 @@ function intersect (a, b) {
   })
 }
 
-export default async (req, res) => {
+export const registerRequestor = async (req, res) => {
   // res.setHeader('Content-Type', 'application/json')
   if (!req.session.isAuthenticated) res.status(403).end()
   // check parameters
@@ -81,3 +81,4 @@ export default async (req, res) => {
     res.status(500).end()
   }
 }
+export default registerRequestor

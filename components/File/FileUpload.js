@@ -56,7 +56,7 @@ class FileUpload extends Component {
     // Map the uppy filename to the s3 bucket URL (once uploaded)
     this.filenameToLocationUrlMap = new Map()
 
-    this.uppy = Uppy({
+    this.uppy = new Uppy({
       id: 'uppy',
       autoProceed: true,
       debug: false,

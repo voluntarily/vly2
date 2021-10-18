@@ -5,7 +5,7 @@ const { accessibleRecordsPlugin } = require('@casl/mongoose')
 const { InterestStatus, InterestSchemaName, InterestArchiveSchemaName } = require('./interest.constants')
 
 // this is deliberately similar to the Story Schema.
-var messageSchema = new mongoose.Schema({
+const messageSchema = new mongoose.Schema({
   body: String,
   // who sent the message (op or vp?)
   author: { type: Schema.Types.ObjectId, ref: 'Person', required: true },
@@ -55,8 +55,8 @@ interestArchiveSchema.plugin(idvalidator)
 interestArchiveSchema.plugin(accessibleRecordsPlugin)
 
 // protect multiple imports
-var Interest
-var InterestArchive
+let Interest
+let InterestArchive
 
 if (mongoose.models.Interest) {
   Interest = mongoose.model(InterestSchemaName)

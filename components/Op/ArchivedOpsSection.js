@@ -10,7 +10,7 @@ import { OpportunityStatus, OpportunityType } from '../../server/api/opportunity
 
 import { EmptyContainer } from '../VTheme/VTheme'
 
-import { Button } from 'antd'
+import { Image, Button } from 'antd'
 import Link from 'next/link'
 const { ASK, OFFER } = OpportunityType
 /* ArchivedOpsSection
@@ -23,7 +23,7 @@ const { ASK, OFFER } = OpportunityType
 const OpArchiveEmpty = ({ type }) => (
   <EmptyContainer>
     <div>
-      <img src='/static/img/about/askforhelp.png' />
+      <Image alt='ask for help icon' src='/static/img/about/askforhelp.png' />
       <h3>
         <FormattedMessage
           id='ArchivedOpsSection.empty.title'
@@ -38,7 +38,7 @@ const OpArchiveEmpty = ({ type }) => (
           description='title for empty op section'
         />
       </p>
-      <Link href={`/a/${type === ASK ? OFFER : ASK}`}>
+      <Link href={`/acts/type/${type === ASK ? OFFER : ASK}`}>
         <a>
           <Button type='primary' shape='round' size='large'>
             <FormattedMessage

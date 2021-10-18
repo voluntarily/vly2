@@ -1,4 +1,3 @@
-import adminPage from '../../hocs/adminPage'
 import { FullPage } from '../../components/VTheme/VTheme'
 import { useState, useEffect } from 'react'
 import callApi from '../../lib/callApi'
@@ -92,4 +91,4 @@ const SummaryReport = () => {
   )
 }
 
-export default adminPage(SummaryReport)
+export default SummaryReport

@@ -38,7 +38,7 @@ personalGoalSchema.plugin(idvalidator)
 personalGoalSchema.plugin(accessibleFieldsPlugin)
 personalGoalSchema.plugin(accessibleRecordsPlugin)
 // protect multiple imports
-var PersonalGoal
+let PersonalGoal
 if (mongoose.models.PersonalGoal) {
   PersonalGoal = mongoose.model(SchemaName)
 } else {

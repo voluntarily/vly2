@@ -1,23 +1,22 @@
 import { Menu } from 'antd'
 import Link from 'next/link'
-import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { useWindowSize } from '../../lib/useWindowSize'
 import { useRouter } from 'next/router'
 
 const { SubMenu, Item } = Menu
 const VMenu = styled(Menu)`
-border-bottom: 2px solid transparent;
-border-right: none;
-font-weight: 700;
-.ant-menu-item {
-  border: none;
-  
-}
-
-@media screen and (max-width: 767px) {
-    // display: none;
+  border-bottom: 2px solid transparent;
+  border-right: none;
+  font-weight: 700;
+  .ant-menu-item {
+    border: none;
+    
   }
+
+  @media screen and (max-width: 767px) {
+      // display: none;
+    }
 `
 export const NavigationH = ({ items }) => {
   const router = useRouter()
@@ -31,14 +30,14 @@ export const NavigationH = ({ items }) => {
     >
       {items.map(item => (
         <Menu.Item key={item.key}>
-          {item.href.startsWith('http')
-            ? ( // offsite links
-              <a key={item.href} href={item.href}>{item.text}</a>
-            ) : (
-              <Link key={item.href} href={item.href}>
-                <a>{item.text}</a>
-              </Link>
-            )}
+          {
+            item.href.startsWith('http')
+              ? <a key={item.href} href={item.href}>{item.text}</a>
+              : (
+                <Link key={item.href} href={item.href} as={item.href}>
+                  <a>{item.text}</a>
+                </Link>)
+          }
         </Menu.Item>
       ))}
 
@@ -62,14 +61,15 @@ export const NavigationV = ({ items }) => {
       >
         {items.map(item => (
           <Item key={item.key}>
-            {item.href.startsWith('http')
-              ? ( // offsite links
-                <a key={item.href} href={item.href}>{item.text}</a>
-              ) : (
-                <Link key={item.href} href={item.href}>
-                  <a>{item.text}</a>
-                </Link>
-              )}
+            {
+              item.href.startsWith('http')
+                ? <a key={item.href} href={item.href}>{item.text}</a>
+                : (
+                  <Link key={item.href} href={item.href}>
+                    <a>{item.text}</a>
+                  </Link>
+                  )
+            }
           </Item>
         ))}
       </SubMenu>
@@ -78,22 +78,14 @@ export const NavigationV = ({ items }) => {
   )
 }
 
+// useWindowSize is giving angry warnings from the SSR.
 const COLLAPSE_MENU_WIDTH = 1020
-const Navigation = (props) => {
+export const Navigation = (props) => {
   const [width] = useWindowSize()
-  return (width < COLLAPSE_MENU_WIDTH)
+  return (width < COLLAPSE_MENU_WIDTH && width !== 0)
     ? <NavigationV {...props} />
     : <NavigationH {...props} />
 }
+// export const Navigation = NavigationH
 
-Navigation.propTypes = {
-  items: PropTypes.arrayOf(
-    PropTypes.shape({
-      key: PropTypes.string,
-      url: PropTypes.string
-    })
-  ),
-  defaultItem: PropTypes.string
-}
-
-export default Navigation
+export default NavigationH

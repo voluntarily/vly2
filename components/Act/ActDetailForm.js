@@ -1,4 +1,6 @@
-import { Button, Divider, Form, Icon, Input, Tooltip, Radio, Switch, Row, Col } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Image, Button, Divider, Input, Tooltip, Radio, Switch, Row, Col } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -8,10 +10,10 @@ import FileUpload from '../File/FileUpload'
 import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
 import { DynamicFieldSet } from '../DynamicFieldSet/DynamicFieldSet'
-import slug from 'limax'
+import slug from 'slug'
 import { ActivityFields, ActivityStatus } from '../../server/api/activity/activity.constants'
 import moment from 'moment'
-
+import { CheckOutlined, CloseOutlined, QuestionCircleOutlined } from '@ant-design/icons'
 import {
   DescriptionContainer,
   FormGrid,
@@ -20,7 +22,7 @@ import {
   ShortInputContainer,
   TitleContainer
 } from '../VTheme/FormStyles'
-import PageTitle from '../LandingPageComponents/PageTitle'
+import PageTitle from '../Landing/PageTitle'
 
 const { TextArea } = Input
 
@@ -157,7 +159,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title="Choose something interesting like 'we want to build robots' ">
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -170,7 +172,7 @@ class ActDetailForm extends Component {
           description='activity Subtitle label in ActDetail Form'
         />{' '}
         <Tooltip title="Choose something interesting like 'we want to build robots' ">
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -183,7 +185,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='How much time overall is likely to be required for the activity?'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -198,7 +200,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Give a long description of what is needed and what people will be doing.'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -211,7 +213,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Make a list of any equipment or materials needed for this activity.'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -225,7 +227,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='How much space is required to run an activity? Indoor or Outdoor activity?'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -239,7 +241,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Give a long description of what is needed and what people will be doing.'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -252,7 +254,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Choose a picture that illustrates the activity, you can upload a picture or link to something on the Internet, Animated Gifs too.'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -265,7 +267,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Upload up to 5 pdf files that you would like to attach to this activity. These will be display on the activity for volunteers to read.'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -279,7 +281,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Which organisation is this activity for?'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -300,7 +302,7 @@ class ActDetailForm extends Component {
         />
         &nbsp;
         <Tooltip title='Enable lock to prevent people from changing the title and image when the base a request on this activity'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -381,14 +383,16 @@ class ActDetailForm extends Component {
                 {getFieldDecorator(ActivityFields.DESCRIPTION, {
                   rules: []
                 })(
-                  isTest ? (
-                    <TextArea
-                      rows={20}
-                      placeholder='All the details about the activity, you can use HTML here'
-                    />
-                  ) : (
-                    <RichTextEditor />
-                  )
+                  isTest
+                    ? (
+                      <TextArea
+                        rows={20}
+                        placeholder='All the details about the activity, you can use HTML here'
+                      />
+                      )
+                    : (
+                      <RichTextEditor />
+                      )
                 )}
               </Form.Item>
               {orgMembership && (
@@ -613,7 +617,7 @@ class ActDetailForm extends Component {
                   description='instructions for add image section in actdetail form'
                 />
               </p>
-              <img
+              <Image
                 style={{ width: '50%', float: 'right' }}
                 src={this.props.form.getFieldValue(ActivityFields.IMG_URL)}
                 alt=''
@@ -693,8 +697,8 @@ class ActDetailForm extends Component {
                   valuePropName: 'checked'
                 })(
                   <Switch
-                    checkedChildren={<Icon type='check' />}
-                    unCheckedChildren={<Icon type='close' />}
+                    checkedChildren={<CheckOutlined />}
+                    unCheckedChildren={<CloseOutlined />}
                   />)}
               </Form.Item>
 

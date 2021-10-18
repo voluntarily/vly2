@@ -2,7 +2,7 @@ import React from 'react'
 import { OpSectionGrid } from '../VTheme/VTheme'
 import styled from 'styled-components'
 import PropTypes from 'prop-types'
-import { Button, Input } from 'antd'
+import { Image, Button, Input } from 'antd'
 import reduxApi from '../../lib/redux/reduxApi'
 import moment from 'moment'
 import { useSelector, useDispatch } from 'react-redux'
@@ -70,7 +70,7 @@ const OpChatPanel = ({ op }) => {
       <OpSectionGrid>
         <div>
           <ProfileCard>
-            <img src={op.requestor.imgUrl} />
+            <Image alt='requestor icon' src={op.requestor.imgUrl} />
             <h3><OpTypeTense type={op.type} /> {op.requestor.nickname}</h3>
           </ProfileCard>
         </div>
@@ -85,7 +85,7 @@ const OpChatPanel = ({ op }) => {
           </ButtonContainer>
         </AskContainer>
       </OpSectionGrid>
-      {!interests.sync && <img src='/static/loading.svg' />}
+      {!interests.sync && <Image alt='loading icon' src='/static/loading.svg' />}
       {interests.sync && messages.map((message) => <OpMessage date={moment(message.createdAt).format('Do MMM YYYY')} time={moment(message.createdAt).format('h:mm a')} comment={message.body} key={message._id} image={message.author.imgUrl} username={message.author.nickname} />)}
       {interests.data[0] && <OpEvent date={moment(interests.data[0].createdAt).format('Do MMM YYYY')} username={op.requestor.nickname} message='You offered to help' />}
     </>

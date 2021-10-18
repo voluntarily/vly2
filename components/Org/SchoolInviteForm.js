@@ -1,4 +1,6 @@
-import { Button, Divider, Form, Input, message, Select } from 'antd'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Button, Divider, Input, message, Select } from 'antd'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'

@@ -4,7 +4,7 @@ import MockExpressResponse from 'mock-express-response'
 import { issueNewBadge, listAllBadge } from '../badge.controller'
 import { config } from '../../../../config/serverConfig'
 import Badge from '../badge'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import badges from './badges.fixture'
@@ -38,17 +38,11 @@ const expectedBadgeResult = [{
   extensions: {}
 }]
 
-test.before('Create a mock database and connect to it ', async t => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-})
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
 
 test.beforeEach('connect and add people fixture', async () => {
   await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-})
-
-test.after.always(async t => {
-  await t.context.memMongo.stop()
 })
 
 test.afterEach.always(async () => {

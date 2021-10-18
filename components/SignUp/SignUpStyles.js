@@ -1,7 +1,8 @@
 
-import { Icon } from 'antd'
+import Icon, { CheckSquareOutlined } from '@ant-design/icons'
 import { useState } from 'react'
 import styled from 'styled-components'
+import Image from 'next/image'
 export const ToggleUl = styled.ul`
   margin: 0 0 1rem 0;
   padding-left: 0;
@@ -33,7 +34,7 @@ export const ButtonLi = styled.li`
       color: #653cad;
     }
   }
-  i {
+  span {
     font-size: 4rem;
     align-self: center;
     color: ${props => props.on ? 'green' : 'grey'};
@@ -48,19 +49,19 @@ const uncheckSquare = () => (
 export const ToggleTick = ({ on }) => {
   return on
     ? (
-      <Icon type='check-square' />
-    )
+      <CheckSquareOutlined />
+      )
     : (
       <Icon component={uncheckSquare} />
-    )
+      )
 }
 
 export const ToggleLi = ({ checked, icon, children, onChange }) => {
   const [on, setOn] = useState(checked || false)
   const toggle = () => { onChange(!on); setOn(!on) }
   return (
-    <ButtonLi onClick={toggle} on={on}>
-      <img style={{ width: '100%' }} src={`/static/img/sign-up/${icon}.svg`} />
+    <ButtonLi onClick={toggle} on={on.toString()}>
+      <Image width='64' height='64' alt='sign-up icon' src={`/static/img/sign-up/${icon}.svg`} />
       {children}
       <ToggleTick on={on} />
     </ButtonLi>

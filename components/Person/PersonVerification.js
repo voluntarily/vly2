@@ -1,4 +1,5 @@
-import { Icon, Popover } from 'antd'
+import { Popover } from 'antd'
+import Icon from '@ant-design/icons'
 import { defineMessages, FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { ShieldSvg } from '../VTheme/Icons'
@@ -54,7 +55,7 @@ export const PersonVerificationBadge = ({ person }) => {
   return (
     <Popover content={<PersonVerification levels={levels} />} title={popoverTitle} trigger='hover'>
       <VerificationBadge>
-        <Icon><ShieldSvg score={score} /></Icon>
+        <Icon component={ShieldSvg} score={score} />
       </VerificationBadge>
     </Popover>
   )

@@ -1,5 +1,5 @@
 import { H3 } from '../VTheme/VTheme'
-import Button from 'antd/lib/button'
+import { Image, Button } from 'antd'
 import styled from 'styled-components'
 import moment from 'moment'
 import DeleteStoryButton from '../../components/Story/DeleteStory'
@@ -17,7 +17,7 @@ export const StoryDetail = ({ story, children }) => {
   return (
     <Article>
       <H3>{story.name}</H3>
-      {story.imgUrl && <img src={story.imgUrl} />}
+      {story.imgUrl && <Image alt='story illustration' src={story.imgUrl} />}
       <ExpandText storyBody={story.body} maxLength={250} />
       <footer>
         <span item={story.author} path='author'> By {story.author && story.author.name}</span> &nbsp;

@@ -1,11 +1,10 @@
 import { Button, Divider } from 'antd'
 import React, { useEffect, useState } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { FormattedMessage } from 'react-intl'
 import TeacherRegistrationRecord from '../../components/Person/Teacher/TeacherRegistrationRecord'
 import GetTeacherRegistration from '../../components/Person/Teacher/GetTeacherRegistration'
 import { FullPage, SpacerSmall } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
 import callApi from '../../lib/callApi'
 
 export function RegisterTeacher () {
@@ -32,9 +31,9 @@ export function RegisterTeacher () {
   }
   return (
     <FullPage>
-      <Helmet>
+      <Head>
         <title>Voluntarily - Register as a Teacher</title>
-      </Helmet>
+      </Head>
       <h3>
         <FormattedMessage
           id='registerRequestor.asaRequestor'
@@ -89,4 +88,4 @@ export function RegisterTeacher () {
 //       <Input disabled />
 //     </p>
 //   </h5>
-export default securePage(RegisterTeacher)
+export default RegisterTeacher

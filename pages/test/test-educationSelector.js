@@ -1,4 +1,4 @@
-import publicPage from '../../hocs/publicPage'
+
 import { FullPage } from '../../components/VTheme/VTheme'
 import EducationSelector from '../../components/Form/Input/EducationSelector'
 import { useState } from 'react'
@@ -18,4 +18,4 @@ const Hi = () => {
   )
 }
 
-export default publicPage(Hi)
+export default Hi

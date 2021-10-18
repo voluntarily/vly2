@@ -1,8 +1,8 @@
-import securePage from '../../../hocs/securePage'
 import { FullPage } from '../../../components/VTheme/VTheme'
 import { VideoQuiz, hashObj } from '../../../components/quiz/quiz'
 import Router from 'next/router'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
+import reduxWrapper from '../../../lib/redux/store'
 
 const readyqs = [
   {
@@ -44,18 +44,23 @@ export const Ready = ({ vqa, me }) => {
   }
   return (
     <FullPage>
-      <Helmet>
+      <Head>
         <title>SchoolReady - Voluntarily</title>
-      </Helmet>
+      </Head>
       <VideoQuiz vqa={vqa} me={me} onCompleted={handleCompleted} />
     </FullPage>
   )
 }
-Ready.getInitialProps = async ({ store }) => {
+
+export const getServerSideProps = reduxWrapper.getServerSideProps(
+  store => async (props) => gssp({ store, query: props.query })
+)
+
+export const gssp = async ({ store, query }) => {
   const vqa = { ...readyqs[0] } // TODO: move to database
   vqa.hash = hashObj(vqa.answers, store.getState().session.me.email)
   delete vqa.answers
-  return { vqa }
+  return { props: { vqa } }
 }
 
-export default securePage(Ready)
+export default Ready

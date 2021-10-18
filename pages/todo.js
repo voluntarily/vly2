@@ -1,5 +1,5 @@
 import ComingSoon from '../components/VTheme/ComingSoon'
-import publicPage from '../hocs/publicPage'
+
 import { FullPage } from '../components/VTheme/VTheme'
 
 const Todo = () =>
@@ -9,4 +9,4 @@ const Todo = () =>
     </ComingSoon>
   </FullPage>
 
-export default publicPage(Todo)
+export default Todo

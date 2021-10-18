@@ -1,4 +1,5 @@
-import { Icon, Result } from 'antd'
+import { Icon as LegacyIcon } from '@ant-design/compatible'
+import { Result } from 'antd'
 import PropTypes from 'prop-types'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
@@ -27,7 +28,7 @@ function NoResult ({
 
   return (
     <Result
-      icon={<Icon type={icon} theme={iconTheme} />}
+      icon={<LegacyIcon type={icon} theme={iconTheme} />}
       title={<FormattedMsg />}
     />
   )

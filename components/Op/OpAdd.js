@@ -20,10 +20,8 @@ const OppAddButtons = styled.div`
 `
 
 export const OpAddNewBtn = () => {
-  const href = '/acts'
-
   return (
-    <Link href={href}>
+    <Link href='/acts' passHref>
       <Button type='primary' shape='round' size='large'>
         <FormattedMessage
           id='OpAdd.newAskOffer'
@@ -31,11 +29,12 @@ export const OpAddNewBtn = () => {
           description='Button to create a new Ask or Offer opportunity used on multiple pages'
         />
       </Button>
-    </Link>)
+    </Link>
+  )
 }
 
 export const OpAddAskBtn = ({ actid }) => {
-  let href = `/op/${OpportunityType.ASK}`
+  let href = `/ops/new/${OpportunityType.ASK}`
   if (actid) {
     href = href.concat(`?act=${actid}`)
   }
@@ -51,7 +50,7 @@ export const OpAddAskBtn = ({ actid }) => {
 }
 
 export const OpAddOfferBtn = ({ actid }) => {
-  let href = `/op/${OpportunityType.OFFER}`
+  let href = `/ops/new/${OpportunityType.OFFER}`
   if (actid) {
     href = href.concat(`?act=${actid}`)
   }
@@ -62,7 +61,8 @@ export const OpAddOfferBtn = ({ actid }) => {
         defaultMessage='Offer to help'
         description='Button to create a new offer opportunity used on multiple pages'
       />
-    </SignUpInviteModal>)
+    </SignUpInviteModal>
+  )
 }
 
 export const OpAdd = ({ actid }) => {

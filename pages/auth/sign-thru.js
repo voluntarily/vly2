@@ -10,7 +10,7 @@ export const SignThru = () => {
   useEffect(() => {
     unsetToken()
     authorize({ redirectUrl })
-  }, [])
+  }, [redirectUrl])
 
   return null
 }

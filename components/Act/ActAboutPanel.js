@@ -50,7 +50,7 @@ export const ActActivityGuideSection = ({ act }) =>
         />
       </p>
       <ActReadMore act={act} />
-      <Link href={`/acts/${act._id}?tab=resources`}>
+      <Link href={`/acts/${act._id}?tab=resources`} passHref>
         <Button shape='round' size='large'>
           <FormattedMessage
             id='ActAboutPanel.button.guide'
@@ -86,7 +86,8 @@ export function ActAboutPanel ({ act }) {
           <TagDisplay tags={act.tags} />
         </TagContainer>
       </OpSectionGrid>
-    </ProfilePanel>)
+    </ProfilePanel>
+  )
 }
 
 ActAboutPanel.propTypes = {

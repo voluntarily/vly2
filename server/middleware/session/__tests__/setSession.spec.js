@@ -1,6 +1,6 @@
 import test from 'ava'
 import setSession from '../setSession'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import Person from '../../../api/person/person'
 import people from '../../../api/person/__tests__/person.fixture'
 import { jwtData, jwtDataBob, jwtDataCharles, jwtDataExpired, DEFAULT_SESSION } from './setSession.fixture'
@@ -8,17 +8,12 @@ import sinon from 'sinon'
 import jwt from 'jsonwebtoken'
 import MockResponse from 'mock-express-response'
 
-test.before('before connect to database', async (t) => {
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
     await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-    // await appReady
   } catch (e) { console.error('setSession.spec.js test.before error:', e) }
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test('check fixture token', t => {

@@ -1,18 +1,16 @@
-import React from 'react'
-import { Helmet } from 'react-helmet'
-import { injectIntl } from 'react-intl'
+import Head from 'next/head'
 import PrivacyEn from '../../assets/notices/privacy-full-en.md'
+import { injectIntl } from 'react-intl'
 import { A4 } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
 
 const Privacy = () =>
   <A4>
-    <Helmet>
+    <Head>
       <title>Privacy Policy - Voluntarily</title>
-    </Helmet>
+    </Head>
     <PrivacyEn />
   </A4>
 
 export const PrivacyTest = Privacy // for test
 
-export default publicPage(injectIntl(Privacy))
+export default injectIntl(Privacy)

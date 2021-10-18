@@ -1,23 +1,22 @@
-import { Form, DatePicker, Icon, Input, Tooltip, Row, Col } from 'antd'
-import React from 'react'
+import { DatePicker, Form, Input, Tooltip, Row, Col } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { DescriptionContainer, FormGrid, ShortInputContainer, InputContainer, TitleContainer } from '../VTheme/FormStyles'
 import { OpTypeDateTitle, OpTypeDatePrompt } from './OpType'
 import moment from 'moment'
-
-const opCommitment = (
-  <span>
-    <FormattedMessage
-      id='OpOfferForm.label.Commitment'
-      defaultMessage='How much time is needed.'
-      description='activity Commitment label in OpOfferForm Form'
-    />
-    &nbsp;
-    <Tooltip title='How much time overall is likely to be required for the activity?'>
-      <Icon type='question-circle-o' />
-    </Tooltip>
-  </span>
-)
+import { QuestionCircleOutlined } from '@ant-design/icons'
+// const opCommitment = (
+//   <span>
+//     <FormattedMessage
+//       id='OpOfferForm.label.Commitment'
+//       defaultMessage='How much time is needed.'
+//       description='activity Commitment label in OpOfferForm Form'
+//     />
+//     &nbsp;
+//     <Tooltip title='How much time overall is likely to be required for the activity?'>
+//       <QuestionCircleOutlined />
+//     </Tooltip>
+//   </span>
+// )
 
 const opStartDate = (
   <span>
@@ -29,7 +28,7 @@ const opStartDate = (
     />
     &nbsp;
     <Tooltip title='Set a start date if the activity needs to be done at a specific time, otherwise leave blank.'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -44,22 +43,28 @@ const opStartDate = (
 //     />
 //     &nbsp;
 //     <Tooltip title='Set an end date if the activity needs more than one day.'>
-//       <Icon type='question-circle-o' />
+//       <QuestionCircleOutlined />
 //     </Tooltip>
 //   </span>
 // )
 
 const durationRules = [{
-  type: 'number',
-  message: 'duration values must be a non negative integer',
-  validator: (_rule, value) => value >= 0
+  type: 'string',
+  warningOnly: true,
+  validator: (_, value) => {
+    const v = parseInt(value)
+    if (!isNaN(v) && v >= 0 && v < 60) {
+      return Promise.resolve()
+    }
+    return Promise.reject(new Error('Enter a number between 0 and 60'))
+  }
 }]
 
 /**
  * Show Date and Commitment section of form
  * @param {} param0
  */
-export const OpFormDate = ({ getFieldDecorator, type, onChange }) =>
+export const OpFormDate = ({ type }) =>
   <FormGrid>
     <DescriptionContainer>
       <TitleContainer>
@@ -69,35 +74,34 @@ export const OpFormDate = ({ getFieldDecorator, type, onChange }) =>
     </DescriptionContainer>
     <InputContainer>
       <ShortInputContainer>
+        <Form.Item label={opStartDate} name='startDate'>
+          <DatePicker
+            showTime={{ format: 'HH:mm' }}
+            disabledDate={current => {
+              return (
+                moment().add(-1, 'days') >= current ||
+                          moment().add(1, 'year') <= current
+              )
+            }}
+            format='DD-MM-YYYY HH:mm'
+            style={{ width: '100%' }}
+          />
+        </Form.Item>
         <Row type='flex' justify='space-between'>
           <Col span={10}>
-            <Form.Item label={opCommitment} name='CommitmentHours'>
-              {getFieldDecorator('durationHours', { rules: durationRules })(<Input className='commitment' placeholder='1 hour' addonAfter='hours' />)}
+            <Form.Item name='durationHours' rules={durationRules}>
+              <Input className='commitment' placeholder='1' addonAfter='hours' />
             </Form.Item>
           </Col>
           <Col span={10}>
-            <Form.Item label=' ' name='CommitmentMinutes'>
-              {getFieldDecorator('durationMinutes', { rules: durationRules })(<Input className='commitment' placeholder='1 minute' addonAfter='minutes' />)}
+            <Form.Item name='durationMinutes' rules={durationRules}>
+              <Input className='commitment' placeholder='1' addonAfter='minutes' />
             </Form.Item>
           </Col>
         </Row>
-        <Form.Item label={opStartDate} name='Start date'>
-          {getFieldDecorator('startDate')(
-            <DatePicker
-              showTime
-              disabledDate={current => {
-                return (
-                  moment().add(-1, 'days') >= current ||
-                          moment().add(1, 'year') <= current
-                )
-              }}
-              format='DD-MM-YYYY HH:mm:ss'
-              onChange={onChange}
-              style={{ width: '100%' }}
-            />
-          )}
-        </Form.Item>
+
       </ShortInputContainer>
     </InputContainer>
   </FormGrid>
+
 export default OpFormDate

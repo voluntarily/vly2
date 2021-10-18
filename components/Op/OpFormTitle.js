@@ -1,4 +1,4 @@
-import PageTitle from '../LandingPageComponents/PageTitle.js'
+import PageTitle from '../Landing/PageTitle.js'
 import { OpTypeImperative } from './OpType'
 import { BackButton } from '../VTheme/Buttons'
 import styled from 'styled-components'
@@ -10,8 +10,6 @@ export const BackAndTitle = styled.div`
   margin: 0;
   grid-template-columns: 8rem 1fr;
   grid-column-gap: 2rem;
-
-
 `
 
 const MiddleButton = styled.div`

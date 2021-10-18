@@ -2,7 +2,6 @@ import {
   FullPage,
   PageBannerNoTabs
 } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
 import { useRouter } from 'next/router'
 import { useSelector, useDispatch } from 'react-redux'
 import reduxApi, { withFeedback } from '../../lib/redux/reduxApi.js'
@@ -12,20 +11,12 @@ import Loading from '../../components/Loading'
 import Link from 'next/link'
 import { Button, Typography } from 'antd'
 import { FormattedMessage } from 'react-intl'
+import reduxWrapper from '../../lib/redux/store'
 
 export const FeedbackSubmitPage = ({ feedbackActions }) => {
   const { query: { rating, opportunity } } = useRouter()
   const [me, members, opportunities, feedback] = useSelector(state => [state.session.me, state.members, state.archivedOpportunities, state.feedback])
   const dispatch = useDispatch()
-
-  if (!members.sync) { return <FullPage><Loading label='members' entity={members} /></FullPage> }
-  if (!opportunities.sync) { return <FullPage><Loading label='opportunities' entity={opportunities} /></FullPage> }
-
-  // collect the orgs the person follows and is member of.
-  if (members.sync && members.data.length > 0) {
-    me.orgMembership = members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
-  }
-
   useEffect(() => {
     const feedback = {
       respondent: me._id,
@@ -35,7 +26,15 @@ export const FeedbackSubmitPage = ({ feedbackActions }) => {
       rating
     }
     dispatch(feedbackActions.post({}, { body: JSON.stringify(feedback) }))
-  }, [])
+  }, [dispatch, feedbackActions, me._id, me.orgMembership, opportunities.data, opportunity, rating])
+
+  if (!members.sync) { return <FullPage><Loading label='members' entity={members} /></FullPage> }
+  if (!opportunities.sync) { return <FullPage><Loading label='opportunities' entity={opportunities} /></FullPage> }
+
+  // collect the orgs the person follows and is member of.
+  if (members.sync && members.data.length > 0) {
+    me.orgMembership = members.data.filter(m => [MemberStatus.MEMBER, MemberStatus.ORGADMIN].includes(m.status))
+  }
 
   const op = opportunities.data[0]
 
@@ -58,7 +57,7 @@ export const FeedbackSubmitPage = ({ feedbackActions }) => {
         />
 
       </p>
-      <Link href='/home'>
+      <Link href='/home' passHref>
         <Button shape='round' size='large' type='primary'>
           <FormattedMessage
             id='feedbacksubmitpage.button.recommended'
@@ -71,15 +70,21 @@ export const FeedbackSubmitPage = ({ feedbackActions }) => {
   )
 }
 
-FeedbackSubmitPage.getInitialProps = async ({ store, query }) => {
+export const getServerSideProps = reduxWrapper.getServerSideProps(
+  store => async (props) => gssp({ store, query: props.query })
+)
+
+export const gssp = async ({ store, query }) => {
   try {
     const me = store.getState().session.me
     const meid = me._id.toString()
     await store.dispatch(reduxApi.actions.members.get({ meid: meid }))
-    await store.dispatch(reduxApi.actions.archivedOpportunities.get({ id: query.opportunity }))
+    if (query.opportunity) {
+      await store.dispatch(reduxApi.actions.archivedOpportunities.get({ id: query.opportunity }))
+    }
   } catch (err) {
     console.error('error in getting feedback submit page data', err)
   }
 }
 
-export default securePage(withFeedback(FeedbackSubmitPage))
+export default withFeedback(FeedbackSubmitPage)

@@ -1,14 +1,15 @@
-import React from 'react'
 import test from 'ava'
+import { Provider } from 'react-redux'
+import fetchMock from 'fetch-mock'
+
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import OpListSection from '../OpListSection'
-import { Provider } from 'react-redux'
-import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
+import reduxApi from '../../../lib/redux/reduxApi'
+import { makeStoreTest } from '../../../lib/redux/store'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import DatePickerType from '../DatePickerType.constant'
 import { API_URL } from '../../../lib/callApi'
 import ops, { orgActionWhizzyFelt, orgOmgTech } from './Op.fixture'
-import fetchMock from 'fetch-mock'
 
 const opsWithOpenEndDate = [
   ...ops,
@@ -49,7 +50,7 @@ function sleep (ms) {
 }
 
 test.serial('mount the list with ops', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/`
@@ -69,7 +70,7 @@ test.serial('mount the list with ops', async t => {
 test.serial('mount the list for Action Whizzy Felt should filtered three ops offered by that organization', async t => {
   t.plan(2)
   const org = orgActionWhizzyFelt._id
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/`
@@ -89,7 +90,7 @@ test.serial('mount the list for Action Whizzy Felt should filtered three ops off
 test.serial('mount the list for OMGTech should filtered one ops offered by that organization', async t => {
   t.plan(2)
   const org = orgOmgTech._id
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/`
@@ -106,7 +107,7 @@ test.serial('mount the list for OMGTech should filtered one ops offered by that 
   myMock.restore()
 })
 test.serial('mount the list with ops search with results', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/?search=Growing`
@@ -125,7 +126,7 @@ test.serial('mount the list with ops search with results', async t => {
 })
 
 test.serial('mount the list with ops search with no results', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/?search=NoSuchItem`
@@ -144,7 +145,7 @@ test.serial('mount the list with ops search with no results', async t => {
 })
 
 test.serial('mount the list with ops query and search', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/?search=100&q=%7B'status'%3A'done'%7D`
@@ -163,7 +164,7 @@ test.serial('mount the list with ops query and search', async t => {
 })
 
 test.serial('test filter by date is called, no op is shown', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const api = `${API_URL}/opportunities/?search=Growing`
@@ -182,7 +183,7 @@ test.serial('test filter by date is called, no op is shown', async t => {
 })
 
 test.serial('test filter by month is called. There is 1 OP shown', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
   const monthFilterValue = {
     date: [ops[0].date[0]] // Confusing but basically this will create an array of 1 element from the first element of the ops array
   }
@@ -204,7 +205,7 @@ test.serial('test filter by month is called. There is 1 OP shown', async t => {
 })
 
 test.serial('test filter by week is called. No opportunities shown', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
   const monthFilterValue = {
     date: [
       '2019-03-02T00:00:00+00:00', // Sat, 02 Mar 2019 00:00:00
@@ -229,7 +230,7 @@ test.serial('test filter by week is called. No opportunities shown', async t => 
 })
 
 test.serial('Test filter by date range. No opportunities shown', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
 
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -249,7 +250,7 @@ test.serial('Test filter by date range. No opportunities shown', async t => {
 })
 
 test.serial('Test filter by date range. Filter result include open ended opportunity', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
 
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -270,7 +271,7 @@ test.serial('Test filter by date range. Filter result include open ended opportu
 })
 
 test.serial('Test filter by week allow to add open end opportunity', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
 
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -290,7 +291,7 @@ test.serial('Test filter by week allow to add open end opportunity', async t => 
 })
 
 test.serial('Test sort by name', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
 
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
@@ -312,7 +313,7 @@ test.serial('Test sort by name', async t => {
 })
 test.serial('Test sort by date', async t => {
   try {
-    const realStore = makeStore(initStore)
+    const realStore = makeStoreTest(initStore)
 
     const myMock = fetchMock.sandbox()
     reduxApi.use('fetch', adapterFetch(myMock))
@@ -350,7 +351,7 @@ test.serial('Test sort by date', async t => {
   }
 })
 test.serial('Test sort by commitment', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
 
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))

@@ -11,7 +11,7 @@ export const OrgOfferedActivities = ({ organisationId }) => {
 
   useEffect(() => {
     dispatch(reduxApi.actions.activities.get({ q: JSON.stringify({ offerOrg: organisationId }) }))
-  }, [organisationId])
+  }, [organisationId, dispatch])
 
   let content = ''
 

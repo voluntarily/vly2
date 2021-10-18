@@ -24,19 +24,21 @@ overflow: visible;
 
 const OpList = ({ ops }) => (
   <CardContainer>
-    {ops ? (
-      ops.map((op, index) =>
-        <CardWrapper key={index}>
-          <OpCardSmall size='Small' op={op} />
-        </CardWrapper>
-      )
-    ) : (
-      <FormattedMessage
-        id='OpListSmall.NoMatchingActivities'
-        defaultMessage='No matching activities'
-        description='no opportunities message in OpList'
-      />
-    )}
+    {ops
+      ? (
+          ops.map((op, index) =>
+            <CardWrapper key={index}>
+              <OpCardSmall size='Small' op={op} />
+            </CardWrapper>
+          )
+        )
+      : (
+        <FormattedMessage
+          id='OpListSmall.NoMatchingActivities'
+          defaultMessage='No matching activities'
+          description='no opportunities message in OpList'
+        />
+        )}
   </CardContainer>
 )
 

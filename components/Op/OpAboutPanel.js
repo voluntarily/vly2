@@ -1,6 +1,5 @@
 /* Dumb React component Shows contents of an opportunity
  */
-import PropTypes from 'prop-types'
 import TagDisplay from '../Tags/TagDisplay'
 import Html from '../VTheme/Html'
 import { ItemIdLine, TagContainer } from '../VTheme/ItemList'
@@ -33,8 +32,8 @@ export function OpAboutPanel ({ op }) {
               <Html>{description}</Html>
               <Divider />
             </>}
-
           {subtitle}
+          {op.address?.suburb},&nbsp;{op.address?.region}
           <TagContainer>
             <h5><FormattedMessage id='OpAboutPanel.categories' defaultMessage='Categories' /></h5>
             <TagDisplay tags={op.tags} />
@@ -58,17 +57,8 @@ export function OpAboutPanel ({ op }) {
         </ProfileSection>
       </OpSectionGrid>
       <Spacer />
-    </ProfilePanel>)
-}
-
-OpAboutPanel.propTypes = {
-  op: PropTypes.shape({
-    tags: PropTypes.arrayOf(
-      PropTypes.string
-    ),
-    description: PropTypes.string,
-    requestor: PropTypes.object
-  }).isRequired
+    </ProfilePanel>
+  )
 }
 
 export default OpAboutPanel

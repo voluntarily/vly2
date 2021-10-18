@@ -1,17 +1,19 @@
 import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server/server'
-import MemoryMongo from '../../../server/util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../server/util/mockMongo'
+
 import fs from 'fs-extra'
 import path from 'path'
 import { jwtData } from '../../../server/middleware/session/__tests__/setSession.fixture'
 import { config } from '../../../config/serverConfig'
 import glob from 'glob'
-import uuid from 'uuid'
+import { v4 as uuid } from 'uuid'
+
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
 
 test.before(async t => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
   await appReady
 })
 
@@ -42,7 +44,7 @@ test.serial('Upload and retrieve file via the filesystem', async t => {
   // Force the file.controller to use the filesystem to store files
   config.env = 'development'
 
-  const uniq = `${uuid.v1()}`.substr(0, 8)
+  const uniq = `${uuid()}`.substr(0, 8)
 
   try {
     const res = await request(server)

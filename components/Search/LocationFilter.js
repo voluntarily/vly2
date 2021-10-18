@@ -1,15 +1,23 @@
 import React from 'react'
-import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import LocationSelector from '../Form/Input/LocationSelector'
 import { PBold } from '../VTheme/VTheme'
-import './locationFilterStyles.less'
+import styled from 'styled-components'
+
+const LocationFilterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+
+  > * {
+      padding: 10px;
+  }
+`
 
 class LocationFilter extends React.Component {
   render () {
     const { locations, onChange, value } = this.props
     return (
-      <div className='location-filter-container'>
+      <LocationFilterContainer>
         <PBold>
           <FormattedMessage
             id='location-filter-description'
@@ -23,15 +31,9 @@ class LocationFilter extends React.Component {
           onChange={onChange}
           width='100%'
         />
-      </div>
+      </LocationFilterContainer>
     )
   }
-}
-
-LocationFilter.propTypes = {
-  locations: PropTypes.arrayOf(PropTypes.string),
-  value: PropTypes.string,
-  onChange: PropTypes.func
 }
 
 export default LocationFilter

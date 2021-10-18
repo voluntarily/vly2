@@ -1,4 +1,4 @@
-import publicPage from '../hocs/publicPage'
+
 import { FullPage } from '../components/VTheme/VTheme'
 import { Unverified } from '../components/Warnings/Unverified'
 
@@ -7,4 +7,4 @@ const UnverifiedPage = ({ user }) =>
     <Unverified user={user} />
   </FullPage>
 
-export default publicPage(UnverifiedPage)
+export default UnverifiedPage

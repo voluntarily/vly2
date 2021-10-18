@@ -7,6 +7,5 @@ test('AcceptPrivacy renders properly', t => {
     <AcceptPrivacy>
       <p>test child</p>
     </AcceptPrivacy>)
-  t.is(wrapper.find('img').first().props().src, '/static/img/sign-up/privacy.svg')
   t.is(wrapper.find('p').first().text(), 'test child')
 })

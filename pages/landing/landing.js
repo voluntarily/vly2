@@ -1,34 +1,31 @@
 import React from 'react'
-import { Helmet } from 'react-helmet'
-import Hero from '../../components/LandingPageComponents/Hero'
-// import OfferSection from '../../components/LandingPageComponents/OfferSection'
+import Head from 'next/head'
+import Hero from '../../components/Landing/Hero'
+// import OfferSection from '../../components/Landing/OfferSection'
 // import OpAdd from '../../components/Op/OpAdd'
 // import OpListSection from '../../components/Op/OpListSection'
 import { FullPage } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
 // import moment from 'moment'
 import { Divider } from 'antd'
-import HowSection from '../../components/LandingPageComponents/HowSection'
+import HowSection from '../../components/Landing/HowSection'
 
-import GiveSupportSection from '../../components/LandingPageComponents/GiveSupportSection'
+import GiveSupportSection from '../../components/Landing/GiveSupportSection'
 
-import TakeSupportSection from '../../components/LandingPageComponents/TakeSupportSection'
-// import Testimonial from '../../components/LandingPageComponents/Testimonial'
-// import CorporateSection from '../../components/LandingPageComponents/CorporateSection'
-// import GiveContentSection from '../../components/LandingPageComponents/GiveContentSection'
-// import HelpSocialSection from '../../components/LandingPageComponents/HelpSocialSection'
-// import HelpOrgsSection from '../../components/LandingPageComponents/HelpOrgsSection'
-import Sponsors from '../../components/LandingPageComponents/Sponsors'
-import WhoSection from '../../components/LandingPageComponents/WhoSection'
+import TakeSupportSection from '../../components/Landing/TakeSupportSection'
+// import Testimonial from '../../components/Landing/Testimonial'
+// import CorporateSection from '../../components/Landing/CorporateSection'
+// import GiveContentSection from '../../components/Landing/GiveContentSection'
+// import HelpSocialSection from '../../components/Landing/HelpSocialSection'
+// import HelpOrgsSection from '../../components/Landing/HelpOrgsSection'
+import Sponsors from '../../components/Landing/Sponsors'
+import WhoSection from '../../components/Landing/WhoSection'
 export const Landing = ({ isAuthenticated }) => (
   <>
-    <Helmet>
+    <Head>
       <title>Voluntarily</title>
-    </Helmet>
+    </Head>
 
-    <Hero
-      isAuthenticated={isAuthenticated}
-    />
+    <Hero isAuthenticated={isAuthenticated} />
 
     <FullPage>
       <Divider />
@@ -59,4 +56,4 @@ export const Landing = ({ isAuthenticated }) => (
     </FullPage>
   </>
 )
-export default publicPage(Landing)
+export default Landing

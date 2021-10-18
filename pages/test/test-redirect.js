@@ -1,6 +1,6 @@
 import React from 'react'
 import Router from 'next/router'
-import publicPage from '../../hocs/publicPage'
+
 import { LoadSpinner } from '../../components/Loading'
 class TestRedirect extends React.Component {
   wait (ms) {
@@ -18,5 +18,5 @@ class TestRedirect extends React.Component {
     return <LoadSpinner />
   }
 }
-export default publicPage(TestRedirect)
+export default TestRedirect
 // export default TestRedirect

@@ -4,7 +4,7 @@ import { server, appReady } from '../../../server'
 import Activity from '../activity'
 import Person from '../../person/person'
 import Organisation from '../../organisation/organisation'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import people from '../../person/__tests__/person.fixture'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 import tagList from '../../tag/__tests__/tag.fixture'
@@ -12,24 +12,20 @@ import { jwtData } from '../../../middleware/session/__tests__/setSession.fixtur
 import { getBucketName } from '../../file/file.controller'
 
 import acts from './activity.fixture.js'
-import uuid from 'uuid'
+import { v4 as uuid } from 'uuid'
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create organisations: ${err}`)
 
   await appReady
 })
 
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
-})
-
 test.beforeEach('connect and add two activity entries', async (t) => {
   // connect each activity to an owner and org
-  acts.map((act, index) => {
+  acts.forEach((act, index) => {
     act.owner = t.context.people[index]._id
     act.offerOrg = t.context.orgs[index]._id
     // each act has two consecutive tags from the list

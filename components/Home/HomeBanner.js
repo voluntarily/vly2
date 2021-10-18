@@ -3,11 +3,12 @@ import React from 'react'
 import { PersonRoleIcons } from '../../components/Person/PersonRole'
 import { PersonVerificationBadge } from '../../components/Person/PersonVerification'
 import { PageBanner } from '../../components/VTheme/VTheme'
+import { Image } from 'antd'
 
-export const HomeBanner = ({ person, children }) =>
+export const HomeBanner = ({ person, children }) => (
   <PageBanner>
     <article>
-      <img src={person.imgUrl} />
+      <Image alt='personal avatar' src={person.imgUrl} />
       <div>
         <h1>{person.name}
           <PersonRoleIcons roles={person.role} />
@@ -17,9 +18,8 @@ export const HomeBanner = ({ person, children }) =>
       </div>
     </article>
     {children}
-
   </PageBanner>
-
+)
 HomeBanner.propTypes = {
   person: PropTypes.shape({
     name: PropTypes.string.isRequired,

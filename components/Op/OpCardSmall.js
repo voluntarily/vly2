@@ -2,12 +2,17 @@
   Display an activity record in card format with a picture, name, and commitment.
 */
 // import React from 'react'
-import PropTypes from 'prop-types'
 import Link from 'next/link'
 import moment from 'moment'
 import { SmallCard, SmallOpGrid, TagState } from '../VTheme/VTheme'
-import { Icon, Divider } from 'antd'
-import styled from 'styled-components'
+import { Image, Divider } from 'antd'
+import {
+  CheckCircleTwoTone,
+  MailTwoTone,
+  CalendarTwoTone,
+  CloseCircleTwoTone
+} from '@ant-design/icons'
+
 import { OpType } from './OpType'
 const getOpPageURL = (isArchived, opid) => {
   if (isArchived) {
@@ -16,11 +21,6 @@ const getOpPageURL = (isArchived, opid) => {
     return `/ops/${opid}`
   }
 }
-
-const StyledIcon = styled(Icon)`
-  font-size: 1rem;
-  margin-right: 0.5rem; 
-`
 
 // todo if image is not present then use a fallback.
 const OpCardSmall = ({ op }) => {
@@ -31,10 +31,10 @@ const OpCardSmall = ({ op }) => {
   const interestIcon = ((interest) => {
     if (!interest) { return '' }
     switch (interest.status) {
-      case 'interested': return <TagState style={{ color: '#222', backgroundColor: '#E1E1E1' }}><StyledIcon type='mail' />You offered to help</TagState>
-      case 'invited': return <TagState style={{ color: 'white', backgroundColor: '#653CAD' }}><StyledIcon type='calendar' />You are invited</TagState>
-      case 'committed': return <TagState style={{ color: 'black', backgroundColor: '#36F482' }}><StyledIcon type='check-circle' />Accepted</TagState>
-      case 'declined': return <TagState style={{ color: 'white', backgroundColor: '#F44336' }}><StyledIcon type='close-circle' />Cancelled</TagState>
+      case 'interested': return <TagState style={{ color: '#222', backgroundColor: '#E1E1E1' }}><MailTwoTone />Signed up</TagState>
+      case 'invited': return <TagState style={{ color: 'white', backgroundColor: '#653CAD' }}><CalendarTwoTone />You are invited</TagState>
+      case 'committed': return <TagState style={{ color: 'black', backgroundColor: '#36F482' }}><CheckCircleTwoTone />Accepted</TagState>
+      case 'declined': return <TagState style={{ color: 'white', backgroundColor: '#F44336' }}><CloseCircleTwoTone />Cancelled</TagState>
       default: return ''
     }
   })(op.interest)
@@ -57,7 +57,7 @@ const OpCardSmall = ({ op }) => {
 
           <Divider />
           <SmallOpGrid>
-            <img src={op.requestor.imgUrl} />
+            <Image alt='requestor icon' src={op.requestor.imgUrl} />
             <figcaption>
               {/* <p>  {op.subtitle}</p> */}
               <ul>
@@ -75,20 +75,6 @@ const OpCardSmall = ({ op }) => {
       </Link>
     </SmallCard>
   )
-}
-
-OpCardSmall.propTypes = {
-  op: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    subtitle: PropTypes.string,
-    description: PropTypes.string,
-    imgUrl: PropTypes.any,
-    date: PropTypes.arrayOf.string,
-    location: PropTypes.string,
-    duration: PropTypes.string,
-    requestor: PropTypes.object,
-    _id: PropTypes.string.isRequired
-  })
 }
 
 export default OpCardSmall

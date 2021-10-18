@@ -1,7 +1,7 @@
 import { Modal } from 'antd'
 import PropTypes from 'prop-types'
 import React from 'react'
-import './filterContainerStyles.less'
+// import './filterContainerStyles.css'
 
 // reusable component for displaying filter input components and details (passed in as children)
 // generic behaviour is that a filter can be applied and cancelled

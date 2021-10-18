@@ -7,7 +7,7 @@ test('shallow the list with goals', t => {
   const wrapper = shallowWithIntl(
     <GoalSection goals={goals} />
   )
-  t.is(wrapper.find('FormattedMessage').first().props().id, 'GoalSection.VP_NEW.title')
+  t.is(wrapper.find('MemoizedFormattedMessage').first().props().id, 'GoalSection.VP_NEW.title')
   t.is(wrapper.find('GoalList').length, 1)
 })
 

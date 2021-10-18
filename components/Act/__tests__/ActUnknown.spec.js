@@ -7,6 +7,5 @@ test('shallow the card with some counts', t => {
   const wrapper = shallowWithIntl(
     <ActUnknown />
   )
-
-  t.is((wrapper.find('FormattedMessage').first().props().id), 'ActUnkown.NotFound')
+  t.is((wrapper.find('MemoizedFormattedMessage').first().props().id), 'ActUnknown.NotFound')
 })

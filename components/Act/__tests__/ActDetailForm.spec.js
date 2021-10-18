@@ -36,11 +36,11 @@ test.before('before test silence async-validator', () => {
 
 test.before('Setup Organisations fixtures', (t) => {
   // not using mongo or server here so faking ids
-  people.map(p => { p._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
   const me = people[0]
 
   // two orgs are aps
-  orgs.map(p => { p._id = objectid().toString() })
+  orgs.forEach(p => { p._id = objectid().toString() })
   const org = orgs[0]
 
   // fake my membership
@@ -125,7 +125,7 @@ test('render the detail with act', t => {
   name
     .simulate('change', { target: { value: '' } })
   wrapper.update()
-  t.is(wrapper.find('.ant-form-explain').first().text(), 'Title is required')
+  t.is(wrapper.find('.ant-legacy-form-explain').first().text(), 'Title is required')
 })
 
 test('toggle radio buttons', t => {

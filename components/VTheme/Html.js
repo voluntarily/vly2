@@ -24,7 +24,7 @@ export const MoreOrLessButton = ({ more, onClick }) =>
           id='MoreOrLessButton.Less'
           defaultMessage='Close'
         />
-      )
+        )
       : (
         <FormattedMessage
           id='MoreOrLessButton.More'

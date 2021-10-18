@@ -18,7 +18,7 @@ test('render confirmation card', t => {
   const wrapper = shallow(<InterestConfirmationCard organizer={requestor} />)
   t.truthy(wrapper.find('Head'))
   t.truthy(wrapper.find('Meta[title="Testy McTestface"]'))
-  t.is(wrapper.find('Icon[type="mail"] + span').text(), ` ${requestor.email}`)
+  t.is(wrapper.find('ForwardRef(MailOutlined) + span').text(), ` ${requestor.email}`)
   t.regex(wrapper.find('span').at(1).text(), /.*027 444 5555/)
 })
 test('render confirmation card no number', t => {

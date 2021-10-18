@@ -21,7 +21,11 @@ const DEFAULT_SESSION = {
 /* when page loads it makes lots of static and library calls
  we don't need to authenticate or set session for these items
  */
-const OPEN_URL = ['/static/', '/_next/']
+const OPEN_URL = [
+  '/static/'
+  // '/_next/'   // AVW removed as these pages need sessions
+]
+// TODO: make this more specific so that we can get sessions for data.json but not images etc.
 
 const openPath = url => {
   let path
@@ -70,6 +74,7 @@ const createPersonFromUser = async (user) => {
 
 const setSession = async (req, res, next) => {
   req.session = { ...DEFAULT_SESSION } // Default session object will get mutated after logged in. Deconstructing the objec will only get the attribute of it
+  // console.log('setSession', req.url)
   if (openPath(req.url)) { // skip if its a special path.
     return next()
   }
@@ -116,6 +121,7 @@ const setSession = async (req, res, next) => {
     user = false
   }
   if (!user) {
+    console.error('failed to find a user')
     return next()
   }
   req.session.idToken = idToken
@@ -139,7 +145,7 @@ const setSession = async (req, res, next) => {
   req.session = {
     isAuthenticated: true, // user.email_verified,
     user,
-    me,
+    me: me.toObject(),
     idToken
   }
   // console.log('setting session from IdToken', req.url, req.session.isAuthenticated, 'user', req.session.user.email, 'me', req.session.me.name, req.session.me.role)

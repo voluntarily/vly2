@@ -1,5 +1,4 @@
 import { FullPage, PageBanner } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
 import { useState } from 'react'
 import { FormattedMessage } from 'react-intl'
 import OrgStatisticsTabs from '../../components/Statistics/OrgStatisticsTabs'
@@ -34,4 +33,4 @@ export const OrgStatisticsPage = (props) => {
   )
 }
 
-export default securePage(OrgStatisticsPage)
+export default OrgStatisticsPage

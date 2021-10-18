@@ -3,19 +3,16 @@ import MockExpressRequest from 'mock-express-request'
 import MockResponse from 'mock-res'
 import sinon from 'sinon'
 import { initializeTags, initializeGroups } from '../initTags'
-import MemoryMongo from '../test-memory-mongo'
+import { startMongo, stopMongo } from '../mockMongo'
+
 import { appReady } from '../../server'
 import Tag from '../../api/tag/tag'
 const { DefaultTagList, GroupTagList } = require('../../api/tag/tag.constants')
 
-test.before('before connect to database', async (t) => {
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   await appReady
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test('Add tags to DB if needed', async t => {

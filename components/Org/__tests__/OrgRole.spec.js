@@ -1,13 +1,13 @@
 import test from 'ava'
-import OrgRole from '../OrgRole'
-import { render } from 'enzyme'
+import OrgRole, { OrgRoleItem } from '../OrgRole'
+import { shallow } from 'enzyme'
 import { OrganisationRole } from '../../../server/api/organisation/organisation.constants'
 
 test('OrgRole with single item', t => {
   const one = [OrganisationRole.VOLUNTEER_PROVIDER]
-  const wrapper = render(<OrgRole orgRole={one} />)
-  t.is(wrapper.find('li').length, 1)
-  t.true(wrapper.find('i').first().hasClass('anticon-bank'))
+  const wrapper = shallow(<OrgRole orgRole={one} />)
+  t.is(wrapper.find('OrgRoleItem').length, 1)
+  t.is(wrapper.find('OrgRoleItem').prop('orgRoleItem'), 'vp')
 })
 test('OrgRole with many item', t => {
   const all = [
@@ -17,16 +17,18 @@ test('OrgRole with many item', t => {
     OrganisationRole.AGENCY,
     OrganisationRole.OTHER
   ]
-  const wrapper = render(<OrgRole orgRole={all} />)
-
-  t.is(wrapper.find('li').length, all.length)
-  t.true(wrapper.find('i').first().hasClass('anticon-bank'))
-  t.true(wrapper.find('i').last().hasClass('anticon-question-circle'))
+  const wrapper = shallow(<OrgRole orgRole={all} />)
+  t.is(wrapper.find('OrgRoleItem').length, all.length)
+  t.is(wrapper.find('OrgRoleItem').first().prop('orgRoleItem'), OrganisationRole.VOLUNTEER_PROVIDER)
 })
 
 test('OrgRole with zero items', t => {
   const none = []
-  const wrapper = render(<OrgRole orgRole={none} />)
+  const wrapper = shallow(<OrgRole orgRole={none} />)
+  t.is(wrapper.find('OrgRoleItem').length, 0)
+})
 
-  t.is(wrapper.find('li').length, 0)
+test('OrgRoleItem', t => {
+  const wrapper = shallow(<OrgRoleItem orgRoleItem={OrganisationRole.VOLUNTEER_PROVIDER} />)
+  t.is(wrapper.find('OrgRoleItem').length, 0)
 })

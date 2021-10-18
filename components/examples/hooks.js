@@ -90,7 +90,7 @@ export const HooksExample = () => {
       </p>
       <h2>BlockList</h2>
       <p>The block display depends on the value of limit and the value of expand.
-        If expand is true we pass in '0' if it is false we pass in the <em>{limit}</em> value
+        If expand is true we pass in 0 if it is false we pass in the <em>{limit}</em> value
       </p>
       <BlockList limit={expand ? '0' : limit} blocks={blocks} />
     </Demo>

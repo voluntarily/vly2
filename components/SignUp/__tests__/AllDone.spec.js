@@ -20,7 +20,6 @@ test('AllDone renders properly', t => {
       <p>Test child</p>
     </AllDone>
   )
-  t.is(wrapper.find('img').first().props().src, '/static/img/sign-up/alldone.svg')
   t.is(wrapper.find('h1').first().text(), 'You are ready to go')
   t.true(wrapper.exists('PersonSummary'))
   t.true(wrapper.exists('TopicSummary'))

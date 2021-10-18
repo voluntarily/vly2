@@ -66,37 +66,37 @@ const makeOp = async (interestCount, fromActivity) => {
 
   const op = fromActivity
     ? {
-      type: OpportunityType.ASK,
-      name: `${fromActivity.name} Opportunity`,
-      imgUrl: fromActivity.imgUrl,
-      subtitle: fromActivity.subtitle,
-      description: fromActivity.description,
-      duration: fromActivity.duration,
-      location: 'Northland',
-      venue: 'Venue Address',
-      status: coin(OpportunityStatus.DRAFT, OpportunityStatus.ACTIVE),
-      date,
-      fromActivity: fromActivity._id,
-      offerOrg: org._id,
-      requestor: requestor._id,
-      tags
-    }
+        type: OpportunityType.ASK,
+        name: `${fromActivity.name} Opportunity`,
+        imgUrl: fromActivity.imgUrl,
+        subtitle: fromActivity.subtitle,
+        description: fromActivity.description,
+        duration: fromActivity.duration,
+        location: 'Northland',
+        venue: 'Venue Address',
+        status: coin(OpportunityStatus.DRAFT, OpportunityStatus.ACTIVE),
+        date,
+        fromActivity: fromActivity._id,
+        offerOrg: org._id,
+        requestor: requestor._id,
+        tags
+      }
     : {
-      type: OpportunityType.ASK,
-      name: `${requestor.nickname} ${code} Opportunity`,
-      imgUrl: `https://picsum.photos/seed/${requestor.nickname}-${code}/200/200`,
-      subtitle: `${requestor.nickname} ${code}`,
-      description: fact,
-      duration: '8 hours',
-      location: 'Northland',
-      venue: 'Venue Address',
-      status: coin(OpportunityStatus.DRAFT, OpportunityStatus.ACTIVE),
-      // date: ,
-      // fromActivity,
-      offerOrg: org._id,
-      requestor: requestor._id,
-      tags
-    }
+        type: OpportunityType.ASK,
+        name: `${requestor.nickname} ${code} Opportunity`,
+        imgUrl: `https://picsum.photos/seed/${requestor.nickname}-${code}/200/200`,
+        subtitle: `${requestor.nickname} ${code}`,
+        description: fact,
+        duration: '8 hours',
+        location: 'Northland',
+        venue: 'Venue Address',
+        status: coin(OpportunityStatus.DRAFT, OpportunityStatus.ACTIVE),
+        // date: ,
+        // fromActivity,
+        offerOrg: org._id,
+        requestor: requestor._id,
+        tags
+      }
   const saved = await Opportunity.create(op)
   const split = Math.round(interestCount / 3)
   const interesteds = await makeInterestedVolunteers(saved, InterestStatus.INTERESTED, split)

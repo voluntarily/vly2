@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Icon } from 'antd'
+import { HistoryOutlined } from '@ant-design/icons'
 import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
@@ -36,7 +36,7 @@ const TextContainer = styled.div`
 export const OpArchivedHeader = ({ status }) => (
   <HeaderContainer>
     <IconContainer>
-      <Icon type='history' style={{ fontSize: '32px', color: 'white' }} />
+      <HistoryOutlined style={{ fontSize: '32px', color: 'white' }} />
     </IconContainer>
     <TextContainer>
       <h4>

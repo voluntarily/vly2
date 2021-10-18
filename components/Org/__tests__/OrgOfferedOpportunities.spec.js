@@ -3,13 +3,14 @@ import adapterFetch from 'redux-api/lib/adapters/fetch'
 import { mountWithIntl, mountWithMockIntl } from '../../../lib/react-intl-test-helper'
 import { Provider } from 'react-redux'
 import fetchMock from 'fetch-mock'
-import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
+import reduxApi from '../../../lib/redux/reduxApi'
+import { makeStoreTest } from '../../../lib/redux/store'
 import { OrgOfferedOpportunities } from '../OrgOfferedOpportunities'
 import { OrganisationRole } from '../../../server/api/organisation/organisation.constants'
 
 test('No results', async t => {
   const expectedNotFoundMessage = 'No offered opportunities found yet'
-  const store = makeStore({})
+  const store = makeStoreTest({})
   const myMock = fetchMock.sandbox()
 
   myMock
@@ -35,7 +36,7 @@ test('No results', async t => {
 })
 
 test('Results', async t => {
-  const store = makeStore({})
+  const store = makeStoreTest({})
   const myMock = fetchMock.sandbox()
 
   const results = [{

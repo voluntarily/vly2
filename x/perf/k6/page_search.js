@@ -15,7 +15,7 @@ export const options = {
     errors: ['rate<0.01'] // <1% errors
   }
 }
-export default function () {
+export default function PageSearch () {
   const res = http.get(`${host}/search?search=fortran`)
 
   const pass = check(res, {

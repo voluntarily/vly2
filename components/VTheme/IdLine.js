@@ -1,3 +1,4 @@
+import { TeamOutlined } from '@ant-design/icons'
 import { Avatar } from 'antd'
 import Link from 'next/link'
 import PropTypes from 'prop-types'
@@ -21,7 +22,7 @@ const IdLine = ({ item, path }) =>
             size={32}
             shape='square'
             src={item.imgUrl}
-            icon='team'
+            icon={<TeamOutlined />}
             alt={item.name}
           />
           <span style={{ marginLeft: '1em' }}>{item.name}</span>

@@ -1,12 +1,12 @@
 /* eslint-disable no-console */
-var MongoClient = require('mongodb').MongoClient
-var ObjectId = require('mongodb').ObjectID
+const MongoClient = require('mongodb').MongoClient
+const ObjectId = require('mongodb').ObjectID
 
-var url = 'mongodb://localhost:27017/'
-var dbname = 'vly2'
+const url = 'mongodb://localhost:27017/'
+const dbname = 'vly2'
 
-var allTags = new Set()
-var dbo
+const allTags = new Set()
+let dbo
 // old tag style "tags":[{"_id":"5d96901c94bcb300124d3d55","tag":"acti","__v":0},{"_id":"5d113a92ad00d00011f7e331","tag":"express","__v":0}
 
 const findTagById = async function (tagId) {

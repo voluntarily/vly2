@@ -2,22 +2,18 @@
 
 import test from 'ava'
 import request from 'supertest'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import { server, appReady } from '../../../server'
 import Opportunity from '../opportunity'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   await appReady
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 /* Demonstrates that we can create a valid Op with only the minimum required fields

@@ -1,6 +1,6 @@
 import test from 'ava'
 import { Interest } from '../interest'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import Opportunity from '../../opportunity/opportunity'
@@ -10,9 +10,9 @@ import orgs from '../../organisation/__tests__/organisation.fixture'
 import { personInterestCount, getInterestDetail } from '../interest.lib'
 import { InterestStatus } from '../interest.constants'
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   t.context.people = await Person.create(people)
   t.context.orgs = await Organisation.create(orgs)
   t.context.me = t.context.people[0] // I am the first person.
@@ -20,7 +20,7 @@ test.before('before connect to database', async (t) => {
   t.context.alice = t.context.people[2]
 
   // setup opportunities 5 items
-  ops.map((op, index) => {
+  ops.forEach((op, index) => {
     // each op has a different person as requestor, but not me
     op.requestor = t.context.people[index + 1]
     // all the ops belong to the OMGTech org
@@ -48,10 +48,6 @@ test.before('before connect to database', async (t) => {
     }
   })
   t.context.interests = await Interest.create(interests)
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.serial('personInterestCount ', async t => {

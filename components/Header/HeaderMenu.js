@@ -1,5 +1,11 @@
 import { FormattedMessage } from 'react-intl'
-import Navigation from '../Navigation/Navigation'
+import dynamic from 'next/dynamic'
+
+// stop SSR and load the navigation on the client side so that the menu size is calculated by the client window.
+const Navigation = dynamic(
+  () => import('../Navigation/Navigation').then(mod => mod.Navigation),
+  { ssr: false }
+)
 
 export const MenuShowState = {
   ANON: 'anon', // option shows for non signed in people
@@ -25,7 +31,7 @@ const menuItems = [
   {
     key: 'acts_ask',
     show: [BASIC, BOTH, ADMIN],
-    href: '/a/ask',
+    href: '/acts/type/ask',
     text:
   <FormattedMessage
     id='HeaderMenu.acts_ask'
@@ -35,7 +41,7 @@ const menuItems = [
   {
     key: 'acts_offer',
     show: [VOLUNTEER, BOTH, ADMIN],
-    href: '/a/offer',
+    href: '/acts/type/offer',
     text:
   <FormattedMessage
     id='HeaderMenu.acts_offer'

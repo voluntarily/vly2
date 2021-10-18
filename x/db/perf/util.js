@@ -8,10 +8,11 @@ const gra = (min, max) => { return (Math.round(Math.random() * (max - min) + min
 const coin = (a, b) => { return gra(0, 1) ? a : b }
 
 // sentence generator
-const path = `${__dirname}/sentences.txt`
+const path = require('path')
+const sentencePath = path.join(__dirname, '/sentences.txt')
 const sentences = []
 
-fs.readFileSync(path, 'utf-8').split(/\r?\n/).forEach(line => { sentences.push(line) })
+fs.readFileSync(sentencePath, 'utf-8').split(/\r?\n/).forEach(line => { sentences.push(line) })
 
 async function asyncForEach (array, callback) {
   for (let index = 0; index < array.length; index++) {

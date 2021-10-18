@@ -14,7 +14,7 @@ export const options = {
     errors: ['rate<0.01'] // <10% errors
   }
 }
-export default function () {
+export default function ApiOrgs () {
   const res = http.get(`${host}/api/organisations?p=name`)
   const pass = check(res, {
     'status was 200': r => r.status === 200,

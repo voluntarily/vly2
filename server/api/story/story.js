@@ -28,7 +28,7 @@ storySchema.plugin(accessibleRecordsPlugin)
 storySchema.index({ tags: 1 })
 
 // protect multiple imports
-var Story
+let Story
 
 if (mongoose.models.Story) {
   Story = mongoose.model(SchemaName)

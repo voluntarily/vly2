@@ -42,7 +42,7 @@ Then('I can see the offers page', () => {
 })
 
 Given( "I visit the offers listing", () => {
-  I.amOnPage('/a/offer')
+  I.amOnPage('/acts/type/offer')
 })
 Then( "I can see multiple offers", () => {
   I.seeElement(locate('figure').at(1)) // opportunity

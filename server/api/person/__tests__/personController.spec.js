@@ -6,23 +6,19 @@ import Person from '../person'
 import MockExpressRequest from 'mock-express-request'
 import MockResponse from 'mock-res'
 import { updatePersonDetail } from '../person.controller'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import people from '../__tests__/person.fixture'
 import { Role } from '../../../../server/services/authorize/role'
 
-test.before('before connect to database', async (t) => {
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
     await appReady
     await Person.create(people).catch((err) => console.error('Unable to create people:', err))
   } catch (e) {
     console.error('personController.spec.js, before connect to database', e)
   }
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.serial('Should call sendStatus function for null record ', async t => {

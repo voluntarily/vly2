@@ -14,21 +14,15 @@ const op = {
   subtitle: 'Growing digitally in the garden',
   imgUrl: 'https://image.flaticon.com/icons/svg/206/206857.svg',
   description: 'Project to grow something in the garden',
-  duration: '15 Minutes',
+  duration: 'PT1H22M',
   locations: ['Northland', 'Online'],
   date: [
     {
-      $date: '2019-06-16T05:57:01.000Z'
-    },
-    {
-      $date: '2019-06-23T05:57:01.000Z'
+      $date: '2023-06-16T05:57:01.000Z'
     }
   ],
   status: OpportunityStatus.DRAFT,
-  startDate: null,
-  endDate: null,
-  tags: tagList,
-  venue: 'street'
+  tags: tagList
 }
 
 const blankAsk = {
@@ -41,8 +35,6 @@ const blankAsk = {
   locations: ['Online'],
   status: OpportunityStatus.DRAFT,
   tags: [],
-  startDate: null,
-  endDate: null,
   date: []
 }
 
@@ -56,8 +48,6 @@ const blankOffer = {
   locations: ['Online'],
   status: OpportunityStatus.DRAFT,
   tags: [],
-  startDate: null,
-  endDate: null,
   date: []
 }
 
@@ -83,23 +73,32 @@ test.after.always(() => {
   console.warn = orginalWarn
 })
 
-test('shallow the detail with op', t => {
+test('shallow the form with op', t => {
   const wrapper = shallowWithIntl(
     <OpShortForm
       op={op}
       onSubmit={() => {}}
       onCancel={() => {}}
-      existingLocations={sortedLocations}
+      locations={locations}
       existingTags={[]}
     />
   )
-  t.is(wrapper.find('OpShortForm').length, 1)
+  t.is(wrapper.find('.OpShortForm').length, 1)
 })
 
-test('render the detail with op', t => {
-  const submitOp = sinon.spy()
+test('render the form with op', async t => {
+  t.plan(7)
+  const done = sinon.promise()
+
   const cancelOp = sinon.spy()
+  const submitOp = sinon.spy(o => {
+    t.is(o.name, op.name)
+    t.is(o.duration, op.duration)
+    t.is(o.status, op.status)
+    done.resolve('done')
+  })
   const me = { _id: '5ccbffff958ff4833ed2188d' }
+
   const wrapper = mountWithIntl(
     <OpShortForm
       op={op}
@@ -115,13 +114,15 @@ test('render the detail with op', t => {
   t.is(wrapper.find('button').length, 3)
   wrapper.find('#backBtn').first().simulate('click')
   t.truthy(cancelOp.calledOnce)
-  wrapper.find('#doneBtn').first().simulate('click')
+  wrapper.find('form').first().simulate('submit')
+  await done
   t.truthy(submitOp.calledOnce)
-  t.truthy(submitOp.calledWith(op))
 })
 
-test('render the detail with new blank ask op', t => {
-  const submitOp = sinon.fake()
+test('render the detail with new blank ask op', async t => {
+  t.plan(4)
+  const done = sinon.promise()
+  const submitOp = sinon.spy(o => done.resolve())
   const cancelOp = sinon.fake()
   const me = { _id: '5ccbffff958ff4833ed2188d' }
 
@@ -135,41 +136,61 @@ test('render the detail with new blank ask op', t => {
       locations={locations}
     />
   )
-  const datePicker = wrapper.find('.ant-calendar-picker')
-  datePicker.at(0).simulate('click') // Check if the dissable date method got called
+
+  // set the description
+  const description = wrapper.find('#op_short_form_description').first()
+  description.simulate('change', { target: { value: 'Hello World!' } })
+
+  // TODO: work out how to test these other form fields.
+  // console.log(wrapper.debug())
+  // const datePicker = wrapper.find('.ant-picker')
+  // datePicker.at(0).simulate('click') // Check if the dissable date method got called
   // datePicker.at(1).simulate('click') // Check if the dissable date method got called
   // t.is(datePicker.length, 2) // should find 1 date picker component
 
-  t.is(wrapper.find('OpShortForm').length, 1)
-  t.is(wrapper.find('button').length, 3) // cancel, save and publish
-  wrapper.find('button').first().simulate('click')
-  t.truthy(cancelOp.calledOnce)
-
   // can't click submit until fields entered
-  wrapper.find('Form').first().simulate('submit')
-  t.falsy(submitOp.calledOnce)
-  wrapper.update()
+  // wrapper.find('form').first().simulate('submit')
+  // t.falsy(submitOp.calledOnce)
+  // wrapper.update()
+  // console.log(wrapper.debug())
 
   // const locationField = wrapper.find('OpFormLocation').first()
   // const locationInput = locationField.find('TagSelect').first()
   // locationInput.props().onChange(['Auckland'])
   // wrapper.update()
 
-  const durationHours = wrapper.find('input#opportunity_detail_form_durationHours').first()
+  const durationHours = wrapper.find('#op_short_form_durationHours input').first()
   durationHours.simulate('change', { target: { value: 10 } })
-  const durationMinutes = wrapper.find('input#opportunity_detail_form_durationMinutes').first()
+
+  const durationMinutes = wrapper.find('#op_short_form_durationMinutes input').first()
   durationMinutes.simulate('change', { target: { value: 25 } })
 
-  wrapper.find('#doneBtn').first().simulate('click')
+  wrapper.find('form').first().simulate('submit')
+  await done
   t.truthy(submitOp.calledOnce)
-  t.is(submitOp.args[0][0].type, OpportunityType.ASK)
+  const result = submitOp.args[0][0]
+  t.is(result.type, OpportunityType.ASK)
+  t.is(result.description, 'Hello World!')
+  t.is(result.duration, 'PT10H25M')
 })
 
-test('render the detail with new blank offer op', t => {
-  const submitOp = sinon.fake()
+test('render the detail with new blank offer op', async t => {
+  t.plan(4)
+  const done = sinon.promise()
+  const submitOp = sinon.spy(o => done.resolve())
   const cancelOp = sinon.fake()
-  const me = { _id: '5ccbffff958ff4833ed2188d' }
-
+  const me = {
+    _id: '5ccbffff958ff4833ed2188d',
+    orgMembership: [
+      {
+        organisation: {
+          _id: 'a',
+          name: 'Careys org',
+          slug: 'carey-org'
+        }
+      }
+    ]
+  }
   const wrapper = mountWithIntl(
     <OpShortForm
       op={blankOffer}
@@ -180,118 +201,30 @@ test('render the detail with new blank offer op', t => {
       locations={locations}
     />
   )
-  const datePicker = wrapper.find('.ant-calendar-picker')
-  datePicker.at(0).simulate('click') // Check if the dissable date method got called
-  // datePicker.at(1).simulate('click') // Check if the dissable date method got called
-  // t.is(datePicker.length, 2) // should find 1 date picker component
 
-  t.is(wrapper.find('OpShortForm').length, 1)
-  t.is(wrapper.find('button').length, 3) // cancel, save and publish
-  wrapper.find('button').first().simulate('click')
-  t.truthy(cancelOp.calledOnce)
+  // set the description
+  const description = wrapper.find('#op_short_form_description').first()
+  description.simulate('change', { target: { value: 'Hello World!' } })
 
-  // can't click submit until fields entered
-  wrapper.find('Form').first().simulate('submit')
-  t.falsy(submitOp.calledOnce)
-  wrapper.update()
+  const durationHours = wrapper.find('#op_short_form_durationHours input').first()
+  durationHours.simulate('change', { target: { value: 8 } })
 
-  // const locationField = wrapper.find('OpFormLocation').first()
-  // const locationInput = locationField.find('TagSelect').first()
-  // locationInput.props().onChange(['Auckland'])
+  const durationMinutes = wrapper.find('#op_short_form_durationMinutes input').first()
+  durationMinutes.simulate('change', { target: { value: 22 } })
+
+  // set the organisation selection
+  // const org = wrapper.find('Select').first()
+  // org.instance().onSelect({ value: '1234' })
   // wrapper.update()
-  const durationHours = wrapper.find('input#opportunity_detail_form_durationHours').first()
-  durationHours.simulate('change', { target: { value: 10 } })
-  const durationMinutes = wrapper.find('input#opportunity_detail_form_durationMinutes').first()
-  durationMinutes.simulate('change', { target: { value: 25 } })
+  // console.log(org.debug())
 
-  wrapper.find('#doneBtn').first().simulate('click')
+  // submit the changes
+  wrapper.find('form').first().simulate('submit')
+  await done
   t.truthy(submitOp.calledOnce)
-  t.is(submitOp.args[0][0].type, OpportunityType.OFFER)
-})
-
-test('Save a op as draft with correct validation', async t => {
-  const submitOp = sinon.spy()
-  const cancelOp = sinon.spy()
-  const me = {
-    _id: '5ccbffff958ff4833ed2188d',
-    orgMembership: [
-      {
-        organisation: {
-          _id: 'a',
-          name: 'Careys org',
-          slug: 'carey-org'
-        }
-      }
-    ]
-  }
-
-  const wrapper = mountWithIntl(
-    <OpShortForm
-      op={op}
-      me={me}
-      onSubmit={submitOp}
-      onCancel={cancelOp}
-      existingTags={[]}
-      locations={locations}
-    />
-  )
-
-  t.is(wrapper.find('OpShortForm').length, 1)
-  t.truthy(wrapper.find('.organisation'))
-
-  const org = wrapper.find('.organisation').first()
-  org.simulate('click')
-  wrapper.find('.ant-select-dropdown li').first().simulate('click')
-
-  const draftButton = wrapper.find('#doneBtn').first()
-  draftButton.simulate('click')
-
-  t.truthy(submitOp.calledOnce)
-
-  t.is(wrapper.find('.ant-form-explain').length, 0)
-})
-
-test('Publish a op with correct validation', t => {
-  const submitOp = sinon.spy()
-  const cancelOp = sinon.spy()
-  const me = {
-    _id: '5ccbffff958ff4833ed2188d',
-    orgMembership: [
-      {
-        organisation: {
-          _id: 'a',
-          name: 'Careys org',
-          slug: 'carey-org'
-        }
-      }
-    ]
-  }
-
-  const wrapper = mountWithIntl(
-    <OpShortForm
-      op={op}
-      me={me}
-      onSubmit={submitOp}
-      onCancel={cancelOp}
-      existingTags={[]}
-      locations={locations}
-    />
-  )
-
-  t.is(wrapper.find('OpShortForm').length, 1)
-
-  t.truthy(wrapper.find('.organisation'))
-  const org = wrapper.find('.organisation').first()
-  org.simulate('click')
-  wrapper.find('.ant-select-dropdown li').first().simulate('click')
-
-  const commitment = wrapper.find('.commitment').first()
-  commitment.simulate('change', { target: { value: '8 hours' } })
-
-  const publishButton = wrapper.find('#doneBtn').first()
-  publishButton.simulate('click')
-
-  t.truthy(submitOp.calledOnce)
-
-  t.is(wrapper.find('.ant-form-explain').length, 0)
+  const result = submitOp.args[0][0]
+  t.is(result.type, OpportunityType.OFFER)
+  t.is(result.description, 'Hello World!')
+  t.is(result.duration, 'PT8H22M')
+  // t.is(result.offerOrg, 'a')
 })

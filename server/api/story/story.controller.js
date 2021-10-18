@@ -57,7 +57,6 @@ const putStory = async (req, res) => {
     // ensure non-admins can't take someone else's story and update the author to be themselves
     return res.sendStatus(404)
   }
-
   storyToUpdate.set(req.body)
 
   if (!req.ability.can(Action.UPDATE, storyToUpdate)) {

@@ -9,7 +9,7 @@ export const options = {
     http_req_duration: ['p(99)<1000'] // 99% of requests must complete below 1.5s
   }
 }
-export default function () {
+export default function ApiHealth () {
   const res = http.get(`${host}/api/health`)
 
   check(res, {

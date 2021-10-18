@@ -17,7 +17,7 @@ const reduceKeyValues = aggregation => aggregation.reduce((acc, kv) =>
 // Multiple group values (e.g. role) return an array
 const aggregateProjection = { $project: { _id: false, key: '$_id', value: '$total' } }
 
-export default async (req, res) => {
+export const summary = async (req, res) => {
   res.setHeader('Content-Type', 'application/json')
   if (!(req.session.me && req.session.me.role.includes(Role.ADMIN))) { // Not an admin
     return res.status(401).json('Authorisation required')
@@ -60,3 +60,4 @@ export default async (req, res) => {
       })
   )
 }
+export default summary

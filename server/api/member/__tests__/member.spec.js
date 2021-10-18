@@ -5,15 +5,15 @@ import Member from '../member'
 import { MemberStatus } from '../member.constants'
 import Organisation from '../../organisation/organisation'
 import Person from '../../person/person'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import people from '../../person/__tests__/person.fixture'
 import orgs from '../../organisation/__tests__/organisation.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 
-test.before('before connect to database', async (t) => {
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
     await appReady
   } catch (e) {
     console.error('member.spec.js - error in test setup', e)
@@ -53,11 +53,6 @@ test.before('before connect to database', async (t) => {
   ]
 
   t.context.members = await Member.create(members).catch(() => 'Unable to create members')
-})
-
-test.after.always(async (t) => {
-  // await Person.deleteMany()
-  await t.context.memMongo.stop()
 })
 
 test.serial('Should give number of Members', async t => {

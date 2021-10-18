@@ -5,10 +5,10 @@ import objectid from 'objectid'
 
 // setup a fixture using people, orgs and some followers
 const fixture = (t) => {
-  people.map(p => { p._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
   const me = people[0]
   // setup list of organisations, I am owner for the first one
-  orgs.map((org, index) => {
+  orgs.forEach((org, index) => {
     org._id = objectid().toString()
   })
 

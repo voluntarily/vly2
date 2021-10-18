@@ -1,6 +1,6 @@
 import test from 'ava'
 import request from 'supertest'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import { server, appReady } from '../../../server'
 import { regions } from '../../location/locationData'
 
@@ -19,21 +19,17 @@ import orgs from '../../organisation/__tests__/organisation.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.orgs = await Organisation.create(orgs).catch((err) => `Unable to create orgs: ${err}`)
   await appReady
 })
 
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
-})
-
 test.beforeEach('connect and add two oppo entries', async (t) => {
   // connect each oppo to a requestor.
-  ops.map((op, index) => {
+  ops.forEach((op, index) => {
     op.requestor = t.context.people[index]._id
     op.offerOrg = t.context.orgs[1]._id
     op.tags = [tags[index]]

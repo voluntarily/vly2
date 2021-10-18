@@ -26,7 +26,8 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     phone: '+64 027 7031007',
     sendEmailNotifications: true,
     website: 'https://voluntarily.nz',
-    tags: ['javascript', 'programming', 'software', 'python', 'c++']
+    tags: ['javascript', 'programming', 'software', 'python', 'c++'],
+    topicGroups: ['business']
   },
   {
     nickname: 'Dali',
@@ -48,7 +49,9 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     phone: '000 000 0000',
     sendEmailNotifications: true,
     imgUrl: 'https://uploads5.wikiart.org/images/salvador-dali.jpg!Portrait.jpg',
-    tags: []
+    tags: [],
+    topicGroups: []
+
   },
   {
     name: 'Alice Niceteacher',
@@ -67,6 +70,7 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     role: ['opportunityProvider', 'basic'],
     status: 'active',
     tags: [],
+    topicGroups: ['education'],
     teacher: {
       registration: {
         trn: '123456',
@@ -93,7 +97,9 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['support', 'volunteer'],
     status: 'active',
-    tags: []
+    tags: [],
+    topicGroups: []
+
   },
   {
     name: 'Testy C McTestface',
@@ -107,7 +113,9 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['volunteer'],
     status: 'active',
-    tags: []
+    tags: [],
+    topicGroups: []
+
   },
   {
     name: 'Testy D McTestface',
@@ -120,7 +128,9 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['volunteer'],
     status: 'active',
-    tags: []
+    tags: [],
+    topicGroups: []
+
   },
   {
     name: 'Testy E McTestface',
@@ -133,7 +143,9 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['volunteer'],
     status: 'active',
-    tags: []
+    tags: [],
+    topicGroups: []
+
   },
   {
     name: 'Testy F McTestface',
@@ -146,7 +158,9 @@ I have a track record as a forward-thinking, customer focussed, innovative solut
     imgUrl: 'https://blogcdn1.secureserver.net/wp-content/uploads/2014/06/create-a-gravatar-beard.png',
     role: ['support', 'volunteer'],
     status: 'active',
-    tags: []
+    tags: [],
+    topicGroups: []
+
   }
 ]
 

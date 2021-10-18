@@ -45,25 +45,28 @@ export const MessagesColumn = {
   }
 }
 
-const InviteText =
+const InviteText = (
   <FormattedMessage
     id='InterestTable.accept'
     defaultMessage='Accept'
     description='Button allowing owner to invite an interested person'
   />
+)
 
-const DeclineText =
+const DeclineText = (
   <FormattedMessage
     id='InterestTable.decline'
     defaultMessage='Decline'
     description='Button allowing owner to decline an interested person'
   />
-export const MessageText =
+)
+export const MessageText = (
   <FormattedMessage
     id='InterestTable.messagePerson'
     defaultMessage='Message'
     description='Button allowing owner to message an interested person'
   />
+)
 
 const messages = defineMessages({
   accept_title: {

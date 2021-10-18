@@ -1,4 +1,7 @@
-import { Form, Input, Icon, Button } from 'antd'
+import { MinusCircleOutlined, PlusOutlined } from '@ant-design/icons'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Input, Button } from 'antd'
 import PropTypes from 'prop-types'
 import React from 'react'
 import styled from 'styled-components'
@@ -80,7 +83,7 @@ export class DynamicFieldSet extends React.Component {
               title={this.props.removeTooltip || undefined}
               onClick={() => this.remove(index)}
             >
-              <Icon type='minus-circle-o' />
+              <MinusCircleOutlined />
             </RemoveItemButton>)
           : null}
       </Form.Item>
@@ -95,7 +98,7 @@ export class DynamicFieldSet extends React.Component {
             block
             onClick={() => this.add()}
           >
-            <Icon type='plus' /> {this.props.addItemText || 'Add item'}
+            <PlusOutlined /> {this.props.addItemText || 'Add item'}
           </Button>
         </Form.Item>
       </>

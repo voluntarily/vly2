@@ -2,15 +2,15 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Tag from '../tag'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import tags from './tag.fixture.js'
 import { jwtData, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
 import people from '../../person/__tests__/person.fixture'
 import Person from '../../person/person'
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   await appReady
 
   const tagCollection = [
@@ -19,11 +19,6 @@ test.before('before connect to database', async (t) => {
   ]
   t.context.people = await Person.create(people).catch((err) => console.error('Unable to create people', err))
   t.context.tags = await Tag.create(tagCollection).catch((err) => console.error('Unable to create tags', err))
-})
-
-test.after.always(async (t) => {
-  await Tag.deleteMany()
-  await t.context.memMongo.stop()
 })
 
 /* -- Anon person */

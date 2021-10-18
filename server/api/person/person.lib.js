@@ -45,7 +45,7 @@ const personProfileCompleteness = (person) => {
 }
 
 const personHasBadge = async (person, badgeclass) => {
-  const count = await Badge.count({ person: person._id, badgeclass }).exec()
+  const count = await Badge.countDocuments({ person: person._id, badgeclass }).exec()
   return count > 0
 }
 
@@ -54,7 +54,7 @@ const getUnsubscribeLink = (person) => {
     throw new Error('Expected a person object with an _id field')
   }
 
-  return new URL(`people/${person._id}`, config.appUrl).toString()
+  return new URL(`/people/${person._id}`, config.appUrl).toString()
 }
 
 module.exports = {

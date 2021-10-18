@@ -27,12 +27,12 @@ test('shallow GoalStartButton', t => {
   )
   // t.is(wrapper.props().href, '/test')
   t.is(wrapper.find('GoalCard__BottomRightButton').first().props().onClick, handleClick)
-  t.is(wrapper.find('FormattedMessage').first().props().defaultMessage, 'Start')
+  t.is(wrapper.find('MemoizedFormattedMessage').first().props().defaultMessage, 'Start')
 
   wrapper = shallowWithIntl(
     <GoalStartButton status={PersonalGoalStatus.ACTIVE} href='/test' onClick={handleClick} />
   )
-  t.is(wrapper.find('FormattedMessage').first().props().defaultMessage, 'Continue')
+  t.is(wrapper.find('MemoizedFormattedMessage').first().props().defaultMessage, 'Continue')
   wrapper = shallowWithIntl(
     <GoalStartButton status={PersonalGoalStatus.COMPLETED} href='/test' onClick={handleClick} />
   )
@@ -48,17 +48,18 @@ test('shallow GoalStatusIcon', t => {
   wrapper = shallowWithIntl(
     <GoalStatusIcon status={PersonalGoalStatus.ACTIVE} />
   )
-  t.is(wrapper.find('GoalCard__StyledIconLeft').first().props().type, 'paper-clip')
+  t.true(wrapper.exists('GoalCard__ActiveIcon'))
   wrapper = shallowWithIntl(
     <GoalStatusIcon status={PersonalGoalStatus.COMPLETED} />
   )
-  t.is(wrapper.find('GoalCard__StyledIconLeft').first().props().type, 'trophy')
+  t.true(wrapper.exists('GoalCard__CompletedIcon'))
 })
 
 test('shallow the card with goal', t => {
   const wrapper = shallowWithIntl(
     <GoalCardTest goal={goal} />
   )
+
   t.is(wrapper.find('GoalCard__CardTitle').first().text(), goal.name)
   t.is(wrapper.find('GoalCard__CardImage').first().props().src, goal.imgUrl)
 })
@@ -95,8 +96,8 @@ Test paragraph with *strong text*
   t.is(wrapper.find('GoalCard__CardTitle').first().text(), goal.name)
   t.is(wrapper.find('GoalCard__CardImage').first().props().src, goal.imgUrl)
   t.is(wrapper.find('GoalStatusIcon').first().props().status, PersonalGoalStatus.QUEUED)
-  const closeBtn = wrapper.find('GoalCard__StyledIconRight').first()
-  t.is(closeBtn.props().type, 'close-circle')
+  t.true(wrapper.exists('GoalCard__CloseIcon'))
+  const closeBtn = wrapper.find('GoalCard__CloseIcon').first()
   const event = {
     stopPropagation: sinon.spy()
   }
@@ -104,6 +105,7 @@ Test paragraph with *strong text*
   wrapper = shallowWithIntl(
     <GoalCardTest goal={goal} dispatch={dispatch} />
   )
+
   t.is(wrapper.find('GoalStatusIcon').first().props().status, PersonalGoalStatus.ACTIVE)
 
   goal.status = PersonalGoalStatus.COMPLETED

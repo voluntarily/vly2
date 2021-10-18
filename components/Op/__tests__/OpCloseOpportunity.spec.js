@@ -27,7 +27,7 @@ test('render OpCloseOpportunity ', t => {
   const dispatch = sinon.fake()
   const op = { _id: 'fakeid' }
   const wrapper = shallowWithIntl(<OpCloseOpportunity op={op} dispatch={dispatch} />)
-  t.is(wrapper.find('h2').first().find('FormattedMessage').props().defaultMessage, 'End Activity')
+  t.is(wrapper.find('h2').first().find('MemoizedFormattedMessage').props().defaultMessage, 'End Activity')
   const confirm = wrapper.find('#completedOpPopConfirm').first()
   confirm.props().onConfirm()
   t.true(dispatch.calledOnce)

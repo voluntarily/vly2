@@ -1,5 +1,5 @@
 import test from 'ava'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import MockExpressRequest from 'mock-express-request'
 import MockExpressResponse from 'mock-express-response'
 import { getSummary, getLocations, getActivityTags, getRatings } from '../statistics.controller'
@@ -24,10 +24,9 @@ const Activity = require('../../activity/activity')
 const Feedback = require('../../feedback/feedback')
 const sinon = require('sinon')
 
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
 test.before('Create a mock database and populate it with data ', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-
   await Organisation.create(organisations)
   await Person.create(people)
   await Member.create(members)
@@ -35,10 +34,6 @@ test.before('Create a mock database and populate it with data ', async (t) => {
   await InterestArchive.create(interestArchives)
   await Activity.create(activities)
   await Feedback.create(feedback)
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test(

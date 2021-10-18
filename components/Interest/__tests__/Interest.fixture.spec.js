@@ -27,7 +27,7 @@ const InterestStatusCheck = [INTERESTED, INVITED, COMMITTED, DECLINED]
 test('makeInterests creates a valid set of volunteer interest records', t => {
   const ips = makeInterests('testy', 5)
   t.is(ips.length, 5)
-  ips.map(ip => {
+  ips.forEach(ip => {
     t.true(InterestStatusCheck.includes(ip.status))
   })
 })

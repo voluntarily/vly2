@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-export default () => `
+export const AboutMiMD = () => `
 # About Voluntari.ly
 
 ### Industry in the classroom.
@@ -40,3 +40,4 @@ Donations and long term support will allow us to get voluntarily.nz working soon
 <Button href="https://secure.squarespace.com/checkout/donate?donatePageId=5becd3d770a6adb0fa3e7b28">Donate</Button>
 
 `
+export default AboutMiMD

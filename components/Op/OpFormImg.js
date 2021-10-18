@@ -1,9 +1,11 @@
-import { Form, Icon, Input, Tooltip } from 'antd'
+import { Image, Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Input, Tooltip } from 'antd'
 import React from 'react'
 import { FormattedMessage } from 'react-intl'
 import ImageUpload from '../Upload/ImageUpload'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, TitleContainer } from '../VTheme/FormStyles'
-
+import { QuestionCircleOutlined } from '@ant-design/icons'
 const opImgUrl = (
   <span>
     <FormattedMessage
@@ -13,7 +15,7 @@ const opImgUrl = (
     />
     &nbsp;
     <Tooltip title="Choose something interesting like 'we want to build robots' ">
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -38,7 +40,7 @@ export const OpFormImg = ({ getFieldDecorator, imgUrl }) =>
         />
 
       </p>
-      <img
+      <Image
         style={{ width: '50%', float: 'right' }}
         src={imgUrl}
         alt='current image'

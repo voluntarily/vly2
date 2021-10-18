@@ -97,7 +97,8 @@ export const StoryForm = ({ story, onSubmit }) => {
       <textarea rows='5' cols='33' value={storyed.body} onChange={(e) => setStoryed({ title: storyed.title, body: e.target.value })} />
       <button onClick={() => onSubmit(storyed)}>Save</button>
       {/* <StoryDetail story={storyed} /> */}
-    </EditableArticle>)
+    </EditableArticle>
+  )
 }
 
 export const EditableStory = ({ story }) => {

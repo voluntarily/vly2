@@ -5,7 +5,7 @@ const Member = require('../../../server/api/member/member')
 const Activity = require('../../../server/api/activity/activity')
 const { MemberStatus } = require('../../../server/api/member/member.constants')
 const { ActivityStatus } = require('../../../server/api/activity/activity.constants')
-const slug = require('limax')
+const slug = require('slug')
 const { makeOps } = require('./makeOps')
 /**
  * create a new activity, make the person the owner

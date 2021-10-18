@@ -47,7 +47,7 @@ const goalSchema = new Schema({
 goalSchema.plugin(idvalidator)
 
 // protect multiple imports
-var Goal
+let Goal
 if (mongoose.models.Goal) {
   Goal = mongoose.model('Goal')
 } else {

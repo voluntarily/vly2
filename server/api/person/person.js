@@ -89,7 +89,7 @@ personSchema.index({ tags: 1 })
 // personSchema.plugin(accessibleFieldsPlugin)
 
 // protect multiple imports
-var Person
+let Person
 
 if (mongoose.models && mongoose.models.Person) {
   Person = mongoose.model(SchemaName)

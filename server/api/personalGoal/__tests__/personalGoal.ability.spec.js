@@ -2,7 +2,7 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import PersonalGoal from '../personalGoal'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
@@ -12,14 +12,10 @@ import { PersonalGoalStatus } from '../personalGoal.constants'
 
 import { jwtData, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   await appReady
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.before('connect and add two personalgoal entries', async (t) => {

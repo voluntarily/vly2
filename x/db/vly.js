@@ -44,7 +44,7 @@ const main = async () => {
         const json = JSON.parse(content)
         if (Array.isArray(json)) {
           console.log(`posting ${json.length} items`)
-          json.map(j => {
+          json.forEach(j => {
             vlyapi.post(argv._[1], j)
           })
         } else {

@@ -47,7 +47,7 @@ const badgeSchema = new Schema({
 badgeSchema.plugin(idvalidator)
 
 // protect multiple imports
-var Badge
+let Badge
 
 if (mongoose.models.Badge) {
   Badge = mongoose.model(SchemaName)

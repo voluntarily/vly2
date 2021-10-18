@@ -1,40 +1,24 @@
-import React, { Component } from 'react'
+import { useState, useEffect } from 'react'
+
 import { FullPage } from '../../components/VTheme/VTheme'
-import adminPage from '../../hocs/adminPage'
 import SchoolInviteForm from '../../components/Org/SchoolInviteForm'
 import fetch from 'isomorphic-fetch'
 import callApi from '../../lib/callApi'
+import AccessDenied from '../../components/Navigation/AccessDenied'
 
-class InviteSchool extends Component {
-  static async getInitialProps ({ req }) {
-    let cookies = {}
-
-    if (req) {
-      cookies = req.cookies
+const InviteSchool = ({ isAdmin }) => {
+  const [schools, setSchools] = useState([])
+  useEffect(() => {
+    const getSchools = async () => {
+      const schoolsList = await callApi('schools?p=schoolId%20name', 'GET')
+      setSchools(schoolsList)
     }
+    getSchools()
+  }, [])
 
-    let schools = []
+  if (!isAdmin) return <AccessDenied />
 
-    try {
-      schools = await callApi('schools?p=schoolId%20name', 'GET', null, cookies)
-    } catch (error) {
-      console.log(error)
-    }
-
-    return {
-      schools: schools
-    }
-  }
-
-  render () {
-    return (
-      <FullPage>
-        <SchoolInviteForm onSubmit={this.handleSubmit} schoolOptions={this.props.schools} />
-      </FullPage>
-    )
-  }
-
-  async handleSubmit (invite) {
+  const handleSubmit = async (invite) => {
     const response = await fetch('/api/notify/school-invite', {
       method: 'POST',
       credentials: 'include',
@@ -44,6 +28,11 @@ class InviteSchool extends Component {
 
     return response.ok
   }
+  return (
+    <FullPage>
+      <SchoolInviteForm onSubmit={handleSubmit} schoolOptions={schools} />
+    </FullPage>
+  )
 }
 
-export default adminPage(InviteSchool)
+export default InviteSchool

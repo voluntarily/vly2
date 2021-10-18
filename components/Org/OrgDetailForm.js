@@ -1,11 +1,13 @@
-import { Button, Checkbox, Divider, Form, Input, Tooltip, Icon, Affix } from 'antd'
-import slug from 'limax'
-import PropTypes from 'prop-types'
+import { Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Image, Button, Checkbox, Divider, Input, Tooltip, Affix } from 'antd'
+import { QuestionCircleOutlined } from '@ant-design/icons'
+import slug from 'slug'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
 import RichTextEditor from '../Form/Input/RichTextEditor'
 import ImageUpload from '../Upload/ImageUpload'
-import PageTitle from '../../components/LandingPageComponents/PageTitle.js'
+import PageTitle from '../../components/Landing/PageTitle.js'
 import { domainRegex } from '../../lib/fieldValidation'
 import {
   DescriptionContainer,
@@ -110,7 +112,7 @@ class OrgDetailForm extends Component {
         />
       &nbsp;
         <Tooltip title='Used to match emails of the form name@org.domain to your organisation automatically.'>
-          <Icon type='question-circle-o' />
+          <QuestionCircleOutlined />
         </Tooltip>
       </span>
     )
@@ -363,7 +365,7 @@ class OrgDetailForm extends Component {
                   description='Title for about section of organisation edit form'
                 />
               </p>
-              <img
+              <Image
                 style={{ width: '50%', float: 'right' }}
                 src={this.props.form.getFieldValue('imgUrl')}
                 alt=''
@@ -624,7 +626,8 @@ class OrgDetailForm extends Component {
             </InputContainer>
           </FormGrid>
           {
-            isTest ? saveAndCancelBtns
+            isTest
+              ? saveAndCancelBtns
               : (
                 <Affix offsetBottom={0}>
                   <FormGrid style={{ backgroundColor: 'white', paddingTop: 15 }}>
@@ -637,46 +640,12 @@ class OrgDetailForm extends Component {
                     {saveAndCancelBtns}
                   </FormGrid>
                 </Affix>
-              )
+                )
           }
         </Form>
       </div>
     )
   }
-}
-
-OrgDetailForm.propTypes = {
-  org: PropTypes.shape({
-    name: PropTypes.string,
-    info: PropTypes.shape({
-      about: PropTypes.string,
-      followers: PropTypes.string,
-      joiners: PropTypes.string,
-      members: PropTypes.string,
-      outsiders: PropTypes.string
-    }),
-    role: PropTypes.arrayOf(
-      PropTypes.oneOf([OrganisationRole.ADMIN, OrganisationRole.OPPORTUNITY_PROVIDER, OrganisationRole.VOLUNTEER_PROVIDER, OrganisationRole.ACTIVITY_PROVIDER, 'other'])
-    ),
-    imgUrl: PropTypes.string,
-    domainName: PropTypes.string,
-    website: PropTypes.string,
-    contactEmail: PropTypes.string,
-    facebook: PropTypes.string,
-    twitter: PropTypes.string,
-    _id: PropTypes.string,
-    ageRange: PropTypes.object,
-    contactName: PropTypes.string,
-    contactPhoneNumber: PropTypes.string,
-    address: PropTypes.string
-  }).isRequired,
-  form: PropTypes.object,
-  params: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  }),
-  onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired
-  // dispatch: PropTypes.func.isRequired,
 }
 
 export default Form.create({

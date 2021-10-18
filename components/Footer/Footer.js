@@ -1,3 +1,4 @@
+import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import { P, Spacer } from '../VTheme/VTheme'
@@ -89,6 +90,11 @@ list-style: none;
   }
 `
 
+const Revision = ({ rev }) => {
+  const url = 'https://github.com/voluntarily/vly2/commit/' + rev[0]?.split(/[ \- _ ]+/)[0]
+  return (<a href={url} rel='noopener noreferrer' target='_blank'>{rev}</a>)
+}
+
 const Footer = () => (
   <FooterBackground>
     <FooterContainer>
@@ -111,7 +117,7 @@ const Footer = () => (
                 target='_blank'
                 rel='noopener noreferrer'
               >
-            Pam Fergusson Charitable Trust
+                Pam Fergusson Charitable Trust
               </a>
             </P>
             <P>
@@ -120,13 +126,13 @@ const Footer = () => (
                 defaultMessage='Version'
                 description='Source coder version label.'
               />
-          :&nbsp;
+              :&nbsp;
               <FormattedMessage
                 id='revision' // set in server.js
                 defaultMessage='local-build'
                 description='Source code revision, auto generated.'
               >
-                {txt => <a href={'https://github.com/voluntarily/vly2/commit/' + txt.split(/[ \- _ ]+/)[0]} rel='noopener noreferrer' target='_blank'>{txt}</a>}
+                {txt => <Revision rev={txt} />}
               </FormattedMessage>
             </P>
 
@@ -148,25 +154,25 @@ const Footer = () => (
               </a>
             </MenuItem>
             <MenuItem>
-              <a
+              <Link
                 href='/terms'
                 rel='noopener noreferrer'
               >Terms of Use
-              </a>
+              </Link>
             </MenuItem>
             <MenuItem>
-              <a
+              <Link
                 href='/terms/privacy'
                 rel='noopener noreferrer'
               >Privacy Policy
-              </a>
+              </Link>
             </MenuItem>
             <MenuItem>
-              <a
+              <Link
                 href='/terms/conduct'
                 rel='noopener noreferrer'
               >Code of Conduct
-              </a>
+              </Link>
             </MenuItem>
             <MenuItem>
               <a

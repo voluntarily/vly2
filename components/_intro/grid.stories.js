@@ -15,7 +15,7 @@ storiesOf('Grids & Layouts', module)
         that scales down on mobile.
         <br /> This is inspired by the{' '}
         <a href='https://bbc.github.io/gel-grid/'>BBC GEL Grid system</a>, but
-        isn't as strict or comprehensive...   Yet.
+        isn&apos;t as strict or comprehensive...   Yet.
       </h4>
       <br />
       <Divider />

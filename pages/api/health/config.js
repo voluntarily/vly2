@@ -4,7 +4,7 @@ const keys = require('../../../lib/sec/keys')
 
 /* prints the current config file and env vars. if signed in as admin
 */
-export default (req, res) => {
+export const Config = (req, res) => {
   res.setHeader('Content-Type', 'application/json')
 
   if (!req.ability.can('manage', 'Organisation')) {
@@ -13,3 +13,5 @@ export default (req, res) => {
   config.keys = { priv: keys.privateKey(), pub: keys.publicKey() }
   res.status(200).json(config)
 }
+
+export default Config

@@ -1,18 +1,12 @@
 import test from 'ava'
 import MockExpressRequest from 'mock-express-request'
 import MockExpressResponse from 'mock-express-response'
-import MemoryMongo from '../../../server/util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../server/util/mockMongo'
 
 import summary from '../../../pages/api/reports/summary'
 
-test.before('start in memory mongo and create fake server', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-})
-
-test.after.always(async (t) => {
-  t.context.memMongo && (await t.context.memMongo.stop())
-})
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
 
 test('Should respond with summary data for an admin', async t => {
   const req = new MockExpressRequest()

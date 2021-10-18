@@ -432,7 +432,7 @@ and smarter components or pages that obtain data and handle interactions
     class Ops extends Component {
       static async getInitialProps ({ store, query }) {
         // Get all Opportunities
-        const ops = await store.dispatch(reduxApi.actions.opportunities.get())
+        const ops = await store.dispatch(reduxApi.actions.opportunities.get({}))
         return { ops, query }
       }
 
@@ -527,7 +527,8 @@ Ant Design of React https://ant.design/components/
 
 [Background](https://voluntarily.atlassian.net/wiki/spaces/VP/pages/4423681/Voluntari.ly+is+Multilingual)
 
-----
+---
+
 # Use react-intl library
 
 https://github.com/yahoo/react-intl
@@ -535,10 +536,12 @@ https://github.com/yahoo/react-intl
 This library provides React components and an API to format dates, numbers, and strings, including pluralization and handling translations.
 
 He tika i te timatanga  | it is right from the start
-----
+
+---
 # Example - IntlDemo.js
+
     import { FormattedMessage, FormattedNumber } from 'react-intl'
-    export default () =>
+    export const Test = () =>
     <div>
         <h1>Test Internationalisation Formatting</h1>
         <FormattedMessage
@@ -549,8 +552,10 @@ He tika i te timatanga  | it is right from the start
     &nbsp;
         <FormattedNumber value={1000} />
     </div>
-----
-# Rules for Intl
+
+---
+## Rules for Intl
+
 * All strings that appear on the screen should be translatable. - use the FormattedMessage wrapper.
 
 * Numbers, plurals, dates and times should also use their respective wrappers.
@@ -558,16 +563,19 @@ He tika i te timatanga  | it is right from the start
 * The messages are collected automatically and the en.json file is generated. This will be profesionally translated ( Do not rely on Google)
 
 * See the About page for how to manage whole pages of translatable content.
+* 
 ---
-# Identity and Access Management
+## Identity and Access Management
 ![Auth0](./img/auth0.jpg)
 
 https://auth0.com/
 
-----
-# Cloud service for identity
+---
+
+## Cloud service for identity
 
 Get somone else to do the work for:
+
 * registration,
 * email validation,
 * sign in/out,
@@ -576,12 +584,12 @@ Get somone else to do the work for:
 * OAuth, SAML, AD etc.
 
 ---
-# Voluntari.ly
+## Voluntarily.nz
 <br />
 ![V](./img/v-logo-white.svg)
 
 ---
-# Voluntari.ly
+## Voluntarily.nz
 <br />
 ![V](./img/v-logo.svg)
 ---

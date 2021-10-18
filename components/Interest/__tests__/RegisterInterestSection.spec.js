@@ -3,7 +3,7 @@ import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import RegisterInterestSection from '../RegisterInterestSection'
 import { Provider } from 'react-redux'
-import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
+import reduxApi, { makeStoreTest } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 
 import { API_URL } from '../../../lib/callApi'
@@ -59,7 +59,8 @@ const interests = [
 ]
 
 test.serial('mount Ask RegisterInterestSection with with no existing interest', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
+
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const getmyinterests = 'path:/api/interests/'
@@ -105,7 +106,7 @@ test.serial('mount Ask RegisterInterestSection with with no existing interest', 
 })
 
 test.serial('mount RegisterInterestSection with op and me', async t => {
-  const realStore = makeStore(initStore)
+  const realStore = makeStoreTest(initStore)
   const myMock = fetchMock.sandbox()
   reduxApi.use('fetch', adapterFetch(myMock))
   const getmyinterests = 'path:/api/interests/'

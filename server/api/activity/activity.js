@@ -2,7 +2,7 @@ const mongoose = require('mongoose')
 const Schema = mongoose.Schema
 const idvalidator = require('mongoose-id-validator')
 const { accessibleRecordsPlugin, accessibleFieldsPlugin } = require('@casl/mongoose')
-const slug = require('limax')
+const slug = require('slug')
 const { ActivityStatus, ActivityFields } = require('./activity.constants')
 const ActivitySchema = new Schema({
   name: { type: String, required: true }, // "Growing in the garden",
@@ -76,7 +76,7 @@ ActivitySchema.plugin(accessibleFieldsPlugin)
 ActivitySchema.index({ tags: 1 })
 
 // protect multiple imports
-var Activity
+let Activity
 
 if (mongoose.models.Activity) {
   Activity = mongoose.model('Activity')

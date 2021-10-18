@@ -1,0 +1,2312 @@
+{
+  "AboutYou.label.location": {
+    "defaultMessage": "Where are you located?"
+  },
+  "AboutYou.label.nickname": {
+    "defaultMessage": "What do you want everyone to call you?"
+  },
+  "AboutYou.title": {
+    "defaultMessage": "About You"
+  },
+  "ActAboutPanel.button.guide": {
+    "defaultMessage": "See all resources"
+  },
+  "ActAboutPanel.readMore": {
+    "defaultMessage": "Read what the experts have to say in our knowledgebase"
+  },
+  "ActAboutPanel.section.prompt.guide": {
+    "defaultMessage": "A description of what you need to prepare and do before you can do the thing."
+  },
+  "ActAboutPanel.section.title.about": {
+    "defaultMessage": "About"
+  },
+  "ActAboutPanel.section.title.guide": {
+    "defaultMessage": "Activity Guide"
+  },
+  "ActAboutPanel.share": {
+    "defaultMessage": "Share"
+  },
+  "ActListPage.Ask.Title": {
+    "defaultMessage": "Volunteers are offering to help with",
+    "description": "Title of ask for help page"
+  },
+  "ActListPage.Offer.Title": {
+    "defaultMessage": "People are asking for help with",
+    "description": "Title of the offerings page"
+  },
+  "ActOpsPanel.button.showAll": {
+    "defaultMessage": "See all"
+  },
+  "ActOpsPanel.prompt.OpAddAskBtn": {
+    "defaultMessage": "Can't see anyone who can help you?"
+  },
+  "ActOpsPanel.prompt.OpAddOfferBtn": {
+    "defaultMessage": "Can't see anyone needing your help?"
+  },
+  "ActOpsPanel.prompt.with": {
+    "defaultMessage": "with"
+  },
+  "ActResourcesPanel.actFileDescription": {
+    "defaultMessage": "Click to download",
+    "description": "Instructions for user telling them to download the file"
+  },
+  "ActResourcesPanel.title.youwillneed": {
+    "defaultMessage": "What you will need",
+    "description": "title on activity resources panel"
+  },
+  "ActTryBelow.prompt": {
+    "defaultMessage": "Check below whether you can help with existing asks and offers before creating new ones.",
+    "description": "prompt the person to review existing ops before creating a new one"
+  },
+  "ActUnknown.NotFound": {
+    "defaultMessage": "Sorry, this activity is not available",
+    "description": "Act not found message"
+  },
+  "ActUnknown.showOps": {
+    "defaultMessage": "Search for more",
+    "description": "Button to show all activities"
+  },
+  "ActiveOpsSection.empty.button": {
+    "defaultMessage": "Browse Activities"
+  },
+  "ActiveOpsSection.empty.subtitle": {
+    "defaultMessage": "Get started by finding something to volunteer for",
+    "description": "title for empty op section"
+  },
+  "ActiveOpsSection.empty.title": {
+    "defaultMessage": "Let’s find cool ways to volunteer",
+    "description": "title for empty op section"
+  },
+  "ActiveOpsSection.title": {
+    "defaultMessage": "Upcoming Activities",
+    "description": "Subtitle for home page for active opportunities that have been hosted"
+  },
+  "AllDone.title": {
+    "defaultMessage": "You are ready to go"
+  },
+  "ArchivedOpsSection.empty.button": {
+    "defaultMessage": "Browse Activities"
+  },
+  "ArchivedOpsSection.empty.subtitle": {
+    "defaultMessage": "In the meantime, let’s find cool ways to volunteer",
+    "description": "title for empty op section"
+  },
+  "ArchivedOpsSection.empty.title": {
+    "defaultMessage": "Activities you volunteered for in the past will show up here",
+    "description": "title for empty op section"
+  },
+  "Button.AcceptAndContinue": {
+    "defaultMessage": "Accept and Continue"
+  },
+  "Button.Back": {
+    "defaultMessage": "Back"
+  },
+  "Button.LearnMore": {
+    "defaultMessage": "Learn more"
+  },
+  "Button.SignIn": {
+    "defaultMessage": "Sign In"
+  },
+  "Button.SignUp": {
+    "defaultMessage": "Get started"
+  },
+  "Button.editSaveDraft": {
+    "defaultMessage": "Save as draft"
+  },
+  "ChooseParticipation.bodyAsk": {
+    "defaultMessage": "Need volunteers to help you out with an Activity. See what is available and ask for help."
+  },
+  "ChooseParticipation.bodyOffer": {
+    "defaultMessage": "Want to volunteer your time, or resources to help out someone in need? See what is needed and offer your skills."
+  },
+  "ChooseParticipation.intro": {
+    "defaultMessage": "How do you want to use Voluntarily?"
+  },
+  "ChooseParticipation.title.ask": {
+    "defaultMessage": "Ask for help from volunteers"
+  },
+  "ChooseParticipation.title.offer": {
+    "defaultMessage": "Offer to help people"
+  },
+  "DoneBtn.label": {
+    "defaultMessage": "Done"
+  },
+  "GoalsListPage.AssignGoalGroupToMe": {
+    "defaultMessage": "Assign me this group",
+    "description": "TEST: button title that assigns the listed group of goals to the current person"
+  },
+  "HeaderMenu.about": {
+    "defaultMessage": "About"
+  },
+  "HeaderMenu.acts_ask": {
+    "defaultMessage": "Ask for help"
+  },
+  "HeaderMenu.acts_offer": {
+    "defaultMessage": "Offer to help"
+  },
+  "HeaderMenu.home": {
+    "defaultMessage": "Home"
+  },
+  "HeaderMenu.sign-in": {
+    "defaultMessage": "Sign in"
+  },
+  "HeaderMenu.sign-out": {
+    "defaultMessage": "Sign out"
+  },
+  "Hero.body.AskForHelp": {
+    "defaultMessage": "Ask for help from trained volunteers who have skills or time to spare"
+  },
+  "Hero.body.Volunteer": {
+    "defaultMessage": "Volunteer to receive training and help people in your community"
+  },
+  "Hero.body.partner": {
+    "defaultMessage": "Empower your community group or organisation with Voluntarily"
+  },
+  "Hero.title.AskForHelp": {
+    "defaultMessage": "Ask for help"
+  },
+  "Hero.title.Volunteer": {
+    "defaultMessage": "Volunteer to help"
+  },
+  "Hero.title.partner": {
+    "defaultMessage": "Partner with us"
+  },
+  "ImageUpload.button": {
+    "defaultMessage": "Upload Photo"
+  },
+  "InterestTable.accept": {
+    "defaultMessage": "Accept",
+    "description": "Button allowing owner to invite an interested person"
+  },
+  "InterestTable.accept.prompt": {
+    "defaultMessage": "Optionally add a note to the message we will send to {nickname}",
+    "description": "prompt on message form from owner to interested person."
+  },
+  "InterestTable.accept.title": {
+    "defaultMessage": "Accept {nickname}",
+    "description": "prompt on message form from owner to interested person."
+  },
+  "InterestTable.decline": {
+    "defaultMessage": "Decline",
+    "description": "Button allowing owner to decline an interested person"
+  },
+  "InterestTable.decline.prompt": {
+    "defaultMessage": "Optionally add a note to the message we will send to {nickname}",
+    "description": "prompt on message form from owner to interested person."
+  },
+  "InterestTable.decline.title": {
+    "defaultMessage": "Decline {nickname}",
+    "description": "prompt on message form from owner to interested person."
+  },
+  "InterestTable.message.prompt": {
+    "defaultMessage": "Send a message to {nickname}",
+    "description": "prompt on message form from owner to interested person."
+  },
+  "InterestTable.message.title": {
+    "defaultMessage": "message {nickname}",
+    "description": "prompt on message form from owner to interested person."
+  },
+  "InterestTable.messagePerson": {
+    "defaultMessage": "Message",
+    "description": "Button allowing owner to message an interested person"
+  },
+  "InviteMembers.InviteBtnPrompt": {
+    "defaultMessage": "Set membership status and send email",
+    "description": "prompt for which invitation button to use"
+  },
+  "InviteMembers.adminMessage": {
+    "defaultMessage": "Add a personal message to the people you are inviting",
+    "description": "label for text box for admin personal message"
+  },
+  "InviteMembers.description": {
+    "defaultMessage": "Use these buttons to send yourself an email that you can forward to people in your school or business. Each button will send you an email containing a link that will automatically add the recipient to your organisation as a follower or member.",
+    "description": "inform orgAdmin how to send emails to staff"
+  },
+  "InviteMembers.description2": {
+    "defaultMessage": "Use Joiner if you want to review new members before accepting them and Administrator to give people permission to edit the organisation pages and add new members. Once people join they will appear in the tables below.",
+    "description": "continued inform orgAdmin how to send emails to staff"
+  },
+  "InviteMembers.follower": {
+    "defaultMessage": "Follower"
+  },
+  "InviteMembers.joiner": {
+    "defaultMessage": "Joiner"
+  },
+  "InviteMembers.member": {
+    "defaultMessage": "Member"
+  },
+  "InviteMembers.orgAdmin": {
+    "defaultMessage": "Administrator"
+  },
+  "InviteMembers.title": {
+    "defaultMessage": "Invite Organisation Members",
+    "description": "title for invite organisation members section on orgAdmin page"
+  },
+  "ItemList.space": {
+    "defaultMessage": "Space:",
+    "description": "label for space requirement"
+  },
+  "ItemList.volunteerratio": {
+    "defaultMessage": "🙋One volunteer for each {ratio, number} people",
+    "description": "label for number of volunteers required per student"
+  },
+  "ItemNeeds.items": {
+    "defaultMessage": "{count,plural,one{, {count, number} item} other{, {count, number} items}}",
+    "description": "label for number of volunteers required"
+  },
+  "ItemNeeds.required": {
+    "defaultMessage": "🤔 Activity needs:",
+    "description": "label for number of people required"
+  },
+  "ItemNeeds.volunteers": {
+    "defaultMessage": "{volunteers,plural,one{{volunteers, number} person} other{{volunteers, number} people}}",
+    "description": "label for number of people required"
+  },
+  "LearnMore": {
+    "defaultMessage": "Learn More",
+    "description": "Learn more button"
+  },
+  "MoreOrLessButton.Less": {
+    "defaultMessage": "Close"
+  },
+  "MoreOrLessButton.More": {
+    "defaultMessage": "Learn more"
+  },
+  "NoRecommendations.button.browse": {
+    "defaultMessage": "Browse Activities"
+  },
+  "NoRecommendations.button.profile": {
+    "defaultMessage": "Update your profile"
+  },
+  "NoRecommendations.prompt": {
+    "defaultMessage": "Either everyone is sorted or we don't know enough about you yet. Complete your profile or browse for new activities."
+  },
+  "NoRecommendations.title": {
+    "defaultMessage": "So much empty!"
+  },
+  "OpAboutPanel.categories": {
+    "defaultMessage": "Categories"
+  },
+  "OpAboutPanel.section.title.about": {
+    "defaultMessage": "About"
+  },
+  "OpAboutPanel.share": {
+    "defaultMessage": "Share"
+  },
+  "OpAdd.newAsk": {
+    "defaultMessage": "Ask for help",
+    "description": "Button to create a new Ask opportunity used on multiple pages"
+  },
+  "OpAdd.newAskOffer": {
+    "defaultMessage": "New request or offering",
+    "description": "Button to create a new Ask or Offer opportunity used on multiple pages"
+  },
+  "OpAdd.newOffer": {
+    "defaultMessage": "Offer to help",
+    "description": "Button to create a new offer opportunity used on multiple pages"
+  },
+  "OpArchivedHeader.Cancelled.message": {
+    "defaultMessage": "This activity was cancelled, but you can still get involved with",
+    "description": "Message in banner activity has cancelled"
+  },
+  "OpArchivedHeader.Completed.message": {
+    "defaultMessage": "This activity has already happened, but you can still get involved with",
+    "description": "Message in banner activity has completed"
+  },
+  "OpArchivedHeader.link": {
+    "defaultMessage": "similar activities here",
+    "description": "Message in banner activity has completed link text"
+  },
+  "OpAskForm.Organisation": {
+    "defaultMessage": "Group",
+    "description": "label for Organisation offering the activity"
+  },
+  "OpAskForm.groups.label": {
+    "defaultMessage": "What categories does this group service?",
+    "description": "Section label for op groups"
+  },
+  "OpAskForm.groups.prompt": {
+    "defaultMessage": "e.g. Business or Individual",
+    "description": "Section prompt for op groups"
+  },
+  "OpAskFormLong..SaveInstructions": {
+    "defaultMessage": "Save as Draft will allow you to preview the request while Publish will make it available to everyone to view.",
+    "description": "Instructions for save and publish on activity details form"
+  },
+  "OpAskFormLong..cancel": {
+    "defaultMessage": "Cancel",
+    "description": "Label for cancel button on activity details form"
+  },
+  "OpAskFormLong..editPublish": {
+    "defaultMessage": "Publish",
+    "description": "Label for submit button on activity details form"
+  },
+  "OpAskFormLong..editSaveDraft": {
+    "defaultMessage": "Save as draft",
+    "description": "Label for save as draft button on activity details form"
+  },
+  "OpAskFormLong.AskForm.Title.label": {
+    "defaultMessage": "What are you looking for?",
+    "description": "Section label for opask"
+  },
+  "OpAskFormLong.AskForm.Title.prompt": {
+    "defaultMessage": "Before our skilled volunteers get involved, they need to know how they can help. Add a title and description that tell volunteers how they can help you.",
+    "description": "Section prompt for opask"
+  },
+  "OpAskFormLong.AskForm.location.label": {
+    "defaultMessage": "Where and when?",
+    "description": "Section label for op location"
+  },
+  "OpAskFormLong.AskForm.location.prompt": {
+    "defaultMessage": "More skilled volunteers will offer to help you if you know when, or where you need help.",
+    "description": "Section prompt for op location"
+  },
+  "OpAskFormLong.AskForm.pageLockedPrompt": {
+    "defaultMessage": "Some fields have been disabled by the activity template.",
+    "description": "Message if some fields are locked"
+  },
+  "OpAskFormLong.AskForm.pagePrompt": {
+    "defaultMessage": "Check and update the details below with a time frame and locality you are when you can receive help.",
+    "description": "subTitle for creating Ops"
+  },
+  "OpAskFormLong.AskForm.sectionPrompt.addImage": {
+    "defaultMessage": "Requests with photos get more responses. Upload or link to a picture that represents this activity.",
+    "description": "Prompt for photo upload section"
+  },
+  "OpAskFormLong.AskForm.sectionTitle.addImage": {
+    "defaultMessage": "Add an image",
+    "description": "Title for photo upload section"
+  },
+  "OpAskFormLong.AskForm.sectiontitle.ConfirmRequest": {
+    "defaultMessage": "Confirm request",
+    "description": "Section title for the save and publish buttons"
+  },
+  "OpAskFormLong.AskForm.tags.label": {
+    "defaultMessage": "Do you have any specific skills or resources?",
+    "description": "Section label for op tags"
+  },
+  "OpAskFormLong.AskForm.tags.prompt": {
+    "defaultMessage": "Does what you are asking for fit into any specific categories like programming, electronics, or robots? Enter them here to make it easier for volunteers to find you.",
+    "description": "Section prompt for op tags"
+  },
+  "OpAskFormLong.AskForm.title.opCreateAsk": {
+    "defaultMessage": "Create an new request",
+    "description": "Title for creating request Ops"
+  },
+  "OpAskFormLong.AskForm.title.opCreateOffer": {
+    "defaultMessage": "Create an new offering",
+    "description": "Title for creating offering Ops"
+  },
+  "OpAskFormLong.Commitment": {
+    "defaultMessage": "Commitment",
+    "description": "activity Commitment label in OpAskForm Form"
+  },
+  "OpAskFormLong.DateRange": {
+    "defaultMessage": "Date Range",
+    "description": "activity date range label in OpAskForm Form"
+  },
+  "OpAskFormLong.Description": {
+    "defaultMessage": "Description",
+    "description": "activity Description label in OpAskForm Form"
+  },
+  "OpAskFormLong.Edit": {
+    "defaultMessage": "Edit your activity",
+    "description": "Title for editing Ops"
+  },
+  "OpAskFormLong.ImgUrl": {
+    "defaultMessage": "Image Link",
+    "description": "activity Image URL label in OpAskForm Form"
+  },
+  "OpAskFormLong.Location": {
+    "defaultMessage": "Location",
+    "description": "activity Location label in OpAskForm Form"
+  },
+  "OpAskFormLong.Organisation": {
+    "defaultMessage": "Offer Group",
+    "description": "label for Organisation offering the activity"
+  },
+  "OpAskFormLong.Subtitle": {
+    "defaultMessage": "Subtitle",
+    "description": "activity Subtitle label in OpAskForm Form"
+  },
+  "OpAskFormLong.Tags": {
+    "defaultMessage": "Tags",
+    "description": "Descriptions of general areas the activity relates to"
+  },
+  "OpAskFormLong.Title": {
+    "defaultMessage": "Title",
+    "description": "activity Title label in OpAskForm Form"
+  },
+  "OpAskFormLong.Venue": {
+    "defaultMessage": "Address",
+    "description": "Venue label in OpAskForm Form"
+  },
+  "OpCloseOpportunity.title": {
+    "defaultMessage": "End Activity",
+    "description": "warning about the buttons to close an op"
+  },
+  "OpCloseOpportunity.warning": {
+    "defaultMessage": "These buttons will permanently end your activity - be careful!",
+    "description": "warning about the buttons to close an op"
+  },
+  "OpFormDoneBtns.SaveInstructions": {
+    "defaultMessage": "Save as Draft will allow you to preview the request while Publish will make it available to everyone to view.",
+    "description": "Instructions for save and publish on activity details form"
+  },
+  "OpFormDoneBtns.sectiontitle.ConfirmRequest": {
+    "defaultMessage": "Confirm request",
+    "description": "Section title for the save and publish buttons"
+  },
+  "OpList.NoMatchingActivities": {
+    "defaultMessage": "No matching activities",
+    "description": "no opportunities message in OpList"
+  },
+  "OpListSmall.NoMatchingActivities": {
+    "defaultMessage": "No matching activities",
+    "description": "no opportunities message in OpList"
+  },
+  "OpOfferForm..SaveInstructions": {
+    "defaultMessage": "Save as Draft will allow you to preview the request while Publish will make it available to everyone to view.",
+    "description": "Instructions for save and publish on activity details form"
+  },
+  "OpOfferForm..cancel": {
+    "defaultMessage": "Cancel",
+    "description": "Label for cancel button on activity details form"
+  },
+  "OpOfferForm..editPublish": {
+    "defaultMessage": "Publish",
+    "description": "Label for submit button on activity details form"
+  },
+  "OpOfferForm..editSaveDraft": {
+    "defaultMessage": "Save as draft",
+    "description": "Label for save as draft button on activity details form"
+  },
+  "OpOfferForm.Commitment": {
+    "defaultMessage": "Commitment",
+    "description": "activity Commitment label in OpOfferForm Form"
+  },
+  "OpOfferForm.Description": {
+    "defaultMessage": "Description",
+    "description": "activity Description label in OpOfferForm Form"
+  },
+  "OpOfferForm.Edit": {
+    "defaultMessage": "Edit your activity",
+    "description": "Title for editing Ops"
+  },
+  "OpOfferForm.ImgUrl": {
+    "defaultMessage": "Image Link",
+    "description": "activity Image URL label in OpOfferForm Form"
+  },
+  "OpOfferForm.Location": {
+    "defaultMessage": "Location",
+    "description": "activity Location label in OpOfferForm Form"
+  },
+  "OpOfferForm.OfferForm.Title.label": {
+    "defaultMessage": "What are you offering?",
+    "description": "Section label for op offer title"
+  },
+  "OpOfferForm.OfferForm.Title.prompt": {
+    "defaultMessage": "Before people can request help, they need to know what you are providing. Add a title and description that tell people how you can help them.",
+    "description": "Section prompt for op offer title"
+  },
+  "OpOfferForm.OfferForm.location.label": {
+    "defaultMessage": "Where and when?",
+    "description": "Section label for op location"
+  },
+  "OpOfferForm.OfferForm.location.prompt": {
+    "defaultMessage": "More skilled volunteers will offer to help you if you know when, or where you need help.",
+    "description": "Section prompt for op location"
+  },
+  "OpOfferForm.OfferForm.pageLockedPrompt": {
+    "defaultMessage": "Some fields have been disabled by the activity template.",
+    "description": "Message if some fields are locked"
+  },
+  "OpOfferForm.OfferForm.pagePrompt": {
+    "defaultMessage": "Check and update the details below with a time frame and locality you are available for.",
+    "description": "subTitle for creating Ops"
+  },
+  "OpOfferForm.OfferForm.sectionPrompt.addImage": {
+    "defaultMessage": "Requests with photos get more responses. Upload or link to a picture that represents this activity.",
+    "description": "Prompt for photo upload section"
+  },
+  "OpOfferForm.OfferForm.sectionTitle.addImage": {
+    "defaultMessage": "Add an image",
+    "description": "Title for photo upload section"
+  },
+  "OpOfferForm.OfferForm.sectiontitle.ConfirmRequest": {
+    "defaultMessage": "Confirm request",
+    "description": "Section title for the save and publish buttons"
+  },
+  "OpOfferForm.OfferForm.tags.label": {
+    "defaultMessage": "Do you have any specific skills or resources?",
+    "description": "Section label for op tags"
+  },
+  "OpOfferForm.OfferForm.tags.prompt": {
+    "defaultMessage": "Does what you are asking for fit into any specific categories like programming, electronics, or robots? Enter them here to make it easier for volunteers to find you.",
+    "description": "Section prompt for op tags"
+  },
+  "OpOfferForm.OfferForm.title.opCreateAsk": {
+    "defaultMessage": "Create an new request",
+    "description": "Title for creating request Ops"
+  },
+  "OpOfferForm.OfferForm.title.opCreateOffer": {
+    "defaultMessage": "Create an new offering",
+    "description": "Title for creating offering Ops"
+  },
+  "OpOfferForm.Organisation": {
+    "defaultMessage": "Topic",
+    "description": "label for Organisation offering the activity"
+  },
+  "OpOfferForm.Subtitle": {
+    "defaultMessage": "Subtitle",
+    "description": "activity Subtitle label in OpOfferForm Form"
+  },
+  "OpOfferForm.Tags": {
+    "defaultMessage": "Tags",
+    "description": "Descriptions of general areas the activity relates to"
+  },
+  "OpOfferForm.Title": {
+    "defaultMessage": "Title",
+    "description": "activity Title label in OpOfferForm Form"
+  },
+  "OpOfferForm.Venue": {
+    "defaultMessage": "Address",
+    "description": "Venue label in OpOfferForm Form"
+  },
+  "OpOfferFormLong.DateRange": {
+    "defaultMessage": "Date Range",
+    "description": "activity date range label in OpOfferForm Form"
+  },
+  "OpRecommendations.sectiontitle.basedOnLocation": {
+    "defaultMessage": "Based on your locations"
+  },
+  "OpRecommendations.sectiontitle.basedOnSkills": {
+    "defaultMessage": "Based on your preferences"
+  },
+  "OpShortForm.Address": {
+    "defaultMessage": "Address",
+    "description": "activity Address label in OpShortForm"
+  },
+  "OpShortForm.AskForm.sectionPrompt.addImage": {
+    "defaultMessage": "Requests with photos get more responses. Upload or link to a picture that represents this activity.",
+    "description": "Prompt for photo upload section"
+  },
+  "OpShortForm.AskForm.sectionTitle.addImage": {
+    "defaultMessage": "Add an image",
+    "description": "Title for photo upload section"
+  },
+  "OpShortForm.AskForm.tags.label": {
+    "defaultMessage": "Do you have any specific skills or resources?",
+    "description": "Section label for op tags"
+  },
+  "OpShortForm.AskForm.tags.prompt": {
+    "defaultMessage": "Does what you are asking for fit into any specific categories like programming, electronics, or robots? Enter them here to make it easier for volunteers to find you.",
+    "description": "Section prompt for op tags"
+  },
+  "OpShortForm.ImgUrl": {
+    "defaultMessage": "Image Link",
+    "description": "activity Image URL label in OpAskForm Form"
+  },
+  "OpShortForm.StartDate": {
+    "defaultMessage": "Available Date / Time",
+    "description": "activity start date label in Op Short Form"
+  },
+  "OpShortForm.Tags": {
+    "defaultMessage": "Tags",
+    "description": "Descriptions of general areas the activity relates to"
+  },
+  "OpType.duration": {
+    "defaultMessage": "commitment",
+    "description": "e.g 10 hours commitment"
+  },
+  "OpportunityStatus.active": {
+    "defaultMessage": "Active",
+    "description": "When an opportunity has been published"
+  },
+  "OpportunityStatus.completed": {
+    "defaultMessage": "Completed",
+    "description": "When an opportunity has been completed"
+  },
+  "OpportunityStatus.draft": {
+    "defaultMessage": "Draft",
+    "description": "When an opportunity is being drafted"
+  },
+  "OpportunityType.ASK": {
+    "defaultMessage": "is asking for your help",
+    "description": "Ask label prefix"
+  },
+  "OpportunityType.ASK2": {
+    "defaultMessage": "needs help with",
+    "description": "Ask label prefix"
+  },
+  "OpportunityType.ASK3": {
+    "defaultMessage": "You offered to help",
+    "description": "Ask label prefix"
+  },
+  "OpportunityType.ActASK": {
+    "defaultMessage": "Requests",
+    "description": "Ask label prefix"
+  },
+  "OpportunityType.ActOFFER": {
+    "defaultMessage": "Offers",
+    "description": "Offer label prefix"
+  },
+  "OpportunityType.OFFER": {
+    "defaultMessage": "can help you",
+    "description": "Offer label prefix"
+  },
+  "OpportunityType.OFFER2": {
+    "defaultMessage": "can help with",
+    "description": "Offer label prefix"
+  },
+  "OpportunityType.OFFER3": {
+    "defaultMessage": "You asked for help from",
+    "description": "Offer label prefix"
+  },
+  "OpportunityType.date.prompt.ASK": {
+    "defaultMessage": "Let people know how much time you need, and if there are only a few dates you can be available.",
+    "description": "Asking date prompt"
+  },
+  "OpportunityType.date.prompt.OFFER": {
+    "defaultMessage": "Let people know how much time you have to give and if there are only a few dates you can give time.",
+    "description": "Offering date prompt"
+  },
+  "OpportunityType.date.title.ASK": {
+    "defaultMessage": "When do you need help? (Optional)",
+    "description": "Asking date title"
+  },
+  "OpportunityType.date.title.OFFER": {
+    "defaultMessage": "When can you help? (Optional)",
+    "description": "Offering date title"
+  },
+  "OpportunityType.description.prompt.ASK": {
+    "defaultMessage": "Is there anything specific you need help with? Let volunteers know how to help you by writing about it here",
+    "description": "Asking description prompt"
+  },
+  "OpportunityType.description.prompt.OFFER": {
+    "defaultMessage": "Is there anything else you need to tell the people asking for help? Please don’t put personal or contact details here, we’ll take care of that later.",
+    "description": "Offering description prompt"
+  },
+  "OpportunityType.description.title.ASK": {
+    "defaultMessage": "How do you want volunteers to help?",
+    "description": "Asking description title"
+  },
+  "OpportunityType.description.title.OFFER": {
+    "defaultMessage": "How can you help?",
+    "description": "Offering description title"
+  },
+  "OpportunityType.imp.ASK": {
+    "defaultMessage": "Ask for help with",
+    "description": "Asking for help command"
+  },
+  "OpportunityType.imp.OFFER": {
+    "defaultMessage": "Offer to help with",
+    "description": "Offering help command"
+  },
+  "OpportunityType.location.ASK": {
+    "defaultMessage": "Where do you need help? (Optional)",
+    "description": "Asking location prompt"
+  },
+  "OpportunityType.location.OFFER": {
+    "defaultMessage": "Where can you help? (Optional)",
+    "description": "Offering location prompt"
+  },
+  "OpportunityType.prompt.notfound.ASK": {
+    "defaultMessage": "Waiting for someone to ask for help.",
+    "description": "Message to display when an activity does not have any archived opportunities"
+  },
+  "OpportunityType.prompt.notfound.OFFER": {
+    "defaultMessage": "Waiting for someone to offer to help.",
+    "description": "Message to display when an activity does not have any archived opportunities"
+  },
+  "OpportunityType.prompt.topic.ASK": {
+    "defaultMessage": "What would you like to get help with?"
+  },
+  "OpportunityType.prompt.topic.OFFER": {
+    "defaultMessage": "What would you like to help with?"
+  },
+  "OpportunityType.prompt.topicverb.ASK": {
+    "defaultMessage": "is asking for help with"
+  },
+  "OpportunityType.prompt.topicverb.OFFER": {
+    "defaultMessage": "is offering to help with"
+  },
+  "OpportunityType.verb.ASK": {
+    "defaultMessage": "{count,plural,=0{No people asking you for help} one{person asking you for help} other{people asking you for help}}",
+    "description": "Asking for help"
+  },
+  "OpportunityType.verb.OFFER": {
+    "defaultMessage": "{count,plural,=0{No people offering to help you} one{person offering to help you} other{people offering to help you}}",
+    "description": "Offering help"
+  },
+  "PersonDetail.About": {
+    "defaultMessage": "About",
+    "description": "About section header for a person profile"
+  },
+  "PersonDetail.Contact": {
+    "defaultMessage": "Contact",
+    "description": "Heading for contact details on person details page"
+  },
+  "PersonDetail.TopicGroups": {
+    "defaultMessage": "Your Interests",
+    "description": "TopicGroups section header for a person profile"
+  },
+  "PersonDetail.edit": {
+    "defaultMessage": "Edit Profile",
+    "description": "Button to edit a person"
+  },
+  "PersonDetail.panel.edit": {
+    "defaultMessage": "Edit Profile",
+    "description": "Button to edit an person on PersonDetails page"
+  },
+  "PersonDetail.skills.title": {
+    "defaultMessage": "Interests and Skills",
+    "description": "subheading for tags on person details page"
+  },
+  "PersonDetail.subheading.achievements": {
+    "defaultMessage": "Recognition",
+    "description": "Header for list of badges I have obtained"
+  },
+  "PersonDetail.subheading.following": {
+    "defaultMessage": "Following",
+    "description": "Header for list of orgs I follow"
+  },
+  "PersonDetail.subheading.member": {
+    "defaultMessage": "Member of",
+    "description": "Header for list of orgs I follow"
+  },
+  "PersonDetail.subheading.membership": {
+    "defaultMessage": "Organisations",
+    "description": "Header for list of orgs I belong to"
+  },
+  "PersonDetailForm.Label.Location": {
+    "defaultMessage": "In what regions do you want to volunteer",
+    "description": "Person Location label in PersonDetails Form"
+  },
+  "PersonDetailForm.Label.Tags": {
+    "defaultMessage": "Skills &amp; Interests",
+    "description": "Descriptions of general areas the person has skills in"
+  },
+  "PersonDetailForm.Label.education": {
+    "defaultMessage": "Education Level",
+    "description": "Select box label for education."
+  },
+  "PersonDetailForm.SectionDescription.AboutYou": {
+    "defaultMessage": "Optional: Tell the people you will be volunteering for something about yourself. And How we should address you."
+  },
+  "PersonDetailForm.SectionDescription.Avatar": {
+    "defaultMessage": "Upload a photo to help people to recognise you and reflect your character."
+  },
+  "PersonDetailForm.SectionDescription.ContactDetails": {
+    "defaultMessage": "How do you want people to get in touch with you? Other people can only see this if you let them 🤫"
+  },
+  "PersonDetailForm.SectionDescription.Location": {
+    "defaultMessage": "This section helps us find the right things for you to do. Tell us the region you in."
+  },
+  "PersonDetailForm.SectionDescription.Settings": {
+    "defaultMessage": "Control your availability for volunteering and whether to receive emails."
+  },
+  "PersonDetailForm.SectionDescription.SkillsAndInterests": {
+    "defaultMessage": "This section helps us find the right things for you to do. Tell us the region you in and your skills and interests. Use keywords like: accounting, video conferencing etc."
+  },
+  "PersonDetailForm.SectionDescription.SocialLinks": {
+    "defaultMessage": "Optional: Share your social media links so the groups you work with can follow your social network."
+  },
+  "PersonDetailForm.SectionDescription.WorkAndEducation": {
+    "defaultMessage": "Tell the people your education, place of work and job to help people know you better and help find recommendations."
+  },
+  "PersonDetailForm.SectionDescription.YourName": {
+    "defaultMessage": "Set your nickname and your formal name to help people to recoginise you."
+  },
+  "PersonDetailForm.SectionTitle.AboutYou": {
+    "defaultMessage": "About you"
+  },
+  "PersonDetailForm.SectionTitle.Avatar": {
+    "defaultMessage": "Profile Photo"
+  },
+  "PersonDetailForm.SectionTitle.ContactDetails": {
+    "defaultMessage": "Contact details"
+  },
+  "PersonDetailForm.SectionTitle.Settings": {
+    "defaultMessage": "Settings"
+  },
+  "PersonDetailForm.SectionTitle.SkillsAndInterests": {
+    "defaultMessage": "Activity Recommendations"
+  },
+  "PersonDetailForm.SectionTitle.SocialLinks": {
+    "defaultMessage": "Social Media"
+  },
+  "PersonDetailForm.SectionTitle.WorkAndEducation": {
+    "defaultMessage": "Work &amp; Education"
+  },
+  "PersonDetailForm.SectionTitle.YourName": {
+    "defaultMessage": "Your name"
+  },
+  "PersonVerification.popover.title": {
+    "defaultMessage": "Verification Level"
+  },
+  "PersonaBusiness": {
+    "defaultMessage": "Businesses",
+    "description": "Businesses"
+  },
+  "PersonaBusinessDescription": {
+    "defaultMessage": "We handle HR, admin, and discovery so your staff have more impact on the community.",
+    "description": "Description content for businesses"
+  },
+  "PersonaContent": {
+    "defaultMessage": "Content Creators",
+    "description": "Content Creators"
+  },
+  "PersonaContentDescription": {
+    "defaultMessage": "We help you get more people involved with your content.",
+    "description": "description content for Content Creators"
+  },
+  "PersonaTeachers": {
+    "defaultMessage": "Teachers",
+    "description": "teachers"
+  },
+  "PersonaTeachersDescription": {
+    "defaultMessage": "Get the help of skilled volunteers to bring tech to your teaching.",
+    "description": "description for teacher promo card"
+  },
+  "PersonaVolunteers": {
+    "defaultMessage": "Volunteers",
+    "description": "volunteers"
+  },
+  "PersonaVolunteersDescription": {
+    "defaultMessage": "Discover cool opportunities to help out teachers, students and charities.",
+    "description": "promo description for volunteers"
+  },
+  "PostSignUp.btn.done": {
+    "defaultMessage": "Confirm"
+  },
+  "PostSignUp.btn.next": {
+    "defaultMessage": "Next"
+  },
+  "PostSignUp.btn.previous": {
+    "defaultMessage": "Back"
+  },
+  "PostSignUp.intro": {
+    "defaultMessage": "To get you setup we have a few quick questions."
+  },
+  "PostSignUp.step.aboutyou": {
+    "defaultMessage": "About you"
+  },
+  "PostSignUp.step.done": {
+    "defaultMessage": "Done"
+  },
+  "PostSignUp.step.participate": {
+    "defaultMessage": "Participate"
+  },
+  "PostSignUp.step.privacy": {
+    "defaultMessage": "Protecting your Privacy"
+  },
+  "PostSignUp.step.topicgroups": {
+    "defaultMessage": "Groups"
+  },
+  "PostSignUp.title": {
+    "defaultMessage": "Getting Started"
+  },
+  "QuestionGroup.submit": {
+    "defaultMessage": "Submit",
+    "description": "Button Submit QuestionGroup answers"
+  },
+  "RegisterInterestMessageForm.accepttcs": {
+    "defaultMessage": "By clicking Send you agree to the"
+  },
+  "RegisterInterestMessageForm.cancel": {
+    "defaultMessage": "Cancel",
+    "description": "Cancel button on popup form"
+  },
+  "RegisterInterestMessageForm.send": {
+    "defaultMessage": "Send",
+    "description": "Send button on popup form"
+  },
+  "RegisterInterestMessageForm.staysafeonline": {
+    "defaultMessage": "Stay safe online"
+  },
+  "RegisterInterestMessageForm.termsandconditions": {
+    "defaultMessage": "Terms and Conditions"
+  },
+  "SelectTopicGroup.business.ASK": {
+    "defaultMessage": "Get help from experts in other businesses"
+  },
+  "SelectTopicGroup.business.OFFER": {
+    "defaultMessage": "Help small businesses with technical and HR issues"
+  },
+  "SelectTopicGroup.community.ASK": {
+    "defaultMessage": "Volunteers in your community want to help you"
+  },
+  "SelectTopicGroup.community.OFFER": {
+    "defaultMessage": "Offer your skills and time to your community"
+  },
+  "SelectTopicGroup.education.ASK": {
+    "defaultMessage": "Skilled volunteers are on standby to help you"
+  },
+  "SelectTopicGroup.education.OFFER": {
+    "defaultMessage": "Offer your skills and time to students and teachers"
+  },
+  "SelectTopicGroup.title.business": {
+    "defaultMessage": "Small Businesses"
+  },
+  "SelectTopicGroup.title.community": {
+    "defaultMessage": "Communities"
+  },
+  "SelectTopicGroup.title.education": {
+    "defaultMessage": "Schools"
+  },
+  "SignUp": {
+    "defaultMessage": "Sign up",
+    "description": "Action button to learn more about Voluntari.ly"
+  },
+  "SignUpModal.body": {
+    "defaultMessage": "You need to sign in or create an account to take the next step",
+    "description": "content on sign up or sign in invitation modal"
+  },
+  "SignUpModal.title": {
+    "defaultMessage": "Get involved",
+    "description": "title on sign up or sign in invitation "
+  },
+  "StatisticsActivityTagsReport.title": {
+    "defaultMessage": "What did they do?",
+    "description": "Title on statistics activity tags report"
+  },
+  "StatisticsLocationsReport.title": {
+    "defaultMessage": "Where did volunteers help?",
+    "description": "Title on statistics locations report"
+  },
+  "StatisticsRatingsReport.title": {
+    "defaultMessage": "How did they find it?",
+    "description": "Title on statistics ratings report"
+  },
+  "TakeSupportSection.ask": {
+    "defaultMessage": "See all activities",
+    "description": "Button to link to activities page"
+  },
+  "TeacherRegistrationRecord.Category": {
+    "defaultMessage": "Category"
+  },
+  "TeacherRegistrationRecord.Expiry": {
+    "defaultMessage": "Expiry"
+  },
+  "TeacherRegistrationRecord.name": {
+    "defaultMessage": "Name"
+  },
+  "TeacherRegistrationRecord.registrationNumber": {
+    "defaultMessage": "Registration Number"
+  },
+  "TeacherRegistrationRecord.title": {
+    "defaultMessage": "Teacher Registration Record"
+  },
+  "VerifyButton.label": {
+    "defaultMessage": "Verify Identity"
+  },
+  "act.SaveInstructions": {
+    "defaultMessage": "Save as draft will allow you to preview the activity while Publish will make it available to everyone to view.",
+    "description": "Instructions for save and publish on activity details form"
+  },
+  "act.cancel": {
+    "defaultMessage": "Cancel",
+    "description": "Label for cancel button on activity details form"
+  },
+  "act.detail.volunteercount": {
+    "defaultMessage": "Total number of volunteers required",
+    "description": "label for field volunteer numbers required"
+  },
+  "act.detailform.volunteerratio": {
+    "defaultMessage": "Number of students per volunteer",
+    "description": "label for field number of students per volunteer"
+  },
+  "act.editPublish": {
+    "defaultMessage": "Publish",
+    "description": "Label for submit button on activity details form"
+  },
+  "act.editSaveDraft": {
+    "defaultMessage": "Save as draft",
+    "description": "Label for save as draft button on activity details form"
+  },
+  "act.list.ask.subtitle": {
+    "defaultMessage": "Find activities volunteers are offering to help you with",
+    "description": "Sub Title of page listing activities people are asking help with"
+  },
+  "act.list.empty": {
+    "defaultMessage": "No matching activities",
+    "description": "no activities message in ActList"
+  },
+  "act.list.offer.subtitle": {
+    "defaultMessage": "Find activities you can offer to help with",
+    "description": "Sub Title of page listing offerings people have"
+  },
+  "act.new": {
+    "defaultMessage": "New Template",
+    "description": "Button to create a new activity on Landing page"
+  },
+  "actCommitment": {
+    "defaultMessage": "Commitment",
+    "description": "activity Commitment label in ActDetail Form"
+  },
+  "actDescription": {
+    "defaultMessage": "Description",
+    "description": "activity description label in ActDetail Form"
+  },
+  "actDetailForm.AboutSection.instructions": {
+    "defaultMessage": "Attract people to this activity with a snappy name, use the subtitle to layout the basic idea.",
+    "description": "first section instructions on actdetailform that asks for title and about details"
+  },
+  "actDetailForm.AboutSection.organisersubtitle": {
+    "defaultMessage": "About the organisers"
+  },
+  "actDetailForm.AboutSection.subtitle": {
+    "defaultMessage": "About this Activity",
+    "description": "first section subtitle on actdetailform that asks for title and about details"
+  },
+  "actDetailForm.ResourceSection.instructions": {
+    "defaultMessage": "What is the time commitment? How many people do you need to help? What skills might they require? Do you need a special space or location to work in? Does this activity require special equipment?",
+    "description": "section instructions on actdetail form for resources"
+  },
+  "actDetailForm.ResourceSection.subtitle": {
+    "defaultMessage": "Requirements",
+    "description": "section subtitle on actdetail form for resources"
+  },
+  "actDetailForm.SaveActivityButton": {
+    "defaultMessage": "Save Activity",
+    "description": "Subtitle for save activity section on ActDetailForm"
+  },
+  "actDetailForm.Subtitle": {
+    "defaultMessage": "Create a template that teachers can use to bring in volunteers",
+    "description": "actdetailform subtitle"
+  },
+  "actDetailForm.TagsSection.instructions": {
+    "defaultMessage": "Make this activity searchable by classifying it with subject, age group, and technology keywords.",
+    "description": "Tag section instructions on actdetailform that asks for title and about details"
+  },
+  "actDetailForm.TagsSection.subtitle": {
+    "defaultMessage": "Topics",
+    "description": "Tag section subtitle on actdetailform that asks for topics and outcomes"
+  },
+  "actDetailForm.Title.New": {
+    "defaultMessage": "Create an Activity",
+    "description": "actdetailform title"
+  },
+  "actDetailForm.addDocumentsSection.instructions": {
+    "defaultMessage": "Upload any PDF documents relativant to the activity that you would like volunteers to refer to (such as a Health and Safety pdf)",
+    "description": "instructions for instructions section in actdetail form"
+  },
+  "actDetailForm.addDocumentsSection.title": {
+    "defaultMessage": "Documents",
+    "description": "subtitle for the documents section in act detail form"
+  },
+  "actDetailForm.addEquipment.instructions": {
+    "defaultMessage": "Let volunteers and businesses know what you need to make the opportunity happen.",
+    "description": "instructions to add equipment in act detail form"
+  },
+  "actDetailForm.addEquipment.title": {
+    "defaultMessage": "Do you need any equipment or materials for this activity? (Optional)",
+    "description": "subtitle for add equipment section in act detail form"
+  },
+  "actDetailForm.addEquipment.validationMessage": {
+    "defaultMessage": "Add an equipment or remove field"
+  },
+  "actDetailForm.addImageSection.instructions": {
+    "defaultMessage": "Activities with illustrations get more responses. If you don't have a photo click suggest and we can provide one based on the tags.",
+    "description": "instructions for add image section in actdetail form"
+  },
+  "actDetailForm.addImageSection.title": {
+    "defaultMessage": "Add an image",
+    "description": "subtitle for add image section in act detail form"
+  },
+  "actDocuments": {
+    "defaultMessage": "Documents",
+    "description": "activity documents label in ActDetailForm"
+  },
+  "actEquipment": {
+    "defaultMessage": "Equipment",
+    "description": "activity equipment label in ActDetail Form"
+  },
+  "actImgUrl": {
+    "defaultMessage": "Image Link",
+    "description": "activity Image URL label in ActDetailForm"
+  },
+  "actLock": {
+    "defaultMessage": "Lock Editable Fields",
+    "description": "activity lock label in ActDetail Form"
+  },
+  "actOrganisation": {
+    "defaultMessage": "Activity Organisation",
+    "description": "label for Organisation offering the activity"
+  },
+  "actResource": {
+    "defaultMessage": "Resource",
+    "description": "activity resource label in ActDetail Form"
+  },
+  "actSpace": {
+    "defaultMessage": "Space Requirement",
+    "description": "activity space label in ActDetail Form"
+  },
+  "actSubtitle": {
+    "defaultMessage": "Subtitle",
+    "description": "activity Subtitle label in ActDetail Form"
+  },
+  "actTabs.about": {
+    "defaultMessage": "About",
+    "description": "Tab label on ActTabs"
+  },
+  "actTabs.edit": {
+    "defaultMessage": "Edit",
+    "description": "Tab label for Act Editor panel on Opportunity"
+  },
+  "actTabs.resources": {
+    "defaultMessage": "Resources",
+    "description": "Tab label on ActTabs"
+  },
+  "actTags": {
+    "defaultMessage": "Tags",
+    "description": "Descriptions of general areas the activity relates to"
+  },
+  "actTitle": {
+    "defaultMessage": "Title",
+    "description": "opportunity Title label in ActDetail Form"
+  },
+  "activityProvider": {
+    "defaultMessage": "Activity Provider"
+  },
+  "admin": {
+    "defaultMessage": "Admin"
+  },
+  "admin-page.access-denied.content": {
+    "defaultMessage": "You do not have permission to view this page.",
+    "description": "Content shown when a person does not have permission to view an admin page"
+  },
+  "admin-page.access-denied.heading": {
+    "defaultMessage": "Access denied",
+    "description": "Heading shown when a person does not have permission to view an admin page"
+  },
+  "askforhelp-anon": {
+    "defaultMessage": "Ask for help",
+    "description": "Registration button on an op that leads to sign in page"
+  },
+  "basic": {
+    "defaultMessage": "Asker"
+  },
+  "cancel": {
+    "defaultMessage": "Cancel",
+    "description": "Label for cancel button on person details form"
+  },
+  "cancelOp": {
+    "defaultMessage": "Cancel Request",
+    "description": "Button to cancel an opportunity on OpDetails page"
+  },
+  "cancelled": {
+    "defaultMessage": "Cancelled",
+    "description": "When an opportunity has been cancelled"
+  },
+  "committed.ask.rejectButtonText": {
+    "defaultMessage": "I can't make it :(",
+    "description": "Allows asker to reject from an opportunity once they have been invited"
+  },
+  "committed.ask.rejectFormPrompt": {
+    "defaultMessage": "Send the organiser a message about why you can't be involved",
+    "description": "prompt on message form when interested person withdraws"
+  },
+  "committed.ask.rejectFormTitle": {
+    "defaultMessage": "Oh no!, Sorry to hear that.",
+    "description": "title message form when interested person withdraws"
+  },
+  "committed.ask.rejectNotifyHeading": {
+    "defaultMessage": "You can't make it",
+    "description": "title on popup after person withdraws interest"
+  },
+  "committed.ask.rejectNotifyMessage": {
+    "defaultMessage": "That's sad but we understand - we will keep you listed as interested and let you know if anything changes.",
+    "description": "message on popup after person withdraws interest"
+  },
+  "committed.ask.statusMessage": {
+    "defaultMessage": "You are committed to this activity",
+    "description": "prompt when asker is committed"
+  },
+  "committed.offer.rejectButtonText": {
+    "defaultMessage": "I can't make it :(",
+    "description": "Allows volunteer to reject from an opportunity once they have been invited"
+  },
+  "committed.offer.rejectFormPrompt": {
+    "defaultMessage": "Send {nickname} a message about why you can't be involved",
+    "description": "prompt on message form when interested person withdraws"
+  },
+  "committed.offer.rejectFormTitle": {
+    "defaultMessage": "Oh no!, Sorry to hear that.",
+    "description": "title message form when interested person withdraws"
+  },
+  "committed.offer.rejectNotifyHeading": {
+    "defaultMessage": "You can't make it",
+    "description": "title on popup after person withdraws interest"
+  },
+  "committed.offer.rejectNotifyMessage": {
+    "defaultMessage": "That's sad but we understand - we will keep you listed as interested and let you know if anything changes.",
+    "description": "message on popup after person withdraws interest"
+  },
+  "committed.offer.statusMessage": {
+    "defaultMessage": "You are committed to this activity",
+    "description": "prompt when volunteer is committed"
+  },
+  "committed.rejectButtonText": {
+    "defaultMessage": "I can't make it :(",
+    "description": "Allows volunteer to reject from an opportunity once they have been invited"
+  },
+  "committed.rejectFormPrompt": {
+    "defaultMessage": "Send the organiser a message about why you can't be involved",
+    "description": "prompt on message form when interested person withdraws"
+  },
+  "committed.rejectFormTitle": {
+    "defaultMessage": "Oh no!, Sorry to hear that.",
+    "description": "title message form when interested person withdraws"
+  },
+  "committed.rejectNotifyHeading": {
+    "defaultMessage": "You can't make it",
+    "description": "title on popup after person withdraws interest"
+  },
+  "committed.rejectNotifyMessage": {
+    "defaultMessage": "That's sad but we understand - we will keep you listed as interested and let you know if anything changes.",
+    "description": "message on popup after person withdraws interest"
+  },
+  "committed.statusMessage": {
+    "defaultMessage": "You are committed to this activity",
+    "description": "prompt when volunteer is committed"
+  },
+  "completedOp": {
+    "defaultMessage": "Completed",
+    "description": "Button to confirm opportunity is completed on OpDetails page"
+  },
+  "cta.description.dev": {
+    "defaultMessage": "Keen to join the build of the platform? Find us on Github and Gitter. All skill levels are welcome.",
+    "description": "description of call to action for developers"
+  },
+  "cta.description.sponsor": {
+    "defaultMessage": "Donations and long term support help speed up the development of the voluntarily platform and be more effective in the lives of young Kiwis.",
+    "description": "description of call to action for sponsors"
+  },
+  "cta.description.volunteer": {
+    "defaultMessage": "If you’re keen to get involved in volunteer operations and help run things, join the channel on Gitter.",
+    "description": "description of call to action for volunteers"
+  },
+  "cta.dev.chat": {
+    "defaultMessage": "Developer Chatroom",
+    "description": "call to action for developers to enter the chatroom"
+  },
+  "cta.dev.repository": {
+    "defaultMessage": "Github Repository",
+    "description": "call to action for developers to view the repository"
+  },
+  "cta.sponsor.donate": {
+    "defaultMessage": "Donate",
+    "description": "call to action for sponsors to donate"
+  },
+  "cta.title.dev": {
+    "defaultMessage": "Developers",
+    "description": "title for call to action for developers"
+  },
+  "cta.title.sponsor": {
+    "defaultMessage": "Sponsors",
+    "description": "title for call to action for sponsors"
+  },
+  "cta.title.volunteer": {
+    "defaultMessage": "Volunteers",
+    "description": "title for call to action for volunteers"
+  },
+  "cta.volunteer.chat": {
+    "defaultMessage": "Volunteer Operations Chatroom",
+    "description": "call to action for volunteers to enter the chatroom"
+  },
+  "declined.ask.statusMessage": {
+    "defaultMessage": "You have been declined for this activity. Try another",
+    "description": "prompt when asker is declined"
+  },
+  "declined.offer.statusMessage": {
+    "defaultMessage": "You have been declined for this activity. Try another",
+    "description": "prompt when volunteer is declined"
+  },
+  "declined.statusMessage": {
+    "defaultMessage": "You have been declined for this activity. Try another",
+    "description": "prompt when volunteer is declined"
+  },
+  "demo.greeting": {
+    "defaultMessage": "Replace in translation with Hello World!",
+    "description": "Use the local equivalent of Hello World."
+  },
+  "error.pagenotfound.contribute": {
+    "defaultMessage": "If you can write code you can help fix that by becoming a contributor to the project."
+  },
+  "error.pagenotfound.description": {
+    "defaultMessage": "The page you are looking for is not here. We have looked everywhere but it doesn't seem to exist. Perhaps it just hasn't been built yet."
+  },
+  "error.pagenotfound.title": {
+    "defaultMessage": "Oh no! Page not found",
+    "description": "Page title for the 404 error"
+  },
+  "error.servererror.description": {
+    "defaultMessage": "Sorry, there was a problem and we can not complete this task. We have let our team know so they can take a look and fix it. For now try to refresh the page, or go back to the previous page",
+    "description": "A server error"
+  },
+  "error.servererror.title": {
+    "defaultMessage": "There was a problem",
+    "description": "Page title for error pages"
+  },
+  "feedbacksubmitpage.button.recommended": {
+    "defaultMessage": "Recommendations"
+  },
+  "feedbacksubmitpage.text.recommended": {
+    "defaultMessage": "Want to do more? Check out the recommendations button for other activities still needing volunteers."
+  },
+  "footer.credit": {
+    "defaultMessage": "Voluntarily is an open source volunteering platform, built by volunteers, to help volunteers volunteer voluntarily for volunteering projects.",
+    "description": "line in the footer that says we are supported by PFCT."
+  },
+  "getTeacherRegistration.registrationError": {
+    "defaultMessage": "Registration number not found, does not match your name, or is expired please verify at&nbsp;"
+  },
+  "goalListTitle": {
+    "defaultMessage": "Goals Index",
+    "description": "title on Goal index page"
+  },
+  "home.History.attendedOpportunities": {
+    "defaultMessage": "Attended Activities",
+    "description": "Subtitle for volunteer attended activites on home page history tab"
+  },
+  "home.History.cancelledOpportunities": {
+    "defaultMessage": "Cancelled Activities",
+    "description": "Subtitle for teacher cancelled activites on home page history tab"
+  },
+  "home.History.completedOpportunities": {
+    "defaultMessage": "Completed Activities",
+    "description": "Subtitle for completed activites on home page history tab"
+  },
+  "home.name": {
+    "defaultMessage": "My Stuff",
+    "description": "title on volunteer home page."
+  },
+  "home.ops": {
+    "defaultMessage": "Active Requests",
+    "description": "show opportunities list on volunteer home page"
+  },
+  "home.profile": {
+    "defaultMessage": "Profile",
+    "description": "show profile on volunteer home page"
+  },
+  "home.search": {
+    "defaultMessage": "Search",
+    "description": "show Search on volunteer home page"
+  },
+  "home.tab.active": {
+    "defaultMessage": "Upcoming",
+    "description": "show opportunities list on volunteer home page"
+  },
+  "home.tab.discover": {
+    "defaultMessage": "Discover",
+    "description": "tab to find new ops and recommendations"
+  },
+  "home.tab.history": {
+    "defaultMessage": "History",
+    "description": "show volunteering history on volunteer home page"
+  },
+  "home.tab.profile": {
+    "defaultMessage": "Profile",
+    "description": "show profile on volunteer home page"
+  },
+  "interestSection.ask.name": {
+    "defaultMessage": "People offering to help",
+    "description": "label for interest table on op detail page"
+  },
+  "interestSection.offer.name": {
+    "defaultMessage": "People asking for help",
+    "description": "label for interest table on op detail page"
+  },
+  "interested.ask.rejectButtonText": {
+    "defaultMessage": "Withdraw Offer",
+    "description": "Button for asker to reject interest in an opportunity"
+  },
+  "interested.ask.rejectFormPrompt": {
+    "defaultMessage": "Leave a message for {nickname}",
+    "description": "prompt on message form when interested person withdraws"
+  },
+  "interested.ask.rejectFormTitle": {
+    "defaultMessage": "Can't make it?",
+    "description": "title message form when interested person withdraws"
+  },
+  "interested.ask.rejectNotifyHeading": {
+    "defaultMessage": "You can't make it",
+    "description": "title on popup after person withdraws interest"
+  },
+  "interested.ask.rejectNotifyMessage": {
+    "defaultMessage": "That's sad but we understand - try another activity",
+    "description": "message on popup after person withdraws interest"
+  },
+  "interested.ask.statusMessage": {
+    "defaultMessage": "You've offered to help, {nickname} will get back to you soon!",
+    "description": "message when asker has already expressed interest"
+  },
+  "interested.offer.rejectButtonText": {
+    "defaultMessage": "Cancel Ask",
+    "description": "Button for volunteer to reject interest in an opportunity"
+  },
+  "interested.offer.rejectFormPrompt": {
+    "defaultMessage": "Leave a message for {nickname}",
+    "description": "prompt on message form when interested person withdraws"
+  },
+  "interested.offer.rejectFormTitle": {
+    "defaultMessage": "No longer need this?",
+    "description": "title message form when interested person withdraws"
+  },
+  "interested.offer.rejectNotifyHeading": {
+    "defaultMessage": "Ask cancelled",
+    "description": "title on popup after person withdraws interest"
+  },
+  "interested.offer.rejectNotifyMessage": {
+    "defaultMessage": "you're all done, if you need anything else search the activities",
+    "description": "message on popup after person withdraws interest"
+  },
+  "interested.offer.statusMessage": {
+    "defaultMessage": "You've asked for help, {nickname} will get back to you soon!",
+    "description": "message when volunteer has already expressed interest"
+  },
+  "interestedOpsSection.title": {
+    "defaultMessage": "You signed up for",
+    "description": "Subtitle for home page for the volunteers current ops"
+  },
+  "invited.acceptButtonText": {
+    "defaultMessage": "Accept",
+    "description": "Allows volunteer to accept invitation to participate in opportunity"
+  },
+  "invited.acceptFormPrompt": {
+    "defaultMessage": "(Optional) Send a message the Organiser if you have any questions",
+    "description": "Sub-heading displayed on express-interest form when volunteer has been invited to participate"
+  },
+  "invited.acceptFormTitle": {
+    "defaultMessage": "Accept Invitiation",
+    "description": "Heading displayed on express-interest form when volunteer has been invited to participate"
+  },
+  "invited.acceptNotifyHeading": {
+    "defaultMessage": "Thank you so much!",
+    "description": "Heading displayed when volunteer has committed to an op"
+  },
+  "invited.acceptNotifyMessage": {
+    "defaultMessage": "You have agreed to participate in this activty! Check out your home page for some things you might need to complete.",
+    "description": "Sub-heading displayed when volunteer has committed to an op"
+  },
+  "invited.ask.acceptButtonText": {
+    "defaultMessage": "Accept",
+    "description": "Allows asker to accept invitation to participate in opportunity"
+  },
+  "invited.ask.acceptFormPrompt": {
+    "defaultMessage": "(Optional) Send a message the Organiser if you have any questions",
+    "description": "Sub-heading displayed on express-interest form when asker has been invited to participate"
+  },
+  "invited.ask.acceptFormTitle": {
+    "defaultMessage": "Accept Invitiation",
+    "description": "Heading displayed on express-interest form when asker has been invited to participate"
+  },
+  "invited.ask.acceptNotifyHeading": {
+    "defaultMessage": "Thank you so much!",
+    "description": "Heading displayed when asker has committed to an op"
+  },
+  "invited.ask.acceptNotifyMessage": {
+    "defaultMessage": "You have agreed to participate in this activty! Check out your home page for some things you might need to complete.",
+    "description": "Sub-heading displayed when asker has committed to an op"
+  },
+  "invited.ask.rejectButtonText": {
+    "defaultMessage": "Decline",
+    "description": "Allows asker to reject from an opportunity once they have been invited"
+  },
+  "invited.ask.rejectFormPrompt": {
+    "defaultMessage": "We will take you off the invite list but keep you as interested. Leave a message for the organiser",
+    "description": "prompt on message form when interested person withdraws"
+  },
+  "invited.ask.rejectFormTitle": {
+    "defaultMessage": "Is there something we can do?",
+    "description": "title message form when interested person withdraws"
+  },
+  "invited.ask.rejectNotifyHeading": {
+    "defaultMessage": "You can't make it",
+    "description": "title on popup after person withdraws interest"
+  },
+  "invited.ask.rejectNotifyMessage": {
+    "defaultMessage": "That's sad but we understand - go look for something else",
+    "description": "message on popup after person withdraws interest"
+  },
+  "invited.ask.statusMessage": {
+    "defaultMessage": "You have been invited to this activity 🥳",
+    "description": "prompt when asker is invited"
+  },
+  "invited.offer.acceptButtonText": {
+    "defaultMessage": "Accept",
+    "description": "Allows volunteer to accept invitation to participate in opportunity"
+  },
+  "invited.offer.acceptFormPrompt": {
+    "defaultMessage": "(Optional) Send a message {nickname} if you have any questions",
+    "description": "Sub-heading displayed on express-interest form when volunteer has been invited to participate"
+  },
+  "invited.offer.acceptFormTitle": {
+    "defaultMessage": "Accept Invitation",
+    "description": "Heading displayed on express-interest form when volunteer has been invited to participate"
+  },
+  "invited.offer.acceptNotifyHeading": {
+    "defaultMessage": "Thank you so much!",
+    "description": "Heading displayed when volunteer has committed to an op"
+  },
+  "invited.offer.acceptNotifyMessage": {
+    "defaultMessage": "You have agreed to participate in this activty! Check out your home page for some things you might need to complete.",
+    "description": "Sub-heading displayed when volunteer has committed to an op"
+  },
+  "invited.offer.rejectButtonText": {
+    "defaultMessage": "Decline",
+    "description": "Allows volunteer to reject from an opportunity once they have been invited"
+  },
+  "invited.offer.rejectFormPrompt": {
+    "defaultMessage": "We will take you off the invite list but keep you as interested. Leave a message for the organiser",
+    "description": "prompt on message form when interested person withdraws"
+  },
+  "invited.offer.rejectFormTitle": {
+    "defaultMessage": "Is there something we can do?",
+    "description": "title message form when interested person withdraws"
+  },
+  "invited.offer.rejectNotifyHeading": {
+    "defaultMessage": "You can't make it",
+    "description": "title on popup after person withdraws interest"
+  },
+  "invited.offer.rejectNotifyMessage": {
+    "defaultMessage": "That's sad but we understand - go look for something else",
+    "description": "message on popup after person withdraws interest"
+  },
+  "invited.offer.statusMessage": {
+    "defaultMessage": "You have been invited to this activity 🥳",
+    "description": "prompt when volunteer is invited"
+  },
+  "invited.rejectButtonText": {
+    "defaultMessage": "Decline",
+    "description": "Allows volunteer to reject from an opportunity once they have been invited"
+  },
+  "invited.rejectFormPrompt": {
+    "defaultMessage": "We will take you off the invite list but keep you as interested. Leave a message for the organiser",
+    "description": "prompt on message form when interested person withdraws"
+  },
+  "invited.rejectFormTitle": {
+    "defaultMessage": "Is there something we can do?",
+    "description": "title message form when interested person withdraws"
+  },
+  "invited.rejectNotifyHeading": {
+    "defaultMessage": "You can't make it",
+    "description": "title on popup after person withdraws interest"
+  },
+  "invited.rejectNotifyMessage": {
+    "defaultMessage": "That's sad but we understand - go look for something else",
+    "description": "message on popup after person withdraws interest"
+  },
+  "invited.statusMessage": {
+    "defaultMessage": "You have been invited to this activity 🥳",
+    "description": "prompt when volunteer is invited"
+  },
+  "itemlist.date": {
+    "defaultMessage": "Date:",
+    "description": "Date label for acts and ops"
+  },
+  "itemlist.duration": {
+    "defaultMessage": "Duration:",
+    "description": "duration label for acts and ops"
+  },
+  "itemlist.equipment": {
+    "defaultMessage": "Equipment needed:",
+    "description": "Equipment label for acts and ops"
+  },
+  "itemlist.locations": {
+    "defaultMessage": "Locations:",
+    "description": "Location label for acts and ops"
+  },
+  "itemlist.resource": {
+    "defaultMessage": "General:",
+    "description": "Resource label for acts and ops"
+  },
+  "itemlist.status": {
+    "defaultMessage": "Status:",
+    "description": "Status label for acts and ops"
+  },
+  "itemlist.venue": {
+    "defaultMessage": "Venue:",
+    "description": "Venue label for acts and ops"
+  },
+  "job": {
+    "defaultMessage": "What is your Job Title?",
+    "description": "person Job label in personDetails Form"
+  },
+  "landing.sectiontitle.offers": {
+    "defaultMessage": "Get Started"
+  },
+  "landing.sectiontitle.persona": {
+    "defaultMessage": "Who we help",
+    "description": "Title for the section that describes who we help"
+  },
+  "location-filter-description": {
+    "defaultMessage": "Find opportunities in...",
+    "description": "Text that describes what the location filter does"
+  },
+  "markAbsent": {
+    "defaultMessage": "Not Attended",
+    "description": "Button allowing event organizer to mark the volunteer as not attended"
+  },
+  "markPresent": {
+    "defaultMessage": "Attended",
+    "description": "Button allowing event organizer to mark the volunteer as attended"
+  },
+  "member.add": {
+    "defaultMessage": "Add",
+    "description": "Button allowing orgAdmin to Add a new org member"
+  },
+  "member.cancelvalidate.button": {
+    "defaultMessage": "Cancel Join",
+    "description": "Button to cancel validation of volunteer to join an organisation"
+  },
+  "member.exportCsv": {
+    "defaultMessage": "Export Members",
+    "description": "Use the local equivalent of export members."
+  },
+  "member.follow.button": {
+    "defaultMessage": "Follow",
+    "description": "Button for volunteer to follow an organisation"
+  },
+  "member.follow.message": {
+    "defaultMessage": "Follow this organisation to get information on opportunities and offerings",
+    "description": "Message for volunteer to follow an organisation"
+  },
+  "member.join.button": {
+    "defaultMessage": "Staff Signup",
+    "description": "Button for volunteer to join an organisation"
+  },
+  "member.join.message": {
+    "defaultMessage": "If you are part of this organisation let us know",
+    "description": "Message for volunteer to join an organisation"
+  },
+  "member.leave.button": {
+    "defaultMessage": "Leave Organisation",
+    "description": "Button for volunteer to cancel join an organisation"
+  },
+  "member.makeadmin": {
+    "defaultMessage": "Make Admin",
+    "description": "Button allowing orgAdmin to add new orgadmin"
+  },
+  "member.member.message": {
+    "defaultMessage": "You are a member of this organisation",
+    "description": "Message for volunteer being validated for an organisation"
+  },
+  "member.reject": {
+    "defaultMessage": "Reject",
+    "description": "Button allowing orgAdmin to Reject a member application"
+  },
+  "member.remove": {
+    "defaultMessage": "Remove",
+    "description": "Button allowing orgAdmin to Remove an org member"
+  },
+  "member.unadmin": {
+    "defaultMessage": "Cancel Admin",
+    "description": "Button allowing orgAdmin to return an admin back to normal member"
+  },
+  "member.unfollow.button": {
+    "defaultMessage": "Unfollow",
+    "description": "Button for volunteer to stop following an organisation"
+  },
+  "member.unfollow.message": {
+    "defaultMessage": "You follow this organisation.",
+    "description": "Message for volunteer to unfollow an organisation"
+  },
+  "member.unjoin.button": {
+    "defaultMessage": "Cancel",
+    "description": "Button to cancel validation of volunteer to join an organisation"
+  },
+  "member.validate.button": {
+    "defaultMessage": "Validate",
+    "description": "Button to confirm validation of volunteer to join an organisation"
+  },
+  "member.validating.message": {
+    "defaultMessage": "Your confirmation as a member of this organisation is in progess",
+    "description": "Message for volunteer being validated for an organisation"
+  },
+  "memberSection.JoinersTitle": {
+    "defaultMessage": "Organisation Joiners",
+    "description": "label for joiner table on org detail page"
+  },
+  "memberSection.MembersTitle": {
+    "defaultMessage": "Organisation Members",
+    "description": "label for member table on org detail page"
+  },
+  "memberSection.followerInfoTitle": {
+    "defaultMessage": "Information for followers",
+    "description": "label for org info for followers detail page"
+  },
+  "memberSection.followersTitle": {
+    "defaultMessage": "Organisation Followers",
+    "description": "label for follower table on org detail page"
+  },
+  "memberSection.joinerInfoSection": {
+    "defaultMessage": "Information for new members",
+    "description": "label for follower table on org detail page"
+  },
+  "memberSection.memberInfoTitle": {
+    "defaultMessage": "Information for members",
+    "description": "label for org info for members detail page"
+  },
+  "memberSection.notMember": {
+    "defaultMessage": "About Joining",
+    "description": "message to non members on the org members tab"
+  },
+  "messageForm.title": {
+    "defaultMessage": "Message {nickname}",
+    "description": "Form title message the organiser"
+  },
+  "messageNotify.description": {
+    "defaultMessage": "We've emailed your message",
+    "description": "Completed sending email notification"
+  },
+  "messageNotify.title": {
+    "defaultMessage": "Done",
+    "description": "Completed sending email notification"
+  },
+  "new.ask.acceptButtonText": {
+    "defaultMessage": "Offer to help",
+    "description": "Button allowing volunteer to express interest in an opportunity"
+  },
+  "new.ask.acceptFormPrompt": {
+    "defaultMessage": "Leave a message about how you can help and {nickname} will get back in touch with you.",
+    "description": "Sub-heading displayed on form allowing volunteer to express interest in an opportunity"
+  },
+  "new.ask.acceptFormTitle": {
+    "defaultMessage": "Thanks for helping out",
+    "description": "Heading displayed on form allowing volunteer to express interest in an opportunity"
+  },
+  "new.ask.acceptNotifyHeading": {
+    "defaultMessage": "Thank you for expressing your interest!",
+    "description": "Heading on express-interest form when asker has already expressed interest"
+  },
+  "new.ask.acceptNotifyMessage": {
+    "defaultMessage": "{nickname} will be in touch shortly.",
+    "description": "Sub-heading on express-interest form when asker has already expressed interest"
+  },
+  "new.offer.acceptButtonText": {
+    "defaultMessage": "Accept help",
+    "description": "Button allowing volunteer to express interest in an opportunity"
+  },
+  "new.offer.acceptFormPrompt": {
+    "defaultMessage": "Leave a message and {nickname} will get in touch with you.",
+    "description": "Sub-heading displayed on form allowing volunteer to express interest in an opportunity"
+  },
+  "new.offer.acceptFormTitle": {
+    "defaultMessage": "Help on its way",
+    "description": "Heading displayed on form allowing volunteer to express interest in an opportunity"
+  },
+  "new.offer.acceptNotifyHeading": {
+    "defaultMessage": "Thank you for asking!",
+    "description": "Heading on express-interest form when volunteer has already expressed interest"
+  },
+  "new.offer.acceptNotifyMessage": {
+    "defaultMessage": "{nickname} will be in touch shortly.",
+    "description": "Sub-heading on express-interest form when volunteer has already expressed interest"
+  },
+  "notice": {
+    "defaultMessage": "none"
+  },
+  "numericRange.from": {
+    "defaultMessage": "From:",
+    "description": "The \"from\" value of a numeric range pair"
+  },
+  "numericRange.to": {
+    "defaultMessage": "to:",
+    "description": "The \"to\" value of a numeric range pair"
+  },
+  "offertohelp-anon": {
+    "defaultMessage": "Offer to help",
+    "description": "Registration button on an op that leads to sign in page"
+  },
+  "op.TypeFilterDescription": {
+    "defaultMessage": "Search by type...",
+    "description": "Text that describes what the type filter does"
+  },
+  "op.list.empty2": {
+    "defaultMessage": "No matching activities",
+    "description": "no opportunities message in OpList"
+  },
+  "opDetailPage.OpNotFound": {
+    "defaultMessage": "Sorry, this activity is not available",
+    "description": "Op not found message"
+  },
+  "opDetailPage.showOps": {
+    "defaultMessage": "Search for more",
+    "description": "Button to show all opportunities"
+  },
+  "opTabs.about": {
+    "defaultMessage": "About",
+    "description": "Tab label on OpDetailsPage"
+  },
+  "opTabs.chat": {
+    "defaultMessage": "Messages",
+    "description": "Tab label on OpDetailsPage"
+  },
+  "opTabs.edit": {
+    "defaultMessage": "Edit",
+    "description": "Tab label for Op Editor panel on Opportunity"
+  },
+  "opTabs.manage": {
+    "defaultMessage": "Manage",
+    "description": "Tab label for Op Manager panel on Opportunity"
+  },
+  "opTabs.questions": {
+    "defaultMessage": "Questions",
+    "description": "Tab label for Question panel on Opportunity"
+  },
+  "oplistpage.title": {
+    "defaultMessage": "All Opportunities",
+    "description": "Title on full opportunities list"
+  },
+  "org.cancel": {
+    "defaultMessage": "Cancel",
+    "description": "Label for cancel button on organisation details form"
+  },
+  "org.detail.viewAddressInGoogleMaps": {
+    "defaultMessage": "View in Google maps",
+    "description": "Link to view the address in Google maps"
+  },
+  "org.list.heading": {
+    "defaultMessage": "Organisations"
+  },
+  "org.list.subtitle": {
+    "defaultMessage": "Check out organisations doing social good on the Voluntarily platform"
+  },
+  "org.new": {
+    "defaultMessage": "New Organisation",
+    "description": "Button to create a new organisation"
+  },
+  "org.save": {
+    "defaultMessage": "Save",
+    "description": "Label for submit button on organisation details form"
+  },
+  "orgAbout": {
+    "defaultMessage": "About",
+    "description": "organisation Description label in OrgDetails Form"
+  },
+  "orgAddress": {
+    "defaultMessage": "Address",
+    "description": "Address of the organisation"
+  },
+  "orgAdmin": {
+    "defaultMessage": "Organisation-Admin"
+  },
+  "orgContactEmail": {
+    "defaultMessage": "Contact Email",
+    "description": "contact Email label in OrgDetails Form"
+  },
+  "orgContactName": {
+    "defaultMessage": "Contact name",
+    "description": "Contact name"
+  },
+  "orgContactPhoneNumber": {
+    "defaultMessage": "Contact phone number",
+    "description": "Contact phone number"
+  },
+  "orgDetail.form.about": {
+    "defaultMessage": "About your Organisation",
+    "description": "Title for about section of organisation edit form"
+  },
+  "orgDetail.form.about.description": {
+    "defaultMessage": "Tell the world about your organisation.{br}{br} This is your opportunity to ‘sell’ your organisation to the rest of the Voluntarily community. Who are you? What do you do? What are your values and your motivations for using Voluntarily?",
+    "description": "Title for about section of organisation edit form"
+  },
+  "orgDetail.form.role": {
+    "defaultMessage": "Set organisation permissions",
+    "description": "The type of organisation"
+  },
+  "orgDetail.form.role.description": {
+    "defaultMessage": "Members of this group can do the listed items.",
+    "description": "Description of the permissions of organisation"
+  },
+  "orgDetail.form.title": {
+    "defaultMessage": "Manage Organisation",
+    "description": "Main Title for Organisation edit form"
+  },
+  "orgDetailPage.OrgNotFound": {
+    "defaultMessage": "Sorry, this organisation is not available",
+    "description": "Org not found message"
+  },
+  "orgDetailPage.button.home": {
+    "defaultMessage": "Return Home",
+    "description": "Button to return home after editing"
+  },
+  "orgDetailPage.showOrgs": {
+    "defaultMessage": "Show All",
+    "description": "Button to show all organisations"
+  },
+  "orgDetailPage.staff.join.description": {
+    "defaultMessage": "What processes do you want staff to do before they start volunteering? Should they fill in a form? Ask for approval from their manager? Specify your instructions here.",
+    "description": "a place to write instructions regarding how to join the org for org managers"
+  },
+  "orgDetailPage.staff.join.title": {
+    "defaultMessage": "Staff Instructions",
+    "description": "title for staff joiner section"
+  },
+  "orgDetailpage.staff.signup.description": {
+    "defaultMessage": "Tell your members what they need to do to join the group - ie: Talk to your manager or HR person for the magic code",
+    "description": "description for joining employees section"
+  },
+  "orgDetailpage.staff.signup.title": {
+    "defaultMessage": "Signing up",
+    "description": "title for joining employees section"
+  },
+  "orgDomain": {
+    "defaultMessage": "Domain Name",
+    "description": "organisation Domain label in OrgDetails Form"
+  },
+  "orgGroups": {
+    "defaultMessage": "Groups",
+    "description": "Descriptions of groups this org belongs to"
+  },
+  "orgImgUrl": {
+    "defaultMessage": "Image Link",
+    "description": "organisation Image URL label in OrgDetails Form"
+  },
+  "orgInfoFollowers": {
+    "defaultMessage": "Followers",
+    "description": "organisation Description label in OrgDetails Form"
+  },
+  "orgInfoInstructions": {
+    "defaultMessage": "Getting started",
+    "description": "organisation instructions label in OrgDetails Form"
+  },
+  "orgInfoJoiners": {
+    "defaultMessage": "Joiners",
+    "description": "organisation Description label in OrgDetails Form"
+  },
+  "orgInfoMembers": {
+    "defaultMessage": "Members",
+    "description": "organisation Description label in OrgDetails Form"
+  },
+  "orgInfoOutsiders": {
+    "defaultMessage": "Outsiders",
+    "description": "organisation Description label in OrgDetails Form"
+  },
+  "orgInstructions": {
+    "defaultMessage": "Getting Started",
+    "description": "show opportunities list on volunteer home page"
+  },
+  "orgMembers": {
+    "defaultMessage": "Members",
+    "description": "show opportunities list on volunteer home page"
+  },
+  "orgName": {
+    "defaultMessage": "Title",
+    "description": "organisation Title label in OrgDetails Form"
+  },
+  "orgOffers": {
+    "defaultMessage": "Offers",
+    "description": "show opportunities list on volunteer home page"
+  },
+  "orgRole": {
+    "defaultMessage": "Role",
+    "description": "business or activity provider"
+  },
+  "orgTabs.about": {
+    "defaultMessage": "About",
+    "description": "Tab label on OrgDetailsPage"
+  },
+  "orgTabs.edit": {
+    "defaultMessage": "Edit",
+    "description": "Tab label for org Editor panel on organisation page"
+  },
+  "orgTabs.history": {
+    "defaultMessage": "History",
+    "description": "Tab label for org history panel on organisation page"
+  },
+  "orgTabs.history.notfound": {
+    "defaultMessage": "This organisation does not have any archived opportunities.",
+    "description": "Message to display when an organisation does not have any archived opportunities"
+  },
+  "orgTabs.history.title": {
+    "defaultMessage": "Previous opportunities",
+    "description": "Title to display on the organisation history panel"
+  },
+  "orgTabs.offers.activities.notfound": {
+    "defaultMessage": "This organisation does not have any activities yet",
+    "description": "Message to display when an organisation does not have any activities yet"
+  },
+  "orgTabs.offers.opportunities.notfound": {
+    "defaultMessage": "This organisation does not have any opportunities yet",
+    "description": "Message to display when an organisation does not have any opportunities yet"
+  },
+  "orgWebsite": {
+    "defaultMessage": "Website",
+    "description": "website label in OrgDetails Form"
+  },
+  "orgstatisticspage.subtitle": {
+    "defaultMessage": "What was your volunteering impact?"
+  },
+  "orgstatisticspage.title": {
+    "defaultMessage": "Data Dashboard",
+    "description": "Title on organisation statistics page"
+  },
+  "people.new": {
+    "defaultMessage": "New Person",
+    "description": "Button to create a new person"
+  },
+  "person.altnew": {
+    "defaultMessage": "New Person",
+    "description": "Button to create a new person"
+  },
+  "person.delete": {
+    "defaultMessage": "Remove Person",
+    "description": "Button to remove an person on PersonDetails page"
+  },
+  "person.notavailable": {
+    "defaultMessage": "Sorry, this person is not available",
+    "description": "message on person not found page"
+  },
+  "personAddress": {
+    "defaultMessage": "Address",
+    "description": "person physical/postal address label in personDetails Form"
+  },
+  "personAvatar": {
+    "defaultMessage": "Profile Photo",
+    "description": "person Image URL label in personDetails Form"
+  },
+  "personEmail": {
+    "defaultMessage": "Email",
+    "description": "person email label in personDetails Form"
+  },
+  "personFacebook": {
+    "defaultMessage": "Facebook",
+    "description": "person facebook label in personDetails Form"
+  },
+  "personListTitle": {
+    "defaultMessage": "People",
+    "description": "H1 on Person list page"
+  },
+  "personName": {
+    "defaultMessage": "Formal name",
+    "description": "person full name label in PersonDetails Form"
+  },
+  "personNickname": {
+    "defaultMessage": "Short name",
+    "description": "person nickname label in personDetails Form"
+  },
+  "personPhone": {
+    "defaultMessage": "Phone",
+    "description": "person phone label in personDetails Form"
+  },
+  "personPronoun": {
+    "defaultMessage": "Pronoun (subject/object/possessive)",
+    "description": "person pronoun label in personDetails Form"
+  },
+  "personRole": {
+    "defaultMessage": "Role",
+    "description": "person Role label in personDetails page"
+  },
+  "personSendEmailNotifications": {
+    "defaultMessage": "Get email notifications from Voluntarily",
+    "description": "send email notifications label in personDetails form"
+  },
+  "personStatus": {
+    "defaultMessage": "Availability",
+    "description": "active or retired status"
+  },
+  "personTwitter": {
+    "defaultMessage": "Twitter",
+    "description": "person twitter label in personDetails Form"
+  },
+  "personWebsite": {
+    "defaultMessage": "Website",
+    "description": "person website label in personDetails Form"
+  },
+  "placeOfWork": {
+    "defaultMessage": "Where is your place of Work",
+    "description": "persons location of work if they do not come from a organisation"
+  },
+  "readLess": {
+    "defaultMessage": "read less",
+    "description": "hyperlink to shrink a story"
+  },
+  "readMore": {
+    "defaultMessage": "read more",
+    "description": "hyperlink to expand a story"
+  },
+  "recommendedOpsSection.subtitle": {
+    "defaultMessage": "Here are some opportunities volunteers are offering"
+  },
+  "recommendedOpsSection.title": {
+    "defaultMessage": "People offering help"
+  },
+  "recommendedOpsSection.title.volunteer": {
+    "defaultMessage": "Discover ways to help out"
+  },
+  "registerRequestor.asaRequestor": {
+    "defaultMessage": "Enable Requestor Status"
+  },
+  "registerRequestor.asaTeacher": {
+    "defaultMessage": "Register as a Teacher"
+  },
+  "registerRequestor.intro": {
+    "defaultMessage": "In order to create new opportunities in Voluntarily you will need to register as a teacher or opportunity provider."
+  },
+  "registerTeacher.intro": {
+    "defaultMessage": "Enter your NZ Teacher Registration Number"
+  },
+  "registerTeacher.methods": {
+    "defaultMessage": "You can validate as a teacher using your teacher registration number:"
+  },
+  "resourceProvider": {
+    "defaultMessage": "Resource Provider"
+  },
+  "revision": {
+    "defaultMessage": "local-build",
+    "description": "Source code revision, auto generated."
+  },
+  "runTestTitle": {
+    "defaultMessage": "End-To-End Testing",
+    "description": "title on Test index page"
+  },
+  "savePerson": {
+    "defaultMessage": "Save",
+    "description": "Label for submit button on person details form"
+  },
+  "schoolInvite.mainHeading": {
+    "defaultMessage": "Invite school",
+    "description": "Heading for the invite school admin UI"
+  },
+  "search.title": {
+    "defaultMessage": "Search results for \"{search}\""
+  },
+  "showPeople": {
+    "defaultMessage": "Show All",
+    "description": "Button to show all People"
+  },
+  "sortCommitment": {
+    "defaultMessage": "commitment",
+    "description": "Sort order by commitment"
+  },
+  "sortDate": {
+    "defaultMessage": "Date",
+    "description": "Sort order by Date"
+  },
+  "sortName": {
+    "defaultMessage": "Name",
+    "description": "Sort order by Name"
+  },
+  "story.cancel": {
+    "defaultMessage": "Cancel",
+    "description": "Button to hide the blog creation form"
+  },
+  "story.delete": {
+    "defaultMessage": "Delete",
+    "description": "Button to delete a story on updates tab"
+  },
+  "story.edit": {
+    "defaultMessage": "Edit",
+    "description": "Button to edit a story on updates tab"
+  },
+  "story.new": {
+    "defaultMessage": "New Blog",
+    "description": "Button to create a new blog post"
+  },
+  "story.publish": {
+    "defaultMessage": "Publish",
+    "description": "Button to publish a story on updates tab"
+  },
+  "storyDescription": {
+    "defaultMessage": "Description",
+    "description": "Story description label in StoryDetail Form"
+  },
+  "storyName": {
+    "defaultMessage": "Title",
+    "description": "Story name label in StoryDetail Form"
+  },
+  "storyUpdate": {
+    "defaultMessage": "Check here for updates about this activity",
+    "description": "Description shown if no updates have been created"
+  },
+  "support": {
+    "defaultMessage": "Help Desk"
+  },
+  "test-person.notavailable": {
+    "defaultMessage": "Sorry, this person is not available",
+    "description": "message on person not found page"
+  },
+  "unverified.button": {
+    "defaultMessage": "Sign out and try again",
+    "description": "try again button"
+  },
+  "unverified.message": {
+    "defaultMessage": "<h1>Email not verified</h1> <p>You have signed in as {name} but your email account is not currently verified. </p> <p>Please check your email inbox and spam box for a verification request to complete the registration process. </p> <p>If problems continue please contact technical support.</p>",
+    "description": "explanation for someone that their email is not verified"
+  },
+  "verification.conduct.confirmation": {
+    "defaultMessage": "Accept and continue",
+    "description": "Label for Code of Conduct confirmation button"
+  },
+  "verification.error.body": {
+    "defaultMessage": "We weren’t able to complete our checks at this time. We’ll let the support team know and they’ll be in touch, we try to help everyone!",
+    "description": "Detail of Verification error"
+  },
+  "verification.error.title": {
+    "defaultMessage": "Whoops, something went wrong",
+    "description": "Title of Verification error"
+  },
+  "verification.success.body": {
+    "defaultMessage": "Your details checked out, you now have the verified badge, and can ask for help, and offer to help.",
+    "description": "This is the detail message the user sees when verification process was successful"
+  },
+  "verification.success.title": {
+    "defaultMessage": "Nice, you're all set!",
+    "description": "Successful ID verification title"
+  },
+  "verification.trustandsafety.confirmation": {
+    "defaultMessage": "Verify Identity",
+    "description": "Label for Trust and Safety confirmation button"
+  },
+  "verificationlabel.address": {
+    "defaultMessage": "Address confirmed"
+  },
+  "verificationlabel.email": {
+    "defaultMessage": "Email verified"
+  },
+  "verificationlabel.name": {
+    "defaultMessage": "Name confirmed"
+  },
+  "verificationlabel.not_ok": {
+    "defaultMessage": "Police vet failed"
+  },
+  "verificationlabel.vet_started": {
+    "defaultMessage": "Police vet started"
+  },
+  "verificationlabel.vetted": {
+    "defaultMessage": "Police vet passed"
+  },
+  "version": {
+    "defaultMessage": "Version",
+    "description": "Source coder version label."
+  },
+  "volunteer": {
+    "defaultMessage": "Volunteer"
+  },
+  "who.body.business": {
+    "defaultMessage": "Connect with experts to mentor and give free advice"
+  },
+  "who.body.communities": {
+    "defaultMessage": "White label the site to manage your volunteers safely"
+  },
+  "who.body.schools": {
+    "defaultMessage": "Connect your class or school with industry volunteers and experts"
+  },
+  "who.title.business": {
+    "defaultMessage": "Small businesses"
+  },
+  "who.title.communities": {
+    "defaultMessage": "Communities"
+  },
+  "who.title.schools": {
+    "defaultMessage": "Schools"
+  },
+  "{id}": {
+    "defaultMessage": "{msg}",
+    "description": "{description}"
+  }
+}

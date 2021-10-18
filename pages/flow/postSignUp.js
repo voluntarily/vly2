@@ -8,7 +8,7 @@ import AcceptPrivacy from '../../components/SignUp/AcceptPrivacy'
 import SelectTopicGroup from '../../components/SignUp/SelectTopicGroup'
 import ChooseParticipation from '../../components/SignUp/ChooseParticipation'
 import { FullPage } from '../../components/VTheme/VTheme'
-import securePage from '../../hocs/securePage'
+
 import callApi from '../../lib/callApi'
 import { useSelector } from 'react-redux'
 import { Role } from '../../server/services/authorize/role'
@@ -160,4 +160,4 @@ const PostSignUp = () => {
   )
 }
 
-export default securePage(PostSignUp)
+export default PostSignUp

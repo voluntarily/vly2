@@ -10,7 +10,7 @@ import {
   InputContainer
 } from '../VTheme/FormStyles'
 
-export default ({ org }) => {
+export const InviteMembers = ({ org }) => {
   const [adminMsg, setAdminMsg] = useState('')
 
   const handleInviteMember = async e => {
@@ -123,3 +123,5 @@ export default ({ org }) => {
     </>
   )
 }
+
+export default InviteMembers

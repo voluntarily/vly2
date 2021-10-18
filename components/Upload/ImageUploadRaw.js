@@ -23,7 +23,7 @@ class ImageUpload extends Component {
     this.handleOpen = this.handleOpen.bind(this)
     this.handleClose = this.handleClose.bind(this)
     if (process.env.NODE_ENV !== 'test') {
-      this.uppy = Uppy({
+      this.uppy = new Uppy({
         id: 'uppy',
         autoProceed: true,
         debug: false,

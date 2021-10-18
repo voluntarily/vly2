@@ -3,7 +3,7 @@ import MockExpressRequest from 'mock-express-request'
 import MockExpressResponse from 'mock-express-response'
 import { SchoolInvite } from '../school-invite.controller'
 import { Role } from '../../../services/authorize/role'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import SchoolLookUp from '../../school-lookup/school-lookup'
 import nodemailerMock from 'nodemailer-mock'
 import fixtures from './school-invite.fixture'
@@ -12,9 +12,10 @@ import { MemberStatus } from '../../member/member.constants'
 import { TOPIC_MEMBER__UPDATE } from '../../../services/pubsub/topic.constants'
 import PubSub from 'pubsub-js'
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
+
 })
 
 test.beforeEach('Load fixtures', async (t) => {
@@ -25,10 +26,6 @@ test.beforeEach('Load fixtures', async (t) => {
 test.afterEach.always('Clear fixtures', async (t) => {
   await SchoolLookUp.deleteMany({})
   await Person.deleteMany({})
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.serial('Invalid HTTP methods', async (t) => {
@@ -196,7 +193,7 @@ test.serial('Create organisation from non-existent school', async (t) => {
   await t.throwsAsync(
     async () => {
       await SchoolInvite.createOrganisationFromSchool(nonExistentSchoolId)
-    },
+    }, null,
     'School not found'
   )
 })

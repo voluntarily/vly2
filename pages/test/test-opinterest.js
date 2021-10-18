@@ -1,4 +1,4 @@
-import publicPage from '../../hocs/publicPage'
+
 import { Landscape, Portrait } from '../../components/VTheme/VTheme'
 import InterestTable from '../../components/Interest/InterestTable'
 import cuid from 'cuid'
@@ -111,4 +111,4 @@ const TestPublicPage = ({ locale, session, isAuthenticated }) => {
 
   )
 }
-export default publicPage(TestPublicPage)
+export default TestPublicPage

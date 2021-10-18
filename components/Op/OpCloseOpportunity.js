@@ -19,7 +19,7 @@ export const OpCloseOpportunity = ({ op, dispatch }) => {
       message.success('Opportunity Confirmed')
       router.replace(`/archivedops/${op._id}?tab=manage`)
       // MAYBE: publish topic for completed op
-    }, [])
+    }, [dispatch, op, router])
 
   const handleCancelOpportunity = useCallback(
     async () => {
@@ -32,7 +32,7 @@ export const OpCloseOpportunity = ({ op, dispatch }) => {
       message.success('Request Cancelled')
       router.replace('/home')
       // MAYBE: publish topic for completed op
-    }, [])
+    }, [dispatch, op, router])
 
   return (
     <OpSectionGrid>

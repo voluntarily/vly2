@@ -3,7 +3,7 @@ import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Opportunity from '../opportunity'
 import Person from '../../person/person'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import people from '../../person/__tests__/person.fixture'
 import ops from './opportunity.fixture.js'
 import tags from '../../tag/__tests__/tag.fixture'
@@ -11,21 +11,17 @@ import { jwtData, jwtDataDali } from '../../../middleware/session/__tests__/setS
 
 const { regions } = require('../../location/locationData')
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   await appReady
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.beforeEach('connect and add two oppo entries', async (t) => {
   // connect each oppo to a requestor.
   t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   t.context.tags = tags
-  ops.map((op, index) => { op.requestor = t.context.people[index]._id })
+  ops.forEach((op, index) => { op.requestor = t.context.people[index]._id })
   t.context.opportunities = await Opportunity.create(ops).catch((err) => console.error('Unable to create opportunities', err))
 })
 

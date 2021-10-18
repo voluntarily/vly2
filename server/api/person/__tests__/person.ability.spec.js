@@ -4,9 +4,9 @@ import { server, appReady } from '../../../server'
 import Person from '../person'
 import { PersonListFields, PersonFriendFields } from '../person.constants'
 import { jwtData, jwtDataDali } from '../../../middleware/session/__tests__/setSession.fixture'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import people from './person.fixture'
-import uuid from 'uuid'
+import { v4 as uuid } from 'uuid'
 import { Role } from '../../../services/authorize/role'
 import jsonwebtoken from 'jsonwebtoken'
 import Organisation from '../../organisation/organisation'
@@ -48,17 +48,13 @@ const createPersonAndGetToken = async (roles) => {
   }
 }
 
-test.before('before connect to database', async (t) => {
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
     await appReady
     t.context.people = await Person.create(people).catch((err) => `Unable to create people: ${err}`)
   } catch (e) { console.error('person.spec.js error before', e) }
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test('List - anonymous', async t => {

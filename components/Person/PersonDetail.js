@@ -1,12 +1,27 @@
 import { defaultToHttpScheme } from '../../lib/urlUtil'
 import { Divider, Button } from 'antd'
+import {
+  MailOutlined,
+  PhoneOutlined,
+  HomeOutlined,
+  GlobalOutlined,
+  FacebookOutlined,
+  TwitterOutlined,
+  CompassOutlined,
+  IdcardOutlined,
+  CoffeeOutlined,
+  BookOutlined,
+  BankOutlined,
+  TeamOutlined
+} from '@ant-design/icons'
+
 import Head from 'next/head'
 import PropTypes from 'prop-types'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
 import MemberUl from '../Member/MemberUl'
 import TagDisplay from '../Tags/TagDisplay'
-import { StyledIcon, OpSectionGrid } from '../VTheme/VTheme'
+import { OpSectionGrid } from '../VTheme/VTheme'
 import Html from '../VTheme/Html'
 import PersonRoles from './PersonRole'
 import PersonPronouns from './PersonPronoun'
@@ -34,6 +49,7 @@ const PersonUl = styled.ul`
   list-style: none;
   padding:0;
   margin:0;
+ 
   @media screen and (min-width: 767px) {
     columns: 2;
     -webkit-columns: 2;
@@ -100,7 +116,7 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
           <div>
             {person.about &&
               <div>
-                <Html children={person.about} />
+                <Html>{person.about}</Html>
                 <Divider />
               </div>}
             {person.tags &&
@@ -132,72 +148,72 @@ const PersonDetail = ({ person, panelEdit, personEdit, canEdit }) => (
 
           <li>
             <a href={`mailto:${person.email}`}>
-              <StyledIcon type='mail' />
+              <MailOutlined />&nbsp;
               {person.email}
             </a>
           </li>
           {person.phone &&
             <li>
               <a href={`tel:${person.phone}`}>
-                <StyledIcon type='phone' />
+                <PhoneOutlined />&nbsp;
                 {person.phone}
               </a>
             </li>}
 
-          {person.phone && person.address && person.address.addressSummary &&
+          {person.phone && person.address && person.address?.addressSummary &&
             <li>
-              <StyledIcon type='home' />
-              <StreetAddressLinkLi address={person.address.addressSummary} />
+              <HomeOutlined />&nbsp;
+              <StreetAddressLinkLi address={person.address?.addressSummary} />
             </li>}
           {person.website &&
             <li>
               <a href={defaultToHttpScheme(person.website)} rel='noopener noreferrer' target='_blank'>
-                <StyledIcon type='global' />
+                <GlobalOutlined />&nbsp;
                 {person.website}
               </a>
             </li>}
           {person.facebook &&
             <li>
               <a href={`https://www.facebook.com/${person.facebook}`} rel='noopener noreferrer' target='_blank'>
-                <StyledIcon type='facebook' />
+                <FacebookOutlined />&nbsp;
                 {person.facebook}
               </a>
             </li>}
           {person.twitter &&
             <li>
               <a href={`https://www.twitter.com/${person.twitter}`} rel='noopener noreferrer' target='_blank'>
-                <StyledIcon type='twitter' />
+                <TwitterOutlined />&nbsp;
                 {person.twitter}
               </a>
             </li>}
           {person.locations && person.locations.length > 0 &&
             <li>
-              <StyledIcon type='compass' />
+              <CompassOutlined />&nbsp;
               {person.locations.join(', ')}
             </li>}
           {person.pronoun &&
             <li>
-              <StyledIcon type='idcard' />
+              <IdcardOutlined />&nbsp;
               <PersonPronouns pronoun={person.pronoun} />
             </li>}
           {person.role &&
             <li>
-              <StyledIcon type='coffee' />
+              <CoffeeOutlined />&nbsp;
               <PersonRoles roles={person.role} />
             </li>}
           {person.education &&
             <li>
-              <StyledIcon type='book' />
+              <BookOutlined />&nbsp;
               {person.education}
             </li>}
           {person.placeOfWork &&
             <li>
-              <StyledIcon type='bank' />
+              <BankOutlined />&nbsp;
               {person.placeOfWork}
             </li>}
           {person.job &&
             <li>
-              <StyledIcon type='coffee' />
+              <TeamOutlined />&nbsp;
               {person.job}
             </li>}
         </PersonUl>

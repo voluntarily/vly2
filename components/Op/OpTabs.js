@@ -1,57 +1,71 @@
-import { Tabs } from 'antd'
-import PropTypes from 'prop-types'
 import React from 'react'
+import { Tabs } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { OpAboutPanel } from './OpAboutPanel'
 import { OpQuestionPanel } from './OpQuestionPanel'
 // import OpUpdatePanel from './OpUpdatePanel'
 import { OpManagePanel } from './OpManagePanel'
-import VTabs from '../VTheme/VTabs'
 import OpChatPanel from './OpChatPanel'
 import { useSelector } from 'react-redux'
 
 const { TabPane } = Tabs
 
-const opAboutTab =
+const opAboutTab = (
   <FormattedMessage
     id='opTabs.about'
     defaultMessage='About'
     description='Tab label on OpDetailsPage'
   />
-const opChatTab =
+)
+const opChatTab = (
   <FormattedMessage
     id='opTabs.chat'
     defaultMessage='Messages'
     description='Tab label on OpDetailsPage'
   />
+)
 
-const opForumTab =
+const opForumTab = (
   <FormattedMessage
     id='opTabs.questions'
     defaultMessage='Questions'
     description='Tab label for Question panel on Opportunity'
   />
+)
 
-const opManageTab =
+const opManageTab = (
   <FormattedMessage
     id='opTabs.manage'
     defaultMessage='Manage'
     description='Tab label for Op Manager panel on Opportunity'
   />
+)
 
-const opEditTab =
+const opEditTab = (
   <FormattedMessage
     id='opTabs.edit'
     defaultMessage='Edit'
     description='Tab label for Op Editor panel on Opportunity'
   />
+)
 
 const isNotProd = process.env.NODE_ENV !== 'production'
 
-export const OpTabs = ({ op, onChange, canManage, canEdit, defaultTab, author }) => {
+export const OpTabs = ({
+  op,
+  onChange,
+  canManage,
+  canEdit,
+  tab
+}) => {
   const interest = useSelector(state => state.interests.data[0])
   return (
-    <VTabs size='large' defaultActiveKey={defaultTab} onChange={onChange}>
+    <Tabs
+      activeKey={tab} onChange={onChange}
+      defaultActiveKey='about'
+      type='card' size='large'
+      tabBarGutter='5px'
+    >
       <TabPane tab={opAboutTab} key='about'>
         <OpAboutPanel op={op} />
       </TabPane>
@@ -73,23 +87,8 @@ export const OpTabs = ({ op, onChange, canManage, canEdit, defaultTab, author })
       {canEdit && (
         <TabPane tab={opEditTab} key='edit' />
       )}
-    </VTabs>
+    </Tabs>
   )
 }
-OpTabs.propTypes = {
-  op: PropTypes.shape({
-    name: PropTypes.string.isRequired,
-    subtitle: PropTypes.string,
-    imgUrl: PropTypes.any,
-    duration: PropTypes.string,
-    location: PropTypes.string,
-    _id: PropTypes.string
-  }),
-  canManage: PropTypes.bool,
-  canEdit: PropTypes.bool,
-  onChange: PropTypes.func,
-  params: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  })
-}
+
 export default OpTabs

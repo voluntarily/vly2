@@ -1,20 +1,16 @@
 import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import { loadInterestFixtures, clearInterestFixtures, sessions, PERSON } from './interest.ability.fixture'
 import { InterestStatus } from '../interest.constants'
 import { InterestArchive } from '../interest'
 import ArchivedOpportunity from '../../archivedOpportunity/archivedOpportunity'
 
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
 test.before('setup database and app', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
   await appReady
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.beforeEach('populate database fixtures', async (t) => {

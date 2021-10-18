@@ -62,7 +62,7 @@ export const ItemDuration = ({ duration }) => {
 
   return (
     <ItemListing>
-      ⏱{' '}
+      ⏱&nbsp;
       <strong>
         <FormattedMessage
           id='itemlist.duration'
@@ -77,7 +77,7 @@ export const ItemDuration = ({ duration }) => {
 
 export const ItemStatus = ({ status }) =>
   <ItemListing>
-    📝
+    📝&nbsp;
     <strong>
       <FormattedMessage
         id='itemlist.status'
@@ -151,7 +151,7 @@ export const LocationsList = ({ locations }) =>
   (locations && locations.length
     ? (
       <ItemListing>
-   📍&nbsp;
+        📍&nbsp;
         <strong>
           <FormattedMessage
             id='itemlist.locations'
@@ -165,12 +165,12 @@ export const LocationsList = ({ locations }) =>
           )}
         </LocationUl>
       </ItemListing>
-    )
+      )
     : '')
 
 export const ItemVenue = ({ venue }) =>
   <ItemListing>
-    🏫
+    🏫&nbsp;
     <strong>
       <FormattedMessage
         id='itemlist.venue'
@@ -183,7 +183,7 @@ export const ItemVenue = ({ venue }) =>
 
 export const ItemResource = ({ resource }) =>
   <ItemListing>
-    🛠️
+    🛠️&nbsp;
     <strong>
       <FormattedMessage
         id='itemlist.resource'
@@ -243,7 +243,7 @@ export const ItemSpace = ({ space }) =>
   space
     ? (
       <ItemListing>
-        🐘
+        🐘&nbsp;
         <strong>
           <FormattedMessage
             id='ItemList.space'
@@ -252,5 +252,5 @@ export const ItemSpace = ({ space }) =>
           />
         </strong>&nbsp;&nbsp;&nbsp;{space}
       </ItemListing>
-    )
+      )
     : ''

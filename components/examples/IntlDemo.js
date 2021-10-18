@@ -1,7 +1,8 @@
 // Test translations example
 
 import { FormattedMessage, FormattedNumber } from 'react-intl'
-export default () =>
+
+const IntlDemo = () =>
   <div>
     <h1>Test Internationalisation Formatting</h1>
     <span>
@@ -11,8 +12,10 @@ export default () =>
         description='Use the local equivalent of Hello World.'
       />
     </span>
-  &nbsp;
+    &nbsp;
     <span>
       <FormattedNumber value={1000} />
     </span>
   </div>
+
+export default IntlDemo

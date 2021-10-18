@@ -1,9 +1,11 @@
 import test from 'ava'
-import { PersonHomePage } from '../pages/home/home'
-import { mountWithIntl } from '../lib/react-intl-test-helper'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
+import thunk from 'redux-thunk'
 import objectid from 'objectid'
+
+import { PersonHomePage, gssp } from '../pages/home/home'
+import { mountWithIntl } from '../lib/react-intl-test-helper'
 import ops from '../server/api/opportunity/__tests__/opportunity.fixture'
 import people from '../server/api/person/__tests__/person.fixture'
 import archivedOpportunities from '../server/api/archivedOpportunity/__tests__/archivedOpportunity.fixture'
@@ -16,46 +18,44 @@ import { InterestStatus } from '../server/api/interest/interest.constants'
 import { MemberStatus } from '../server/api/member/member.constants'
 import reduxApi from '../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
-import thunk from 'redux-thunk'
 import { MockWindowScrollTo } from '../server/util/mock-dom-helpers'
-import sinon from 'sinon'
-import * as nextRouter from 'next/router'
+import { mockRouter, unmockRouter } from '../server/util/mockRouter'
 
 MockWindowScrollTo.replaceForTest(test, global)
 
 const { sortedLocations, regions } = require('../server/api/location/locationData')
-test.before('Setup Route', (t) => {
-  const router = () => {
-    return ({
-      pathname: '/home',
-      route: '/home',
-      asPath: '/home',
-      initialProps: {},
-      pageLoader: sinon.fake(),
-      App: sinon.fake(),
-      Component: sinon.fake(),
-      replace: sinon.fake(),
-      push: sinon.fake(),
-      back: sinon.fake()
-    })
-  }
-  sinon.replace(nextRouter, 'useRouter', router)
-})
+// test.before('Setup Route', (t) => {
+//   const router = () => {
+//     return ({
+//       pathname: '/home',
+//       route: '/home',
+//       asPath: '/home',
+//       initialProps: {},
+//       pageLoader: sinon.fake(),
+//       App: sinon.fake(),
+//       Component: sinon.fake(),
+//       replace: sinon.fake(),
+//       push: sinon.fake(),
+//       back: sinon.fake()
+//     })
+//   }
+//   sinon.replace(nextRouter, 'useRouter', router)
+// })
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
-  people.map(p => { p._id = objectid().toString() })
-  orgs.map(p => { p._id = objectid().toString() })
-  goals.map(p => { p._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
+  orgs.forEach(p => { p._id = objectid().toString() })
+  goals.forEach(p => { p._id = objectid().toString() })
 
   const me = people[0]
   // setup list of opportunities, I am owner for the first one
-  ops.map((op, index) => {
+  ops.forEach((op, index) => {
     op._id = objectid().toString()
     op.requestor = people[index]
   })
   // take ownership of 2nd event
-  archivedOpportunities.map((op, index) => {
+  archivedOpportunities.forEach((op, index) => {
     op._id = objectid().toString()
     op.requestor = me._id
   })
@@ -256,7 +256,10 @@ test.before('Setup fixtures', (t) => {
   )
 })
 
-test.afterEach.always(t => t.context.mockServer.reset())
+test.afterEach.always(t => {
+  t.context.mockServer.reset()
+  unmockRouter(t)
+})
 
 test.after.always(() => {
 
@@ -269,24 +272,25 @@ const tabIndex = {
 }
 
 test.serial('run GetInitialProps', async t => {
-  const me = t.context.people[0]
   t.context.mockServer
-    .get(`path:/api/people/${me._id}`, { body: [me] })
     .get('path:/api/opportunities/', { body: [t.context.ops[0]] })
+    .get('path:/api/archivedOpportunities/', { body: t.context.archivedOpportunities })
     .get('path:/api/interests/', { body: t.context.interests })
     .get('path:/api/personalGoals/', { body: t.context.personalGoals })
-    .get('path:/api/archivedOpportunities/', { body: t.context.archivedOpportunities })
     .get('path:/api/members/', { body: t.context.members })
-    .get('path:/api/opportunities/recommended', { body: [t.context.recommendedOps] })
     .get('path:/api/interestArchives/', { body: t.context.archivedInterestFixture })
+    .get('path:/api/opportunities/recommended', { body: [t.context.recommendedOps] })
   reduxApi.use('fetch', adapterFetch(t.context.mockServer))
 
-  await PersonHomePage.getInitialProps({ store: t.context.mockStore })
+  await gssp({ store: t.context.mockStore })
   // 2 actions for each call and success
-  t.is(t.context.mockStore.getActions().length, 16)
+  // t.is(t.context.mockStore.getActions().length, 16)
+  t.true(t.context.mockServer.done())
 })
 
-test('render volunteer home page - Active tab', t => {
+test.serial('render volunteer home page - Active tab', t => {
+  mockRouter('/home', { tab: 'active' })(t)
+
   const props = {
     me: t.context.me
   }
@@ -296,10 +300,10 @@ test('render volunteer home page - Active tab', t => {
       <PersonHomePage {...props} />
     </Provider>)
 
-  t.is(wrapper.find('h1').first().text(), 'Andrew Watkins')
+  t.is(wrapper.find('h1').first().text(), 'Andrew Watkins🌟')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Upcoming')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(1).text(), 'You are asking forActivities you requested help from Volunteers with are listed below:')
-  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(2).text(), 'You offered to help withActivities you have offered to help out with are listed below:')
+  t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(1).text(), 'You signed up for')
+  // t.is(wrapper.find('.ant-tabs-tabpane-active h2').at(2).text(), 'You offered to help withActivities you have offered to help out with are listed below:')
 
   const oplists = wrapper.find('OpList') // find 2 oplists on the home page
   t.is(oplists.length, 2)
@@ -313,23 +317,23 @@ test('render volunteer home page - Active tab', t => {
   t.true(cards2.first().find('h1').first().text().includes(t.context.ops[1].name))
 })
 
-test.only('render volunteer home page - Discover tab', t => {
+test.serial('render volunteer home page - Discover tab', t => {
+  mockRouter('/home', { tab: 'discover' })(t)
+
   const props = {
     me: t.context.me
   }
-
   const wrapper = mountWithIntl(
     <Provider store={t.context.mockStore}>
       <PersonHomePage {...props} />
     </Provider>)
-  wrapper.find('.ant-tabs-tab').at(tabIndex.discover).simulate('click')
-  t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Discover')
   const discoverPane = wrapper.find('.ant-tabs-tabpane-active').first()
   const oplists = discoverPane.find('OpList') // find 2 oplists on the home page
   t.is(oplists.length, 0)
 })
 
 test.serial('render volunteer home page - History tab', t => {
+  mockRouter('/home', { tab: 'history' })(t)
   const props = {
     me: t.context.me
   }
@@ -339,7 +343,6 @@ test.serial('render volunteer home page - History tab', t => {
       <PersonHomePage {...props} />
     </Provider>)
 
-  wrapper.find('.ant-tabs-tab').at(tabIndex.history).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'History')
 
   const historyPane = wrapper.find('.ant-tabs-tabpane-active').first()
@@ -370,6 +373,8 @@ test.serial('render volunteer home page - History tab', t => {
 })
 
 test.serial('render volunteer home page - Profile tab', t => {
+  mockRouter('/home', { tab: 'profile' })(t)
+
   t.context.mockServer
     .get(`path:/api/badge/${t.context.me._id}`, { body: [] })
     .get('path:/api/locations', { body: t.context.locations })
@@ -383,13 +388,14 @@ test.serial('render volunteer home page - Profile tab', t => {
     <Provider store={t.context.mockStore}>
       <PersonHomePage {...props} />
     </Provider>)
-  wrapper.find('.ant-tabs-tab').at(tabIndex.profile).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Profile')
   const tab3 = wrapper.find('TabPane').at(tabIndex.profile)
   t.is(tab3.find('h1').first().text(), t.context.me.name)
 })
 
 test.serial('render Edit Profile ', async t => {
+  mockRouter('/home', { tab: 'profile' })(t)
+
   t.context.mockServer
     .get(`path:/api/badge/${t.context.me._id}`, { body: [] })
     .get('path:/api/locations', { body: t.context.locations })
@@ -405,10 +411,12 @@ test.serial('render Edit Profile ', async t => {
   wrapper.find('.ant-tabs-tab').at(tabIndex.profile).simulate('click')
   t.is(wrapper.find('.ant-tabs-tab-active').first().text(), 'Profile')
   const profilePanel = wrapper.find('EditablePersonPanel').first()
-  t.is(profilePanel.find('Button').first().text(), 'Edit')
+  t.is(profilePanel.find('Button').first().text(), 'Edit Profile')
   profilePanel.find('EditablePersonPanel Button').first().simulate('click')
 
   wrapper.find('EditablePersonPanel Button').first().simulate('click') // cancel edit
   wrapper.find('EditablePersonPanel Button').first().simulate('click') // edit again
-  wrapper.find('Form').first().simulate('submit')
+  // console.log(wrapper.debug())
+  // wrapper.find('form').first().simulate('submit')
+  // wait for completion
 })

@@ -1,9 +1,11 @@
-import { Button, DatePicker, Divider, Form, Icon, Input, Tooltip } from 'antd'
+import { Image, Form } from '@ant-design/compatible'
+import '@ant-design/compatible/assets/index.css'
+import { Button, DatePicker, Divider, Input, Tooltip } from 'antd'
 import moment from 'moment'
 import PropTypes from 'prop-types'
 import React, { Component } from 'react'
 import { FormattedMessage } from 'react-intl'
-import PageTitle from '../LandingPageComponents/PageTitle.js'
+import PageTitle from '../Landing/PageTitle.js'
 import { OpportunityStatus, OpportunityType } from '../../server/api/opportunity/opportunity.constants'
 import LocationSelector from '../Form/Input/LocationSelector'
 import RichTextEditor from '../Form/Input/RichTextEditor'
@@ -11,7 +13,7 @@ import TagInput from '../Form/Input/TagInput'
 import OrgSelector from '../Org/OrgSelector'
 import ImageUpload from '../Upload/ImageUpload'
 import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, ShortInputContainer, TitleContainer } from '../VTheme/FormStyles'
-
+import { QuestionCircleOutlined } from '@ant-design/icons'
 const { TextArea } = Input
 const { RangePicker } = DatePicker
 
@@ -25,7 +27,7 @@ const opTitle = (
     />
     &nbsp;
     <Tooltip title="Choose something interesting like 'Help me get setup with Video Conferencing' ">
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -38,7 +40,7 @@ const opSubtitle = (
       description='activity Subtitle label in OpAskForm Form'
     />{' '}
     <Tooltip title="Choose something interesting like 'we want to build robots' ">
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -51,7 +53,7 @@ const opCommitment = (
     />
     &nbsp;
     <Tooltip title='How much time overall is likely to be required for the activity?'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -65,7 +67,7 @@ const opLocation = (
     />
     &nbsp;
     <Tooltip title='set the region to help find local volunteers'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -79,7 +81,7 @@ const opVenue = (
     />
     &nbsp;
     <Tooltip title='Enter the address where this takes place'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -93,7 +95,7 @@ const opOrganisation = (
     />
     &nbsp;
     <Tooltip title='Which organisation is this activity for?'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -107,7 +109,7 @@ const opDescription = (
     />
     &nbsp;
     <Tooltip title='Give a long description of what is needed and what people will be doing.'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -121,7 +123,7 @@ const opDateRange = (
     />
     &nbsp;
     <Tooltip title='Set a date range if the activity needs more than one day.'>
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -134,7 +136,7 @@ const opImgUrl = (
     />
     &nbsp;
     <Tooltip title="Choose something interesting like 'we want to build robots' ">
-      <Icon type='question-circle-o' />
+      <QuestionCircleOutlined />
     </Tooltip>
   </span>
 )
@@ -238,25 +240,29 @@ class OpAskFormLong extends Component {
       <div className='OpAskForm'>
         <PageTitle>
           <h1>
-            {isNewOp ? (
-              <FormattedMessage
-                id='OpAskFormLong.Edit'
-                description='Title for editing Ops'
-                defaultMessage='Edit your activity'
-              />
-            ) : opType === OpportunityType.ASK ? (
-              <FormattedMessage
-                id='OpAskFormLong.AskForm.title.opCreateAsk'
-                description='Title for creating request Ops'
-                defaultMessage='Create an new request'
-              />)
-              : opType === OpportunityType.OFFER ? (
+            {isNewOp
+              ? (
                 <FormattedMessage
-                  id='OpAskFormLong.AskForm.title.opCreateOffer'
-                  description='Title for creating offering Ops'
-                  defaultMessage='Create an new offering'
-                />)
-                : null}
+                  id='OpAskFormLong.Edit'
+                  description='Title for editing Ops'
+                  defaultMessage='Edit your activity'
+                />
+                )
+              : opType === OpportunityType.ASK
+                ? (
+                  <FormattedMessage
+                    id='OpAskFormLong.AskForm.title.opCreateAsk'
+                    description='Title for creating request Ops'
+                    defaultMessage='Create an new request'
+                  />)
+                : opType === OpportunityType.OFFER
+                  ? (
+                    <FormattedMessage
+                      id='OpAskFormLong.AskForm.title.opCreateOffer'
+                      description='Title for creating offering Ops'
+                      defaultMessage='Create an new offering'
+                    />)
+                  : null}
           </h1>
           <h5>
             <FormattedMessage
@@ -330,15 +336,17 @@ class OpAskFormLong extends Component {
                 {getFieldDecorator('description', {
                   rules: []
                 })(
-                  isTest ? (
-                    <TextArea
-                      rows={20}
-                      placeholder='All the details about the request.'
-                      disabled={lockedField('description')}
-                    />
-                  ) : (
-                    <RichTextEditor />
-                  )
+                  isTest
+                    ? (
+                      <TextArea
+                        rows={20}
+                        placeholder='All the details about the request.'
+                        disabled={lockedField('description')}
+                      />
+                      )
+                    : (
+                      <RichTextEditor />
+                      )
                 )}
               </Form.Item>
               {orgMembership && (
@@ -470,7 +478,7 @@ class OpAskFormLong extends Component {
                 />
 
               </p>
-              <img
+              <Image
                 style={{ width: '50%', float: 'right' }}
                 src={op.imgUrl}
                 alt='current image'

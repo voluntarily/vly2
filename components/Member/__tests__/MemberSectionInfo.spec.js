@@ -6,7 +6,7 @@ import test from 'ava'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import MemberSection from '../MemberSection'
 import { Provider } from 'react-redux'
-import reduxApi, { makeStore } from '../../../lib/redux/reduxApi'
+import reduxApi, { makeStoreTest } from '../../../lib/redux/reduxApi'
 import adapterFetch from 'redux-api/lib/adapters/fetch'
 import fixture from './member.fixture.js'
 import { MemberStatus } from '../../../server/api/member/member.constants'
@@ -25,7 +25,7 @@ test.before('Setup fixtures', t => {
       me: t.context.people[1]
     }
   }
-  t.context.store = makeStore(initStore)
+  t.context.store = makeStoreTest(initStore)
   t.context.fetchMock = fetchMock.sandbox()
   t.context.fetchMock.config.overwriteRoutes = false
   reduxApi.use('fetch', adapterFetch(t.context.fetchMock))
@@ -56,7 +56,7 @@ test.serial('What instructions non members see', async t => {
       me: t.context.people[1]
     }
   }
-  const store = makeStore(initStore)
+  const store = makeStoreTest(initStore)
   const wrapper = mountWithIntl(
     <Provider store={store}>
       <MemberSection org={org} />
@@ -83,7 +83,7 @@ test.serial('What instructions followers see', async t => {
       me: t.context.people[1]
     }
   }
-  const store = makeStore(initStore)
+  const store = makeStoreTest(initStore)
   const wrapper = mountWithIntl(
     <Provider store={store}>
       <MemberSection org={org} />
@@ -110,7 +110,7 @@ test.serial('What instructions joiners see', async t => {
       me: t.context.people[1]
     }
   }
-  const store = makeStore(initStore)
+  const store = makeStoreTest(initStore)
   const wrapper = mountWithIntl(
     <Provider store={store}>
       <MemberSection org={org} />
@@ -137,7 +137,7 @@ test.serial('What instructions validators see', async t => {
       me: t.context.people[1]
     }
   }
-  const store = makeStore(initStore)
+  const store = makeStoreTest(initStore)
   const wrapper = mountWithIntl(
     <Provider store={store}>
       <MemberSection org={org} />
@@ -164,7 +164,7 @@ test.serial('What instructions members see', async t => {
       me: t.context.people[1]
     }
   }
-  const store = makeStore(initStore)
+  const store = makeStoreTest(initStore)
   const wrapper = mountWithIntl(
     <Provider store={store}>
       <MemberSection org={org} />
@@ -209,7 +209,7 @@ const testNoInfo = async (t, status) => {
       me: t.context.people[1]
     }
   }
-  const store = makeStore(initStore)
+  const store = makeStoreTest(initStore)
   const wrapper = mountWithIntl(
     <Provider store={store}>
       <MemberSection org={org} />

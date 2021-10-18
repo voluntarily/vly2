@@ -2,8 +2,8 @@ import React from 'react'
 import test from 'ava'
 import Navigation from '../Navigation/Navigation'
 import { mountWithIntl } from '../../lib/react-intl-test-helper'
-import mockUseRouter from '../../server/util/mockUseRouter'
-test.before('Setup Route', mockUseRouter('/about'))
+import mockRouter from '../../server/util/mockRouter'
+test.before('Setup Route', mockRouter('/about'))
 const menu = [
   {
     key: 'acts',

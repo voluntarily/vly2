@@ -44,7 +44,7 @@ personalVerificationSchema.plugin(idvalidator)
 personalVerificationSchema.plugin(accessibleFieldsPlugin)
 personalVerificationSchema.plugin(accessibleRecordsPlugin)
 // protect multiple imports
-var PersonalVerification
+let PersonalVerification
 if (mongoose.models.PersonalVerification) {
   PersonalVerification = mongoose.model(SchemaName)
 } else {

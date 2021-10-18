@@ -1,14 +1,14 @@
 import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import fs from 'fs-extra'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 
-test.before('before connect to database', async (t) => {
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
     await appReady
     fs.emptyDirSync('public/static/upload-test')
   } catch (e) { console.error('image.spec.js error before', e) }

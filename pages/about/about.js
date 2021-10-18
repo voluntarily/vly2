@@ -1,11 +1,10 @@
 import { Button } from 'antd'
 import Markdown from 'markdown-to-jsx'
 import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import styled from 'styled-components'
 import AboutCTA from '../../components/About/AboutCTA.js'
 import { FullPage, Spacer } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
 import { injectIntl } from 'react-intl'
 import aboutEn from './about-en-md.js'
 import aboutMi from './about-mi-md.js'
@@ -70,20 +69,20 @@ class About extends Component {
 
     return (
       <FullPage>
-        <Helmet>
+        <Head>
           <title>Voluntarily - Home</title>
-        </Helmet>
+        </Head>
         <Spacer />
         <Spacer />
         <AboutSection>
           <Markdown
-            children={about}
             options={{
               overrides: {
                 Button: { component: Button }
               }
             }}
-          />
+          >{about}
+          </Markdown>
         </AboutSection>
         <AboutCTA />
 
@@ -106,4 +105,4 @@ class About extends Component {
 
 export const AboutTest = About // for test
 
-export default publicPage(injectIntl(About))
+export default injectIntl(About)

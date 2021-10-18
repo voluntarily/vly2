@@ -1,204 +1,94 @@
-import { Divider, Form } from 'antd'
+import { Form, Divider } from 'antd'
 import moment from 'moment'
-import PropTypes from 'prop-types'
-import React, { Component } from 'react'
-import { OpportunityStatus } from '../../server/api/opportunity/opportunity.constants'
 import OpFormDate from './OpFormDate'
 import OpFormDescription from './OpFormDescription'
 import OpFormPublishBtns from './OpFormDoneBtns'
 import OpFormLocation from './OpFormLocation'
 import OpFormTitle from './OpFormTitle'
 
-class OpShortForm extends Component {
-  constructor (props) {
-    super(props)
+export const OpShortForm = ({
+  op,
+  me,
+  onSubmit,
+  onCancel,
+  locations
+}) => {
+  const [form] = Form.useForm()
+  // const [publish, setPublish] = useState(true)
+  const initialValues = op
 
-    this.state = {
-      startDateValue: null,
-      endDateValue: null
+  const isoDuration = moment.duration(op.duration)
+  initialValues.durationHours = Math.floor(isoDuration.asHours())
+  initialValues.durationMinutes = isoDuration.minutes()
+  initialValues.startDate = op.date[0] && moment(op.date[0])
+  initialValues.endDate = op.date[1] && moment(op.date[1])
+
+  const onFinish = (values) => {
+    // console.log('onFinish', values)
+    values.locations = [...new Set(values.locations)]
+
+    // compose a correct op from the fields.
+    const duration = moment.duration()
+    duration.add(Number(values.durationHours), 'hours')
+    duration.add(Number(values.durationMinutes), 'minutes')
+    op = {
+      ...op,
+      ...values,
+      offerOrg: values.offerOrg && values.offerOrg.key,
+      duration: duration?.toISOString(),
+      // in this version of the form we only have start date
+      date: [values.startDate?.toISOString()]
+
     }
+
+    // remove items we used for fields but don't want to send to database
+    delete op.durationHours
+    delete op.durationMinutes
+    delete op.startDate
+    delete op.endDate
+
+    // in the short form the are no draft versions - always active
+    // op.status = publish
+    //   ? OpportunityStatus.ACTIVE
+    //   : OpportunityStatus.DRAFT
+
+    onSubmit(op)
   }
 
-  componentDidMount () {
-    // // Call validateFields here to disable the submit button when on a blank form.
-    // // empty callback supresses a default which prints to the console.
-    // this.props.form.validateFields(['title']);
-    const op = this.props.op
-    this.setState({ startDateValue: op.date[0] })
-    this.setState({ endDateValue: op.date[1] })
-  }
+  const orgMembership =
+    me?.orgMembership &&
+    me.orgMembership.map(member => member.organisation)
 
-  handleSubmit = (draftOrPublish) => {
-    this.setState({
-      requiredForPublish: draftOrPublish === 'publish'
-    }
-    , () => {
-      this.props.form.validateFields((err, values) => {
-        if (!err) {
-          const op = this.props.op
-          const { startDateValue, endDateValue } = this.state
-          op.date = [] // Dirty work around to not change schema
-          op.date.push(startDateValue, endDateValue)
-          // op.name = values.name
-          op.subtitle = values.subtitle
-          // op.tags = values.tags
+  return (
+    <div className='OpShortForm'>
+      <OpFormTitle type={op.type} title={op.name} onBack={onCancel} />
 
-          const duration = moment.duration()
-          duration.add(Number(values.durationHours), 'hours')
-          duration.add(Number(values.durationMinutes), 'minutes')
-          op.duration = duration.toISOString()
-
-          op.locations = [...new Set([values.city, values.region])]
-          delete op.location
-          op.address = {
-            street: values.street,
-            suburb: values.suburb,
-            city: values.city,
-            postcode: values.postcode,
-            region: values.region
-          }
-          op.offerOrg = values.offerOrg && values.offerOrg.key
-          op.description = values.description
-          // op.imgUrl = values.imgUrl
-          // op.venue = values.venue
-          op.status = draftOrPublish === 'publish'
-            ? OpportunityStatus.ACTIVE
-            : OpportunityStatus.DRAFT
-
-          this.props.onSubmit(op)
-        } else {
-          window.scrollTo(0, 0)
-          console.error('field validation error:', err)
-        }
-      })
-    })
-  }
-
-  changeFormValue = (state, value) => {
-    this.setState({
-      [state]: value
-    })
-  }
-
-  handleStartDateChange = value => {
-    this.changeFormValue('startDateValue', value)
-  }
-
-  render () {
-    const op = this.props.op
-
-    const {
-      getFieldDecorator,
-      setFieldsValue
-    } = this.props.form
-
-    // Only show error after a field is touched.
-    // const nameError = isFieldTouched('name') && getFieldError('name')
-    const orgMembership =
-      this.props.me.orgMembership &&
-      this.props.me.orgMembership.map(member => member.organisation)
-    return (
-      <div className='OpShortForm'>
-        <OpFormTitle type={op.type} title={op.name} onBack={this.props.onCancel} />
+      <Form
+        form={form}
+        name='op_short_form'
+        layout='vertical'
+        initialValues={initialValues}
+        onFinish={onFinish}
+        size='large'
+        scrollToFirstError
+      >
         <Divider />
-        <Form colon={false}>
-          <OpFormDescription getFieldDecorator={getFieldDecorator} type={op.type} />
-          <Divider />
-          <OpFormLocation getFieldDecorator={getFieldDecorator} setFieldsValue={setFieldsValue} type={op.type} orgMembership={orgMembership} addressFinderKey={this.props.locations.addressFinderKey} />
-          <Divider />
-          <OpFormDate getFieldDecorator={getFieldDecorator} type={op.type} onChange={this.handleStartDateChange} />
-          {/* <OpFormTags getFieldDecorator={getFieldDecorator} existingTags={this.props.existingTags} /> */}
-          <Divider />
+        <OpFormDescription type={op.type} />
+        <Divider />
+        <OpFormLocation form={form} type={op.type} orgMembership={orgMembership} addressFinderKey={locations.addressFinderKey} />
+        <Divider />
+        <OpFormDate type={op.type} />
 
-          <OpFormPublishBtns getFieldDecorator={getFieldDecorator} type={op.type} onSubmit={this.handleSubmit} onCancel={this.props.onCancel} />
-        </Form>
-      </div>
-    )
-  }
+        <Divider />
+
+        <OpFormPublishBtns type={op.type} onCancel={onCancel} />
+        {/* <OpFormPublishBtns type={op.type} onCancel={onCancel} canSaveDraft onSaveDraft={() => setPublish(false)} /> */}
+      </Form>
+    </div>
+  )
 }
 
-OpShortForm.propTypes = {
-  op: PropTypes.shape({
-    _id: PropTypes.string,
-    name: PropTypes.string,
-    subtitle: PropTypes.string,
-    imgUrl: PropTypes.string,
-    duration: PropTypes.string,
-    locations: PropTypes.arrayOf(PropTypes.string),
-    address: PropTypes.shape({
-      street: PropTypes.string,
-      suburb: PropTypes.string,
-      city: PropTypes.string,
-      postcode: PropTypes.string,
-      region: PropTypes.string
-    }),
-    offerOrg: PropTypes.oneOfType([
-      PropTypes.string,
-      PropTypes.shape({
-        _id: PropTypes.string
-      })
-    ]),
-    date: PropTypes.array,
-    status: PropTypes.string,
-    // requestor: PropTypes.string,
-    tags: PropTypes.arrayOf(PropTypes.string),
-    organisationVenue: PropTypes.string
+// export const PersonDetailFormWithAddressFinder = withAddressFinder(OpShortForm)
+// export default connect(store => ({ me: store.session.me }))(PersonDetailFormWithAddressFinder)
 
-  }),
-  me: PropTypes.shape({
-    _id: PropTypes.string,
-    locations: PropTypes.arrayOf(PropTypes.string),
-    orgMembership: PropTypes.arrayOf(
-      PropTypes.shape({
-        _id: PropTypes.string,
-        name: PropTypes.string
-      })
-    )
-  }),
-  form: PropTypes.object,
-  params: PropTypes.shape({
-    id: PropTypes.string.isRequired
-  }),
-  onSubmit: PropTypes.func.isRequired,
-  onCancel: PropTypes.func.isRequired,
-  existingTags: PropTypes.arrayOf(PropTypes.string).isRequired,
-  locations: PropTypes.shape({
-    addressFinderKey: PropTypes.string.isRequired
-  })
-  // dispatch: PropTypes.func.isRequired,
-}
-
-export default Form.create({
-  name: 'opportunity_detail_form',
-  mapPropsToFields ({ op }) {
-    if (!op.locations) { op.locations = [op.location] }
-
-    const isoDuration = moment.duration(op.duration)
-    const totalHours = Math.floor(isoDuration.asHours())
-
-    return {
-      // name: Form.createFormField({ ...op.name, value: op.name }),
-      subtitle: Form.createFormField({ value: op.subtitle }),
-      description: Form.createFormField({ value: op.description }),
-      durationHours: Form.createFormField({ value: totalHours }),
-      durationMinutes: Form.createFormField({ value: isoDuration.minutes() }),
-      street: Form.createFormField({ value: op.address && op.address.street }),
-      suburb: Form.createFormField({ value: op.address && op.address.suburb }),
-      city: Form.createFormField({ value: op.address && op.address.city }),
-      postcode: Form.createFormField({ value: op.address && op.address.postcode }),
-      region: Form.createFormField({ value: op.address && op.address.region }),
-      offerOrg: Form.createFormField({ value: { key: op.offerOrg ? op.offerOrg._id : '' } }),
-      // imgUrl: Form.createFormField({ value: op.imgUrl }),
-      // status: Form.createFormField({ value: op.status }),
-      // tags: Form.createFormField({ value: op.tags }),
-      startDate: Form.createFormField({
-        value: op.startDate != null ? moment(op.startDate) : null
-      })
-      // endDate: Form.createFormField({
-      //   value: op.endDate != null ? moment(op.endDate) : null
-      // }),
-      // venue: Form.createFormField({ value: op.venue || '' })
-    }
-  }
-
-})(OpShortForm)
+export default OpShortForm

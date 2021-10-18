@@ -1,5 +1,5 @@
 import styled from 'styled-components'
-import { Tag, Icon } from 'antd'
+import { Tag } from 'antd'
 
 /*
 ====================================================
@@ -896,13 +896,19 @@ export const BigQuoteAuthor = styled.p`
     line-height: 1.5;
   }
 `
-export const ContactIcon = ({ type }) =>
-  <Icon
-    // theme='twoTone'
-    twoToneColor='blue'
-    type={type}
-    style={{ marginRight: '0.5rem', fontSize: '1rem', color: '#6549AA' }}
-  />
+// delegated props,  usage <ContactIcon icon={TwitterOutlined} />
+export const ContactIcon = ({ icon, children }) => {
+  const Icon = icon // Note: variable name _must_ start with a capital letter
+  return (
+    <Icon
+      twoToneColor='blue'
+      style={{ marginRight: '1rem', fontSize: '1.5rem', color: '#6549AA' }}
+    >
+      {children}
+    </Icon>
+  )
+}
+
 /*
 ====================================================
 
@@ -1315,9 +1321,6 @@ left: 0.5rem;
   margin: 0.5rem 0 0 0;
 `
 
-export const StyledIcon = styled(Icon)`
-  margin-right: 0.5rem;
-`
 /* Contact list displayed for organisations */
 
 export const ContactList = styled.ul`

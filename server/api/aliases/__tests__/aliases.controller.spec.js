@@ -1,12 +1,12 @@
 import test from 'ava'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import { server, appReady } from '../../../server'
 import request from 'supertest'
 import sinon from 'sinon'
 import AliasSet from '../aliasSet'
 import { aliases } from './aliases.fixture'
 import { jwtData as jwtAdmin } from '../../../middleware/session/__tests__/setSession.fixture'
-import uuid from 'uuid'
+import { v4 as uuid } from 'uuid'
 import { Role } from '../../../services/authorize/role'
 import Person from '../../person/person'
 import jsonwebtoken from 'jsonwebtoken'
@@ -33,10 +33,9 @@ const createAdminAndGetToken = async () => {
   return jsonwebtoken.sign(jwt.idTokenPayload, 'secret')
 }
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   t.context.sandbox = sinon.createSandbox()
   await appReady
 })
@@ -44,10 +43,6 @@ test.before('before connect to database', async (t) => {
 test.afterEach.always(async (t) => {
   await AliasSet.deleteMany()
   await Tag.deleteMany()
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.serial('Return an empty array when there are no aliases in the DB', async (t) => {

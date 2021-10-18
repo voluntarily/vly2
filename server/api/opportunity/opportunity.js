@@ -6,11 +6,12 @@ const { OpportunityStatus, OpportunityType } = require('./opportunity.constants'
 const { SchemaName } = require('./opportunity.constants')
 
 const opportunityAddressSchema = new Schema({
-  street: String,
-  suburb: String,
-  city: String,
-  postcode: String,
-  region: String
+  street: { type: 'String' },
+  suburb: { type: 'String' },
+  city: { type: 'String' },
+  postcode: { type: 'String' },
+  region: { type: 'String' },
+  addressSummary: { type: 'String' }
 })
 
 const opportunitySchema = new Schema({
@@ -43,7 +44,7 @@ const opportunitySchema = new Schema({
   location: String, // region or city,  deprecated - use locations array
   locations: { type: [String], default: [] }, // list of places where Op is of interest region or city,
   address: opportunityAddressSchema,
-  venue: String, // actual address
+  venue: String, // deprecated - use actual address
   date: [Date], // start and optional end dates
   fromActivity: { type: Schema.Types.ObjectId, ref: 'Activity', required: false },
   offerOrg: { type: Schema.Types.ObjectId, ref: 'Organisation', required: false },
@@ -58,7 +59,7 @@ opportunitySchema.plugin(accessibleFieldsPlugin)
 opportunitySchema.index({ tags: 1 })
 
 // protect multiple imports
-var Opportunity
+let Opportunity
 
 if (mongoose.models.Opportunity) {
   Opportunity = mongoose.model(SchemaName)

@@ -15,19 +15,21 @@ const CardWrapper = styled.div`
 
 const OpList = ({ ops, ...props }) => (
   <Grid>
-    {ops ? (
-      ops.map((op, index) =>
-        <CardWrapper key={index}>
-          <OpCard size='Small' op={op} />
-        </CardWrapper>
-      )
-    ) : (
-      <FormattedMessage
-        id='OpList.NoMatchingActivities'
-        defaultMessage='No matching activities'
-        description='no opportunities message in OpList'
-      />
-    )}
+    {ops
+      ? (
+          ops.map((op, index) =>
+            <CardWrapper key={index}>
+              <OpCard size='Small' op={op} />
+            </CardWrapper>
+          )
+        )
+      : (
+        <FormattedMessage
+          id='OpList.NoMatchingActivities'
+          defaultMessage='No matching activities'
+          description='no opportunities message in OpList'
+        />
+        )}
   </Grid>
 )
 

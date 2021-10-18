@@ -66,7 +66,7 @@ const MemberSection = ({ org, me, members, isAdmin, dispatch }) => {
     const realMembers = members.data.filter(memberOrOrgAdmin)
     const followers = members.data.filter(follower)
     const joiners = members.data.filter(joinerOrValidator)
-    orgAdminSection =
+    orgAdminSection = (
       <div>
         <SubSection>
           <InviteMembers org={org} />
@@ -118,11 +118,12 @@ const MemberSection = ({ org, me, members, isAdmin, dispatch }) => {
           />
         </SubSection>
       </div>
+    )
   }
 
   let joinerInfoSection = ''
   if (joinerOrValidator(myMembership)) {
-    joinerInfoSection =
+    joinerInfoSection = (
       <section>
         <h2>
           <FormattedMessage
@@ -131,14 +132,15 @@ const MemberSection = ({ org, me, members, isAdmin, dispatch }) => {
             description='label for follower table on org detail page'
           />
         </h2>
-        <Html children={org.info.joiners || ''} />
+        <Html>{org.info.joiners || ''}</Html>
       </section>
+    )
   }
 
   // full Members see instructions
   let memberInfoSection = ''
   if (memberOrOrgAdmin(myMembership)) {
-    memberInfoSection =
+    memberInfoSection = (
       <section>
         <h2>
           <FormattedMessage
@@ -147,14 +149,16 @@ const MemberSection = ({ org, me, members, isAdmin, dispatch }) => {
             description='label for org info for members detail page'
           />
         </h2>
-        <Html children={org.info.members || ''} />
+        <Html>{org.info.members || ''}</Html>
+
       </section>
+    )
   }
 
   // full Members see instructions
   let followerInfoSection = ''
   if (follower(myMembership)) {
-    followerInfoSection =
+    followerInfoSection = (
       <section>
         <h2>
           <FormattedMessage
@@ -163,13 +167,15 @@ const MemberSection = ({ org, me, members, isAdmin, dispatch }) => {
             description='label for org info for followers detail page'
           />
         </h2>
-        <Html children={org.info.followers || ''} />
+        <Html>{org.info.followers || ''}</Html>
+
       </section>
+    )
   }
 
   let nonMemberInfoSection = ''
   if (nonMember(myMembership)) {
-    nonMemberInfoSection =
+    nonMemberInfoSection = (
       <section>
         <h2>
           <FormattedMessage
@@ -178,16 +184,19 @@ const MemberSection = ({ org, me, members, isAdmin, dispatch }) => {
             description='message to non members on the org members tab'
           />
         </h2>
-        <Html children={org.info.outsiders || ''} />
+        <Html>{org.info.outsiders || ''}</Html>
+
       </section>
+    )
   }
 
   let memberExportSection = ''
   if (myMembership.status === MemberStatus.ORGADMIN || isAdmin) {
-    memberExportSection =
+    memberExportSection = (
       <section>
         <MemberExport members={members.data} />
       </section>
+    )
   }
 
   return (

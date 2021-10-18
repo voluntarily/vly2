@@ -2,28 +2,24 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Organisation from '../organisation'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import orgs from './organisation.fixture.js'
 import { Role } from '../../../services/authorize/role'
 import Person from '../../person/person'
 import jsonwebtoken from 'jsonwebtoken'
-import uuid from 'uuid'
+import { v4 as uuid } from 'uuid'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 import { MemberStatus } from '../../member/member.constants'
 import Member from '../../member/member'
 import cuid from 'cuid'
-import slug from 'limax'
+import slug from 'slug'
 import { OrganisationRole } from '../organisation.constants'
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   await appReady
   await Organisation.create(orgs).catch(() => 'Unable to create orgs')
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 const endpointUrl = '/api/organisations'

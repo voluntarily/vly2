@@ -1,7 +1,7 @@
 import PropTypes from 'prop-types'
 import React from 'react'
 import { config } from '../../config/clientConfig'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { SideBarGrid, BannerDetail } from '../VTheme/VTheme'
 import {
   Left,
@@ -30,7 +30,7 @@ const OpBanner = ({ op, children }) => {
   const creator = `@${requestor.name || ''}`
   return (
     <>
-      <Helmet>
+      <Head>
         <title>{op.name} - Voluntarily</title>
         <meta name='twitter:card' content='summary' />
         <meta name='twitter:site' content='@voluntarilyHQ' />
@@ -39,7 +39,7 @@ const OpBanner = ({ op, children }) => {
         <meta property='og:title' content={op.name} />
         <meta property='og:description' content={description} />
         <meta property='og:image' content={op.imgUrl} />
-      </Helmet>
+      </Head>
       {/* // add space for the action bar */}
       <SideBarGrid>
         <Left>
@@ -65,7 +65,8 @@ const OpBanner = ({ op, children }) => {
           </>
         </BannerDetail>
       </SideBarGrid>
-    </>)
+    </>
+  )
 }
 
 OpBanner.propTypes = {

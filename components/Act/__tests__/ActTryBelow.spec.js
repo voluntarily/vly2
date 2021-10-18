@@ -25,7 +25,7 @@ test('shallow the card with some counts', t => {
     <ActTryBelow act={act} counts={counts} role={Role.OPPORTUNITY_PROVIDER} />
   )
 
-  t.is((wrapper.find('FormattedMessage').first().props().id), 'ActTryBelow.prompt')
+  t.is((wrapper.find('MemoizedFormattedMessage').first().props().id), 'ActTryBelow.prompt')
 })
 
 test('shallow the card with no OP', t => {

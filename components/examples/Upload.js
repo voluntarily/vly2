@@ -1,4 +1,5 @@
-import { Button, Icon, message, Upload } from 'antd'
+import { UploadOutlined } from '@ant-design/icons'
+import { Button, message, Upload } from 'antd'
 import { Component } from 'react'
 // import { JSDOM } from 'jsdom'
 // const dom = new JSDOM(`<!DOCTYPE html><p>Hello world</p>`)
@@ -29,7 +30,7 @@ export default class Uploader extends Component {
     const body = (process.env.NODE_ENV !== 'test') &&
       <Upload {...this.pprops}>
         <Button>
-          <Icon type='upload' />Click to Upload
+          <UploadOutlined />Click to Upload
         </Button>
       </Upload>
 

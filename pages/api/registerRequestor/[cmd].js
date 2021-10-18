@@ -14,7 +14,7 @@
     - found but didn't match name - 400 Bad Request
 */
 
-export default async (req, res) => {
+export const command = async (req, res) => {
   if (!req.session.isAuthenticated) res.status(403).end()
   // check parameters
   try {
@@ -32,3 +32,4 @@ export default async (req, res) => {
     res.status(500).end()
   }
 }
+export default command

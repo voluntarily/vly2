@@ -9,7 +9,7 @@ can be used to setup a new database.
   /api/admin/testOps - loads a set of test people and opportunities
   /api/admin/testOrgs - loads a set of test people and opportunities
 */
-export default (req, res) => {
+export const setAdmin = (req, res) => {
   res.setHeader('Content-Type', 'application/json')
   // person must be authenticated administrator
   if (!req.session ||
@@ -27,3 +27,4 @@ export default (req, res) => {
   }
   res.send(result)
 }
+export default setAdmin

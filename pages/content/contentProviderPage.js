@@ -1,10 +1,9 @@
 import { Button, Divider } from 'antd'
 import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import styled from 'styled-components'
-import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
+import SectionTitle from '../../components/Landing/SectionTitle'
 import { BigQuote, BigQuoteAuthor, FullPage, H1, H3, H3Bold, H4, HalfGrid, P, PBold, Spacer, SpacerSmall, TripleGrid } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
 
 const GridContainer = styled.div`
   position: relative;
@@ -206,9 +205,9 @@ export class ContentProvider extends Component {
     return (
       <div>
         <FullPage>
-          <Helmet>
+          <Head>
             <title>Voluntarily - Business</title>
-          </Helmet>
+          </Head>
           <HeroContainer>
             <HalfGrid>
               <GridContainer>
@@ -363,8 +362,8 @@ export class ContentProvider extends Component {
               <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>HR system integration</PBold>
               <P>
-                V supports single sign on, so you don't have to remember extra
-                credentials if you're a large corp
+                V supports single sign on, so you don&apos;t have to remember extra
+                credentials if you&apos;re a large corp
               </P>
             </ItemContainer>
             <ItemContainer>
@@ -387,8 +386,8 @@ export class ContentProvider extends Component {
               <ItemIcon src='/static/img/icons/search.svg' />
               <PBold>Integration</PBold>
               <P>
-                V supports single sign on, so you don't have to remember extra
-                credentials if you're a large corp
+                Voluntarily.nz supports single sign on, so you don&apos;t have to remember extra
+                credentials if you&apos;re a large corp
               </P>
             </ItemContainer>
           </TripleGrid>
@@ -411,7 +410,7 @@ export class ContentProvider extends Component {
               <H3>Contact us</H3>
               <SpacerSmall />
               <P>
-              Want to get more involved in the project? Get in touch below.
+                Want to get more involved in the project? Get in touch below.
               </P>
               <br />
               <a>business@voluntarily.nz</a>
@@ -427,4 +426,4 @@ export class ContentProvider extends Component {
   }
 }
 
-export default publicPage(ContentProvider)
+export default ContentProvider

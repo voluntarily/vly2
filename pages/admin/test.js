@@ -1,11 +1,13 @@
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { Button, message } from 'antd'
 import { FormattedMessage } from 'react-intl'
 import { FullPage, Section } from '../../components/VTheme/VTheme'
-import adminPage from '../../hocs/adminPage'
 import fetch from 'isomorphic-fetch'
+import AccessDenied from '../../components/Navigation/AccessDenied'
 
-const TestPage = () => {
+const TestPage = ({ isAdmin }) => {
+  if (!isAdmin) return <AccessDenied />
+
   const handleRunTest = async () => {
     try {
       await fetch('/api/xadmin/runTest')
@@ -15,9 +17,9 @@ const TestPage = () => {
 
   return (
     <FullPage>
-      <Helmet>
+      <Head>
         <title>Voluntarily - E2E Testing</title>
-      </Helmet>
+      </Head>
       <h1>
         <FormattedMessage id='runTestTitle' defaultMessage='End-To-End Testing' description='title on Test index page' />
       </h1>
@@ -30,4 +32,4 @@ const TestPage = () => {
   )
 }
 
-export default adminPage(TestPage)
+export default TestPage

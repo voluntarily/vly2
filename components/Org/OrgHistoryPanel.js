@@ -19,12 +19,10 @@ export const OrgHistoryPanel = ({ organisationId }) => {
   const dispatch = useDispatch()
 
   useEffect(() => {
-    if (!loadingState.loading) {
-      dispatch(
-        reduxApi.actions.archivedOpportunities.get({ q: JSON.stringify({ offerOrg: organisationId }) })
-      )
-    }
-  }, [organisationId])
+    dispatch(
+      reduxApi.actions.archivedOpportunities.get({ q: JSON.stringify({ offerOrg: organisationId }) })
+    )
+  }, [organisationId, dispatch])
 
   let content = ''
 

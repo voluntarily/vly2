@@ -19,5 +19,5 @@ const TestReduxPage = () =>
     <Section title='Redux Async'><ReduxAsyncTest /></Section>
   </A4>
 
-// export default publicPage(TestReduxPage)
+// export default TestReduxPage
 export default TestReduxPage

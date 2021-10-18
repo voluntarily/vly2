@@ -1,5 +1,5 @@
 /* eslint-disable max-len */
-export default () => `
+export const SafetyMdEn = () => `
 # Trust & Safety
 
 In keep you safe we need to verify your identity, for this you’ll need a current drivers license.
@@ -11,3 +11,4 @@ In keep you safe we need to verify your identity, for this you’ll need a curre
 * Check the details of your drivers licence with NZTA to make sure it’s valid
 <br/><br/>
 `
+export default SafetyMdEn

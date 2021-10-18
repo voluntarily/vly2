@@ -2,7 +2,7 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Goal from '../goal'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import goals from './goal.fixture.js'
 import { GoalGroup } from '../goalGroup'
 
@@ -18,17 +18,13 @@ const testGoal = {
   evaluation: () => { return false }
 }
 
-test.before('before connect to database', async (t) => {
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   try {
-    t.context.memMongo = new MemoryMongo()
-    await t.context.memMongo.start()
     await appReady
     t.context.goals = await Goal.create(goals).catch((e) => console.error('Unable to create goals', e))
   } catch (e) { console.error('goal.spec.js before error:', e) }
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.serial('verify fixture database has goals', async t => {
@@ -109,8 +105,8 @@ test.serial('Should correctly give reverse sorted goals of group', async t => {
     .expect(200)
     .expect('Content-Type', /json/)
   const got = res.body
-  t.is(got.length, 2)
-  t.is(got[0].slug, 'goal-complete-school-profile')
+  t.is(got.length, 3)
+  t.is(got[0].slug, 'test-003')
 })
 
 const queryString = params => Object.keys(params).map((key) => {

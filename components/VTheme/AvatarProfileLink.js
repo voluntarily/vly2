@@ -1,3 +1,4 @@
+import { UserOutlined } from '@ant-design/icons'
 import { Avatar } from 'antd'
 import React from 'react'
 import Link from 'next/link'
@@ -14,7 +15,7 @@ export function AvatarProfile ({ person }) {
           shape='round'
           onClick={() => Router.push(`/people/${person._id}`)}
           src={person.imgUrl}
-          icon='user'
+          icon={<UserOutlined />}
         />&nbsp;&nbsp;
         <span>{person.nickname}</span>
         {person.role && <PersonRoleIcons roles={person.role} />}

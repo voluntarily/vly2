@@ -19,7 +19,7 @@ export const EditablePersonPanel = ({ person, me }) => {
       ])
     }
     getEditorOptions()
-  }, [])
+  }, [dispatch])
 
   const doneEditing = () => {
     window.scrollTo(0, 0)
@@ -44,13 +44,12 @@ export const EditablePersonPanel = ({ person, me }) => {
         locations={locations.data[0]}
         onSubmit={handleUpdate}
         onCancel={doneEditing}
-      />)
+      />
+    )
   }
 
   return (
-    <>
-      <PersonDetail person={person} canEdit panelEdit={() => setEditing(true)} />
-    </>
+    <PersonDetail person={person} canEdit panelEdit={() => setEditing(true)} />
   )
 }
 

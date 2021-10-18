@@ -3,7 +3,7 @@ import { loadGoals } from '../../../server/api/goal/loadGoals'
 /* The /api/admin endpoint provides some utility calls that
   /api/admin/initGoals - loads some initial goals from a designated file
 */
-export default (req, res) => {
+export const LoadGoals = (req, res) => {
   res.setHeader('Content-Type', 'application/json')
   // person must be authenticated administrator
   if (!req.session ||
@@ -19,3 +19,5 @@ export default (req, res) => {
     return res.status(400).json(e)
   }
 }
+
+export default LoadGoals

@@ -4,16 +4,15 @@ import { ActListSection } from '../ActListSection'
 import { mountWithIntl } from '../../../lib/react-intl-test-helper'
 import acts from '../../../server/api/activity/__tests__/activity.fixture'
 import objectid from 'objectid'
-// import withMockRoute from '../../../server/util/mockRouter'
-import sinon from 'sinon'
 import * as nextRouter from 'next/router'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
 import thunk from 'redux-thunk'
+import mockRouter from '../../../server/util/mockRouter'
 
 test.before('Setup fixtures', (t) => {
   // not using mongo or server here so faking ids
-  acts.map(p => { p._id = objectid().toString() })
+  acts.forEach(p => { p._id = objectid().toString() })
   t.context.props = {
     activities: {
       sync: true,
@@ -45,23 +44,7 @@ test.before('Setup fixtures', (t) => {
   t.context.mockStore = configureStore([thunk])(t.context.defaultstore)
 })
 
-test.before('Setup Route', (t) => {
-  t.context.router = {
-    pathname: '/acts',
-    route: '/acts',
-    query: { search: 'sun' },
-    asPath: '/acts?search=sun',
-    initialProps: {},
-    pageLoader: sinon.fake(),
-    App: sinon.fake(),
-    Component: sinon.fake(),
-    replace: sinon.fake(),
-    push: sinon.fake(),
-    back: sinon.fake()
-  }
-  const router = () => { return (t.context.router) }
-  sinon.replace(nextRouter, 'useRouter', router)
-})
+test.before('Setup Route', mockRouter('/acts', { search: 'sun' }))
 
 test.serial('render ActListSection', async t => {
   const router = nextRouter.useRouter()
@@ -89,7 +72,6 @@ test.serial('render ActListSection with selected Org', async t => {
   t.is(t.context.mockStore.getActions().length, 1)
   // handle selected Org
   const menu = wrapper.find('ActMenu').first()
-  menu.props().onClick({ key: 'orgOmgTech' })
-  wrapper.update()
+  await menu.invoke('onClick')({ key: 'orgOmgTech' })
   t.is(t.context.mockStore.getActions().length, 2)
 })

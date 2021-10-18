@@ -2,19 +2,19 @@ import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
 import Story from '../story'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import stories from './story.fixture.js'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import { StoryStatus } from '../../story/story.constants'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
 
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
 test.before('before connecting to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
   await appReady
   t.context.people = await Person.create(people)
-  stories.map((story, index) => {
+  stories.forEach((story, index) => {
     story.author = t.context.people[index]._id
   })
   t.context.stories = await Story.create(stories)
@@ -68,7 +68,7 @@ test.serial('Should not find invalid _id', async t => {
   t.is(res.status, 404)
 })
 
-test.serial('Should correctly edit a story', async t => {
+test.only('Should correctly edit a story', async t => {
   const story1 = new Story({
     name: 'How to make a robot',
     description: 'To make a robot, you need to be a human.',
@@ -76,15 +76,15 @@ test.serial('Should correctly edit a story', async t => {
     author: t.context.people[0]._id
   })
   await story1.save()
-
-  story1.name = 'I am a robot'
+  const story2 = story1.toObject()
+  story2.name = 'I am a robot'
   const res = await request(server)
     .put(`/api/stories/${story1._id}`)
     .set('Cookie', [`idToken=${jwtData.idToken}`])
-    .send(story1)
+    .send(story2)
     .set('Accept', 'application/json')
   t.is(res.status, 200)
-  t.is(res.body.name, story1.name)
+  t.is(res.body.name, story2.name)
 })
 
 test.serial('Should correctly delete a story', async t => {

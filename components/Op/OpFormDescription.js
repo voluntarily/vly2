@@ -4,7 +4,7 @@ import { DescriptionContainer, FormGrid, InputContainer, MediumInputContainer, T
 import { OpTypeDescriptionTitle, OpTypeDescriptionPrompt } from './OpType'
 const { TextArea } = Input
 
-export const OpFormDescription = ({ getFieldDecorator, type }) => {
+export const OpFormDescription = ({ type }) => {
   const opDescriptionLabel = (
     <OpTypeDescriptionTitle type={type} />
   )
@@ -19,12 +19,12 @@ export const OpFormDescription = ({ getFieldDecorator, type }) => {
       </DescriptionContainer>
       <InputContainer>
         <MediumInputContainer>
-          <Form.Item label={opDescriptionLabel}>
-            {getFieldDecorator('description')(
-              <TextArea
-                rows={6}
-              />
-            )}
+          <Form.Item
+            name='description'
+            label={opDescriptionLabel}
+            rules={[{ required: true, message: 'Without some details no one will know what is needed' }]}
+          >
+            <TextArea rows={6} />
           </Form.Item>
         </MediumInputContainer>
       </InputContainer>

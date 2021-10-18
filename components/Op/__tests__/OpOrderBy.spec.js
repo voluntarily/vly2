@@ -10,7 +10,7 @@ test('render sorting order', t => {
   )
   const options = wrapper.find('Option')
   t.is(options.length, 3)
-  const dateOption = options.first().find('FormattedMessage').first()
+  const dateOption = options.first().find('MemoizedFormattedMessage').first()
   t.is(dateOption.props().id, 'sortDate')
 })
 
@@ -20,6 +20,6 @@ test('simulate change', t => {
   const wrapper = shallowWithIntl(
     <OpOrderBy onChange={handleSort} />
   )
-  wrapper.find('Select').first().simulate('change', 'name')
+  wrapper.find('ForwardRef(InternalSelect)').first().simulate('change', 'name')
   t.true(handleSort.calledOnce)
 })

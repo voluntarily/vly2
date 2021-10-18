@@ -1,27 +1,31 @@
 import test from 'ava'
 import sinon from 'sinon'
 import { shallowWithIntl } from '../../lib/react-intl-test-helper'
-import withMockRoute from '../../server/util/mockRouter'
-import { PersonDetailPage } from '../../pages/person/persondetailpage'
+import mockRouter from '../../server/util/mockRouter'
+
+import { PersonDetailPage, gssp } from '../../pages/people/[personId]'
+import { gssp as newGssp } from '../../pages/people/new'
 import objectid from 'objectid'
 import orgs from '../../server/api/organisation/__tests__/organisation.fixture'
 import people from '../../server/api/person/__tests__/person.fixture'
 
+test.before('Setup Route', mockRouter('/person'))
+
 test.before('Setup fixtures', (t) => {
-  people.map(p => { p._id = objectid().toString() })
-  orgs.map(p => { p._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
+  orgs.forEach(p => { p._id = objectid().toString() })
   const me = people[0]
 
   // I am orgAdmin of the first org (voluntarily) and member of the second org (OMGTech)
   const orgMembership = [
     {
-      _id: objectid().toString(),
+      _personId: objectid().toString(),
       status: 'orgadmin',
       person: me._id,
       organisation: orgs[0]
     },
     {
-      _id: objectid().toString(),
+      _personId: objectid().toString(),
       status: 'member',
       person: me._id,
       organisation: orgs[1]
@@ -65,10 +69,10 @@ test.before('Setup fixtures', (t) => {
   }
 })
 
-test('PersonDetailPage GetInitialProps existing person', async t => {
+test('PersonDetailPage getServerSideProps existing person', async t => {
   const me = people[0]
   const query = {
-    id: me._id
+    personId: me._id
   }
   const store = {
     dispatch: sinon.fake(),
@@ -77,17 +81,14 @@ test('PersonDetailPage GetInitialProps existing person', async t => {
     }
   }
 
-  const props = await PersonDetailPage.getInitialProps({ store, query })
+  const { props } = await gssp({ store, query })
   t.false(props.isNew)
-  t.is(props.personid, me._id)
   t.is(store.dispatch.callCount, 4)
 })
 
-test('PersonDetailPage GetInitialProps new person', async t => {
+test('PersonDetailPage gssp new person', async t => {
   const me = people[0]
-  const query = {
-    new: 'new'
-  }
+
   const store = {
     dispatch: sinon.fake(),
     getState: () => {
@@ -95,40 +96,9 @@ test('PersonDetailPage GetInitialProps new person', async t => {
     }
   }
 
-  const props = await PersonDetailPage.getInitialProps({ store, query })
+  const { props } = await newGssp({ store })
   t.true(props.isNew)
-  t.is(props.personid, null)
   t.is(store.dispatch.callCount, 2)
-})
-
-test('render Loading PersonDetailPage ', async t => {
-  const dali = people[1]
-  const props = {
-    ...t.context.store,
-    me: dali,
-    isNew: false,
-    personid: dali._id,
-    people: {
-      sync: false,
-      syncing: false,
-      loading: true,
-      data: [],
-      request: null
-    },
-    members: {
-      sync: false,
-      syncing: false,
-      loading: false,
-      data: [],
-      request: null
-    }
-  }
-
-  const RoutedPersonDetailPage = withMockRoute(PersonDetailPage)
-  const outer = shallowWithIntl(<RoutedPersonDetailPage {...props} />)
-  const wrapper = outer.dive()
-
-  t.false(wrapper.exists('PersonDetail'))
 })
 
 test('render unknown person PersonDetailPage ', async t => {
@@ -139,7 +109,7 @@ test('render unknown person PersonDetailPage ', async t => {
     ...t.context.store,
     me: dali,
     isNew: false,
-    personid: unknown,
+    personpersonId: unknown,
     people: {
       sync: true,
       syncing: false,
@@ -156,13 +126,11 @@ test('render unknown person PersonDetailPage ', async t => {
     }
   }
 
-  const RoutedPersonDetailPage = withMockRoute(PersonDetailPage)
-  const outer = shallowWithIntl(<RoutedPersonDetailPage {...props} />)
-  const wrapper = outer.dive()
+  const wrapper = shallowWithIntl(<PersonDetailPage {...props} />)
 
   t.false(wrapper.exists('PersonDetail'))
   t.true(wrapper.exists('PersonNotAvailable'))
-  t.is(wrapper.dive().find('FormattedMessage').first().props().id, 'person.notavailable')
+  t.is(wrapper.dive().find('MemoizedFormattedMessage').first().props().id, 'person.notavailable')
 })
 
 test('render Dalis PersonDetailPage as non admin random person alice', async t => {
@@ -172,7 +140,7 @@ test('render Dalis PersonDetailPage as non admin random person alice', async t =
     ...t.context.store,
     me: alice,
     isNew: false,
-    personid: dali._id,
+    personpersonId: dali._id,
     people: {
       sync: true,
       syncing: false,
@@ -182,10 +150,7 @@ test('render Dalis PersonDetailPage as non admin random person alice', async t =
     }
   }
 
-  const RoutedPersonDetailPage = withMockRoute(PersonDetailPage)
-  const outer = shallowWithIntl(<RoutedPersonDetailPage {...props} />)
-  const wrapper = outer.dive()
-
+  const wrapper = shallowWithIntl(<PersonDetailPage {...props} />)
   t.true(wrapper.exists('PersonDetail'))
   t.is(wrapper.find('PersonDetail').first().props().person, dali)
 
@@ -200,7 +165,7 @@ test('render Dalis PersonDetailPage as admin ', async t => {
     ...t.context.store,
     me: admin,
     isNew: false,
-    personid: dali._id,
+    personpersonId: dali._id,
     people: {
       sync: true,
       syncing: false,
@@ -211,9 +176,7 @@ test('render Dalis PersonDetailPage as admin ', async t => {
     dispatch: sinon.fake()
   }
 
-  const RoutedPersonDetailPage = withMockRoute(PersonDetailPage)
-  const outer = shallowWithIntl(<RoutedPersonDetailPage {...props} />)
-  const wrapper = outer.dive()
+  const wrapper = shallowWithIntl(<PersonDetailPage {...props} />)
 
   t.true(wrapper.exists('PersonDetail'))
   t.is(wrapper.find('PersonDetail').first().props().person, dali)
@@ -233,7 +196,7 @@ test('render Dalis PersonDetailPage as self dali', async t => {
     ...t.context.store,
     me: dali,
     isNew: false,
-    personid: dali._id,
+    personpersonId: dali._id,
     people: {
       sync: true,
       syncing: false,
@@ -244,9 +207,7 @@ test('render Dalis PersonDetailPage as self dali', async t => {
     dispatch: sinon.fake()
   }
 
-  const RoutedPersonDetailPage = withMockRoute(PersonDetailPage)
-  const outer = shallowWithIntl(<RoutedPersonDetailPage {...props} />)
-  const wrapper = outer.dive()
+  const wrapper = shallowWithIntl(<PersonDetailPage {...props} />)
 
   t.true(wrapper.exists('PersonDetail'))
   t.is(wrapper.find('PersonDetail').first().props().person, dali)
@@ -257,34 +218,37 @@ test('render Dalis PersonDetailPage as self dali', async t => {
   t.true(personDetail.exists('#editPersonBtn'))
 
   // click the edit button
+  const editor = 'Connect(WrappedWithAddressFinderComponent)'
   const editPerson = personDetail.find('Button#editPersonBtn')
   editPerson.props().onClick()
   // we should now be in edit mode
-  t.true(wrapper.exists('Connect(Form(WrappedWithAddressFinderComponent))'))
+  t.true(wrapper.exists(editor))
   // cancel the edit
-  wrapper.find('Connect(Form(WrappedWithAddressFinderComponent))').first().props().onCancel()
+  wrapper.find(editor).first().props().onCancel()
   personDetail = wrapper.find('PersonDetail').first().dive()
 
   t.is(personDetail.find('Button').length, 1)
 
   // edit again
   editPerson.props().onClick()
-  t.true(wrapper.exists('Connect(Form(WrappedWithAddressFinderComponent))'))
+  t.true(wrapper.exists(editor))
   // save the edit
-  await wrapper.find('Connect(Form(WrappedWithAddressFinderComponent))').first().props().onSubmit(dali)
+  const editorComponent = wrapper.find(editor).first()
+  await editorComponent.invoke('onSubmit')(dali)
   personDetail = wrapper.find('PersonDetail').first().dive()
   t.true(personDetail.exists('#editPersonBtn'))
   t.is(props.dispatch.callCount, 1)
 })
 
 test('render new PersonDetailPage as admin ', async t => {
+  const router = t.context.router
   const admin = people[0]
   const alice = people[2]
   const props = {
     ...t.context.store,
     me: admin,
     isNew: true,
-    personid: null,
+    personpersonId: null,
     people: {
       sync: true,
       syncing: false,
@@ -295,21 +259,17 @@ test('render new PersonDetailPage as admin ', async t => {
     dispatch: sinon.fake.returns([alice])
   }
 
-  const RoutedPersonDetailPage = withMockRoute(PersonDetailPage)
-  const outer = shallowWithIntl(<RoutedPersonDetailPage {...props} />)
-  const router = outer.props().router
-  router.back = sinon.fake()
-  router.replace = sinon.fake()
-  const wrapper = outer.dive()
+  const wrapper = shallowWithIntl(<PersonDetailPage {...props} />)
 
   // we should start in edit mode
-  t.true(wrapper.exists('Connect(Form(WrappedWithAddressFinderComponent))'))
+  t.true(wrapper.exists('Connect(WrappedWithAddressFinderComponent)'))
+
   // cancel the edit
-  wrapper.find('Connect(Form(WrappedWithAddressFinderComponent))').first().props().onCancel()
+  wrapper.find('Connect(WrappedWithAddressFinderComponent)').first().props().onCancel()
   t.is(router.back.callCount, 1)
 
   // save the edit
-  await wrapper.find('Connect(Form(WrappedWithAddressFinderComponent))').first().props().onSubmit(alice)
+  await wrapper.find('Connect(WrappedWithAddressFinderComponent)').first().props().onSubmit(alice)
   t.is(props.dispatch.callCount, 1)
   t.is(router.replace.lastArg, '/people')
 })

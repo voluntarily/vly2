@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import { Helmet } from 'react-helmet'
+import Head from 'next/head'
 import { Button, Divider } from 'antd'
-import SectionTitle from '../../components/LandingPageComponents/SectionTitle'
-import PersonaSection from '../../components/LandingPageComponents/PersonaSection'
+import SectionTitle from '../../components/Landing/SectionTitle'
+import PersonaSection from '../../components/Landing/PersonaSection'
 import {
   FullPage,
   HalfGrid,
@@ -12,12 +12,12 @@ import {
   SectionContainer
 
 } from '../../components/VTheme/VTheme'
-import publicPage from '../../hocs/publicPage'
-import Hero2 from '../../components/LandingPageComponents/Hero2'
+
+import Hero2 from '../../components/Landing/Hero2'
 import {
   SponsorContainer,
   SponsorIcon
-} from '../../components/LandingPageComponents/Partners'
+} from '../../components/Landing/Partners'
 import styled from 'styled-components'
 
 // annoying hack to make sure buttons dont inherit block width
@@ -125,9 +125,9 @@ export class Business extends Component {
     return (
       <div>
         <FullPage>
-          <Helmet>
+          <Head>
             <title>Voluntarily - for Teachers</title>
-          </Helmet>
+          </Head>
 
           <Hero2
             subheader='Voluntarily for Businesses'
@@ -230,4 +230,4 @@ export class Business extends Component {
   }
 }
 
-export default publicPage(Business)
+export default Business

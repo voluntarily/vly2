@@ -1,7 +1,7 @@
 import test from 'ava'
 import request from 'supertest'
 import { server, appReady } from '../../../server'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import Person from '../../person/person'
 import people from '../../person/__tests__/person.fixture'
 import { jwtData } from '../../../middleware/session/__tests__/setSession.fixture'
@@ -12,14 +12,10 @@ import { config } from '../../../../config/serverConfig'
 
 const { BADGR_API } = config
 
-test.before('before connect to database', async (t) => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
+test.before('before init db', async (t) => {
   await appReady
-})
-
-test.after.always(async (t) => {
-  await t.context.memMongo.stop()
 })
 
 test.beforeEach('populate fixtures', async (t) => {

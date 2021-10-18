@@ -1,4 +1,4 @@
-import React, { useState, useEffect } from 'react'
+import { useState, useEffect } from 'react'
 import { useRouter } from 'next/router'
 import { Modal, Button } from 'antd'
 import VerifyButton from './VerifyButton'
@@ -22,7 +22,7 @@ const Verification = () => {
       const newUrl = router.asPath.replace(`&${VerificationResultUrlQueryParam}=true`, '')
       router.replace(router.asPath, newUrl, { shallow: true })
     }
-  })
+  }, [router])
 
   return (
     <>

@@ -1,8 +1,14 @@
-import { Button, Icon, message } from 'antd'
+import { Button, message } from 'antd'
 import PropTypes from 'prop-types'
 import styled from 'styled-components'
 import { PersonalGoalStatus } from '../../server/api/personalGoal/personalGoal.constants'
 import reduxApi, { withPersonalGoals } from '../../lib/redux/reduxApi'
+import
+{
+  CloseCircleTwoTone,
+  PaperClipOutlined,
+  TrophyOutlined
+} from '@ant-design/icons'
 
 import { FormattedMessage } from 'react-intl'
 import Link from 'next/link'
@@ -55,13 +61,20 @@ const CardSubtitle = styled.p`
   margin: 0 1rem 1rem 1rem;
 ` // GoalCardSubtitle
 
-const StyledIconRight = styled(Icon)`
+const CloseIcon = styled(CloseCircleTwoTone)`
   font-size: 1rem;
   position: absolute;
   top: 0.5rem;
   right: 0.5rem;    
 `
-const StyledIconLeft = styled(Icon)`
+
+const ActiveIcon = styled(PaperClipOutlined)`
+  font-size: 3rem;
+  position: absolute;
+  top: 0.5rem; 
+  left: 0.5rem;    
+`
+const CompletedIcon = styled(TrophyOutlined)`
   font-size: 3rem;
   position: absolute;
   top: 0.5rem; 
@@ -76,8 +89,8 @@ const BottomRightButton = styled(Button)`
 
 export const GoalStatusIcon = ({ status }) => {
   switch (status) {
-    case PersonalGoalStatus.ACTIVE: return <StyledIconLeft type='paper-clip' />
-    case PersonalGoalStatus.COMPLETED: return <StyledIconLeft type='trophy' />
+    case PersonalGoalStatus.ACTIVE: return <ActiveIcon />
+    case PersonalGoalStatus.COMPLETED: return <CompletedIcon />
     default: return ''
   }
 }
@@ -98,7 +111,7 @@ export const GoalStartButton = ({ status, href, onClick }) => {
     }
   }
   return (
-    <Link href={href}>
+    <Link href={href} passHref>
       <BottomRightButton shape='round' type='primary' onClick={onClick}>
         <FormattedMessage {...statusDesc[status]} />
       </BottomRightButton>
@@ -140,7 +153,7 @@ const GoalCard = ({ goal, dispatch }) => {
   return (
     <CardContainer>
       {pg &&
-        <StyledIconRight type='close-circle' onClick={handleClose} />}
+        <CloseIcon onClick={handleClose} />}
       <a href={goal.startLink} onClick={handleStart}>
         <>
           <CardImage src={goal.imgUrl} />

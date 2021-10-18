@@ -1,5 +1,5 @@
 import test from 'ava'
-import MemoryMongo from '../../../util/test-memory-mongo'
+import { startMongo, stopMongo } from '../../../util/mockMongo'
 import { server, appReady } from '../../../server'
 import Feedback from '../feedback'
 import { jwtData } from '../../../../server/middleware/session/__tests__/setSession.fixture'
@@ -13,10 +13,9 @@ import Organisation from '../../organisation/organisation'
 import Member from '../../member/member'
 import { InterestArchive } from '../../interest/interest'
 
+test.before('before connect to database', startMongo)
+test.after.always(stopMongo)
 test.before('Create a mock database and populate it with data', async t => {
-  t.context.memMongo = new MemoryMongo()
-  await t.context.memMongo.start()
-
   await Person.create(people)
   await Organisation.create(organisations)
   await Member.create(members)
@@ -33,10 +32,6 @@ test.beforeEach('Populate database with test data', async t => {
 
 test.afterEach.always(async t => {
   await Feedback.deleteMany()
-})
-
-test.after.always(async t => {
-  await t.context.memMongo.stop()
 })
 
 test.serial('Test create valid feedback should return 201', async t => {

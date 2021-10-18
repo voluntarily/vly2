@@ -1,0 +1,99 @@
+*,
+*:before,
+*:after {
+  box-sizing: inherit;
+}
+
+html {
+  box-sizing: border-box;
+  font-size: 14px;
+  -ms-overflow-style: -ms-autohiding-scrollbar;
+}
+
+body {
+  background-color: var(--backgroundColor);
+  -ms-text-size-adjust: 100%;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+  text-rendering: optimizeLegibility;
+}
+
+
+.logo {
+  display: flex;
+  align-items: center;
+  margin-right: 1rem;
+  font-size: 1.25rem;
+  white-space: nowrap;
+  color: var(--primaryColor);
+  justify-content: center;
+}
+
+.logo > svg {
+  fill: var(--primaryColor);
+}
+
+.text-disabled {
+  color: var(--textColorSecondary) !important;
+}
+
+
+
+/* 
+==================================
+Global Text styles lol 
+==================================
+*/
+.ant-tabs { 
+  overflow: visible;
+  }
+  
+  a {
+    color: black;
+  }
+  
+  strong {
+    font-weight: 500;
+  }
+  
+  img {
+  object-fit: contain;
+  }
+  
+  
+  dl {
+    width: 100%;
+    overflow: hidden;
+    padding: 0;
+    margin: 0;
+  }
+  dt {
+    float: left;
+    width: 20%;
+    /* adjust the width; make sure the total of both is 100% */
+    padding: 0;
+    margin: 0;
+  }
+  dd {
+    float: left;
+    width: 80%;
+    /* adjust the width; make sure the total of both is 100% */
+    padding: 0;
+    margin: 0;
+  }
+  
+  h1 {
+    font-size: 2rem;
+    font-weight: 700;
+    letter-spacing: -0.5px;
+    margin: 0;
+  }
+  
+  h2 {
+    margin: 0;
+  }
+  
+  h3 {
+    font-size: 1.5rem;
+  }
+  

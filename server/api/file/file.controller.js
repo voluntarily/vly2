@@ -8,7 +8,7 @@ const path = require('path')
 const uploadFile = async (req, res) => {
   try {
     if (!req.session.isAuthenticated) {
-      return res.send(403)
+      return res.sendStatus(403)
     }
 
     const { data, filename } = req.body

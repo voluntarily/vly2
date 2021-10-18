@@ -139,7 +139,7 @@ Once Published we will start finding volunteers
   },
 
   {
-    group: 'Throwers',
+    group: GoalGroup.ORG_OP_NEW,
     name: 'Test 3 Thrower',
     slug: 'test-003',
     imgUrl: '/static/img/goal/goal-school-ready.png',

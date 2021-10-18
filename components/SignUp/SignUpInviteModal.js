@@ -21,11 +21,12 @@ export const SignUpInviteModal = ({ children, href }) => {
   const session = useSelector(state => state.session)
   if (session.isAuthenticated) {
     return (
-      <Link href={href}>
+      <Link href={href} passHref>
         <Button type='primary' shape='round' size='large' style={{ width: '10rem' }}>
           {children}
         </Button>
-      </Link>)
+      </Link>
+    )
   }
   const handleClick = () => {
     setShowModal(true)
@@ -54,6 +55,7 @@ export const SignUpInviteModal = ({ children, href }) => {
           description='content on sign up or sign in invitation modal'
         />
       </Modal>
-    </>)
+    </>
+  )
 }
 export default SignUpInviteModal

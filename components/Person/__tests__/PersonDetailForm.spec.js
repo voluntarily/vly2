@@ -5,7 +5,7 @@ import { mountWithIntl, shallowWithIntl } from '../../../lib/react-intl-test-hel
 import objectid from 'objectid'
 import tagList from '../../../server/api/tag/__tests__/tag.fixture'
 
-import { PersonDetailForm, permissionTrimFields } from '../PersonDetailForm'
+import { PersonDetailFormWithAddressFinder, PersonDetailForm, permissionTrimFields } from '../PersonDetailForm'
 import sinon from 'sinon'
 import people from '../../../server/api/person/__tests__/person.fixture'
 import { MockWindowScrollTo } from '../../../server/util/mock-dom-helpers'
@@ -32,7 +32,7 @@ test.afterEach(t => {
 
 test.before('Setup People fixtures', (t) => {
   // not using mongo or server here so faking ids
-  people.map(p => { p._id = objectid().toString() })
+  people.forEach(p => { p._id = objectid().toString() })
   const me = people[0]
 
   t.context.me = me
@@ -53,39 +53,48 @@ test.after.always(() => {
   console.warn = orginalWarn
 })
 
-test('shallow the detail with person', t => {
+test('is the form wrapped in an Address Finder', t => {
   const wrapper = shallowWithIntl(
-    <PersonDetailForm person={t.context.me} existingTags={tagList} locations={locations} onSubmit={() => {}} onCancel={() => {}} me={t.context.me} />
+    <PersonDetailFormWithAddressFinder person={t.context.me} existingTags={tagList} locations={locations} onSubmit={() => {}} onCancel={() => {}} me={t.context.me} />
   )
-  t.is(wrapper.find('WrappedWithAddressFinderComponent').length, 1)
+  t.is(wrapper.find('PersonDetailForm').length, 1)
+  t.is(wrapper.find('PersonDetailForm').prop('scriptLoaded'), false)
 })
 
 test('render the detail with op', t => {
   t.context.mockServer.get('end:/api/education', { body: ['small', 'medium', 'large'] })
-
-  const submitOp = sinon.spy()
+  function checkSubmit (person) {
+    t.is(person, t.context.me)
+  }
   const cancelOp = sinon.spy()
-
+  const submitOp = sinon.spy(checkSubmit)
   const wrapper = mountWithIntl(
-    <PersonDetailForm person={t.context.me} existingTags={tagList} locations={locations} onSubmit={submitOp} onCancel={cancelOp} me={t.context.me} />
+    <PersonDetailForm
+      person={t.context.me}
+      existingTags={tagList}
+      locations={locations}
+      onSubmit={submitOp}
+      onCancel={cancelOp}
+      me={t.context.me}
+    />
   )
-  t.true(wrapper.exists('ForwardRef(TagSelect)'))
-  const locationInput = wrapper.find('ForwardRef(TagSelect)').first()
+  // console.log(wrapper.debug())
+  t.true(wrapper.exists('TagSelect'))
+  const locationInput = wrapper.find('TagSelect').first()
   locationInput.props().onChange(['Auckland'])
 
-  t.true(wrapper.exists('ForwardRef(EducationSelector)'))
-  const educationSelector = wrapper.find('ForwardRef(EducationSelector)').first()
+  t.true(wrapper.exists('EducationSelector'))
+  const educationSelector = wrapper.find('EducationSelector').first()
   educationSelector.props().onChange('medium')
   // wrapper.find('ImageUpload').first().props().setImgUrl('https://example.com/picture.png')
 
-  t.is(wrapper.find('PersonDetail').length, 1)
   t.is(wrapper.find('TagInput').length, 0)
   t.is(wrapper.find('button').length, 2)
   wrapper.find('button').first().simulate('click')
   t.truthy(cancelOp.calledOnce)
-  wrapper.find('Form').first().simulate('submit')
-  t.truthy(submitOp.calledOnce)
-  t.truthy(submitOp.calledWith(t.context.me))
+  // wrapper.find('ForwardRef(InternalForm)').first().simulate('submit')
+  wrapper.simulate('submit')
+  // test here is caught by the onSubmit handler
 })
 
 for (const role of [Role.ACTIVITY_PROVIDER, Role.OPPORTUNITY_PROVIDER, Role.ORG_ADMIN, Role.RESOURCE_PROVIDER, Role.VOLUNTEER]) {
