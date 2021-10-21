@@ -1,6 +1,6 @@
 import React from 'react'
 import test from 'ava'
-import { ActListPage } from '../../pages/acts/actlistpage'
+import { ActListPage } from '../../pages/acts/type/[actType]'
 import { shallowWithIntl } from '../../lib/react-intl-test-helper'
 import acts from '../../server/api/activity/__tests__/activity.fixture'
 import objectid from 'objectid'
@@ -38,9 +38,9 @@ test.afterEach(() => {
 })
 
 test.serial('render ActListPage for asks', async t => {
-  mockRouter('/acts/new', { actType: 'ask' })(t)
+  mockRouter('/acts/type', { actType: 'ask' })(t)
 
-  const wrapper = shallowWithIntl(<ActListPage />)
+  const wrapper = shallowWithIntl(<ActListPage actType='ask' />)
   t.is(wrapper.find('h1 MemoizedFormattedMessage').first().props().id, 'ActListPage.Ask.Title')
   t.true(wrapper.exists('ActListSection'))
 })
@@ -48,7 +48,7 @@ test.serial('render ActListPage for asks', async t => {
 test.serial('render ActListPage for offers', async t => {
   mockRouter('/acts/new', { actType: 'offer' })(t)
 
-  const wrapper = shallowWithIntl(<ActListPage />)
+  const wrapper = shallowWithIntl(<ActListPage actType='offer' />)
   t.is(wrapper.find('h1 MemoizedFormattedMessage').first().props().id, 'ActListPage.Offer.Title')
   t.true(wrapper.exists('ActListSection'))
 })

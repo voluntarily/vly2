@@ -1,11 +1,4 @@
 import { FormattedMessage } from 'react-intl'
-import dynamic from 'next/dynamic'
-
-// stop SSR and load the navigation on the client side so that the menu size is calculated by the client window.
-const Navigation = dynamic(
-  () => import('../Navigation/Navigation').then(mod => mod.Navigation),
-  { ssr: false }
-)
 
 export const MenuShowState = {
   ANON: 'anon', // option shows for non signed in people
@@ -105,8 +98,6 @@ const menuItems = [
   }
 ]
 
-const filterMenu = (state) => menuItems.filter(l => l.show.includes(state))
-export const HeaderMenu = ({ state }) =>
-  <Navigation items={filterMenu(state)} />
+export const headerMenu = (state) => menuItems.filter(l => l.show.includes(state))
 
-export default HeaderMenu
+export default headerMenu

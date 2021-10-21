@@ -3,12 +3,15 @@ import React from 'react'
 import { PersonRoleIcons } from '../../components/Person/PersonRole'
 import { PersonVerificationBadge } from '../../components/Person/PersonVerification'
 import { PageBanner } from '../../components/VTheme/VTheme'
-import { Image } from 'antd'
+import { Avatar } from 'antd'
 
 export const HomeBanner = ({ person, children }) => (
   <PageBanner>
     <article>
-      <Image alt='personal avatar' src={person.imgUrl} />
+      <Avatar
+        src={person.imgUrlSm || person.imgUrl}
+        size={100}
+      />
       <div>
         <h1>{person.name}
           <PersonRoleIcons roles={person.role} />

@@ -1,1 +1,1 @@
-export { default } from './actlistpage.js'
+export { default } from './type/[actType].js'

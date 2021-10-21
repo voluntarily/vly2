@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { FormattedMessage } from 'react-intl'
 import styled from 'styled-components'
-import { P, Spacer } from '../VTheme/VTheme'
+import { P } from '../VTheme/VTheme'
 
 const FooterBackground = styled.footer`
   background-color: #f3f3f3;
@@ -11,11 +11,14 @@ const FooterContainer = styled.div`
   width: 100%;
   padding-left: 2rem;
   padding-right: 2rem;
+  padding-top: 2rem;
 
   @media screen and (min-width: 1300px) {
     width: 80rem;
     margin: auto;
     padding: 0;
+    padding-top: 2rem;
+
   }
 `
 
@@ -99,7 +102,6 @@ const Footer = () => (
   <FooterBackground>
     <FooterContainer>
 
-      <Spacer />
       <FooterGrid>
 
         <div>
@@ -233,7 +235,6 @@ const Footer = () => (
           </MenuWrapper>
         </div>
       </FooterGrid>
-      <Spacer />
 
     </FooterContainer>
   </FooterBackground>
