@@ -1,7 +1,7 @@
 import React from 'react'
 import test from 'ava'
 import Header from '../Header'
-import { mountWithIntl } from '../../../lib/react-intl-test-helper'
+import { mountWithIntl, mountWithMockIntl } from '../../../lib/react-intl-test-helper'
 import mockRouter from '../../../server/util/mockRouter'
 import configureStore from 'redux-mock-store'
 import { Provider } from 'react-redux'
@@ -25,16 +25,13 @@ test('renders the Header and Navigation for anon user', t => {
     </Provider>
   )
 
-  t.is(wrapper.find('a').length, 1)
-  t.snapshot()
+  t.is(wrapper.find('a').length, 4)
+  t.is(wrapper.find('a').at(1).text(), 'About')
 
-  // const search = wrapper.find('input').first()
-  // search.simulate('change', { target: { value: 'auckland' } })
-  // search.simulate('keyDown', { keyCode: 13 })
-  // t.truthy(onpush.calledOnce)
+  t.snapshot()
 })
 
-test.skip('renders the Header and Navigation for basic auth user', t => {
+test('renders the Header and Navigation for basic auth user', t => {
   const mockStoreAuth = configureStore()(
     {
       session: {
@@ -50,11 +47,13 @@ test.skip('renders the Header and Navigation for basic auth user', t => {
     </Provider>
   )
   t.is(wrapper.find('a').length, 5)
+  t.is(wrapper.find('a').at(1).text(), 'Home')
+
   t.is(wrapper.find('a').last().text(), 'Sign out')
   t.snapshot()
 })
 
-test.skip('renders the Header and Navigation for auth volunteer user', t => {
+test('renders the Header and Navigation for auth volunteer user', t => {
   const mockStoreAuth = configureStore()(
     {
       session: {
@@ -74,7 +73,7 @@ test.skip('renders the Header and Navigation for auth volunteer user', t => {
   t.snapshot()
 })
 
-test.skip('renders the Header and Navigation for auth admin/support user', t => {
+test('renders the Header and Navigation for auth admin/support user', t => {
   const mockStoreAuth = configureStore()(
     {
       session: {
@@ -91,5 +90,78 @@ test.skip('renders the Header and Navigation for auth admin/support user', t => 
   )
   t.is(wrapper.find('a').length, 9)
   t.is(wrapper.find('a').last().text(), 'Sign out')
+  t.snapshot()
+})
+
+test('notice shows if included in messages', t => {
+  const mockStoreAuth = configureStore()(
+    {
+      session: {
+        isAuthenticated: true,
+        me: { name: 'Mr Volunteer', role: ['basic', 'volunteer', 'admin'], email: 'test123@abc.com', nickname: 'slat' }
+      }
+    }
+  )
+  const expectedNotice = 'This is a notice'
+
+  const wrapper = mountWithMockIntl(
+    <Provider store={mockStoreAuth}>
+      <Header />
+    </Provider>
+    ,
+    {
+      notice: expectedNotice
+    })
+  t.is(wrapper.find('a').length, 9)
+  t.is(wrapper.find('a').last().text(), 'Sign out')
+  t.snapshot()
+  t.true(wrapper.exists('Header__Notice'))
+})
+
+test('notice for support workers', t => {
+  const mockStoreAuth = configureStore()(
+    {
+      session: {
+        isAuthenticated: true,
+        me: { name: 'Mr Volunteer', role: ['basic', 'volunteer', 'support'], email: 'test123@abc.com', nickname: 'slat' }
+      }
+    }
+  )
+  const expectedNotice = 'This is a notice'
+
+  const wrapper = mountWithMockIntl(
+    <Provider store={mockStoreAuth}>
+      <Header />
+    </Provider>
+    ,
+    {
+      notice: expectedNotice
+    })
+  t.is(wrapper.find('a').length, 9)
+  t.is(wrapper.find('a').last().text(), 'Sign out')
+  t.snapshot()
+})
+
+test('no notice for anon', t => {
+  const mockStoreAuth = configureStore()(
+    {
+      session: {
+        isAuthenticated: false,
+        me: { role: ['anonymous'] }
+      }
+    }
+  )
+  const expectedNotice = 'This is a notice'
+
+  const wrapper = mountWithMockIntl(
+    <Provider store={mockStoreAuth}>
+      <Header />
+    </Provider>
+    ,
+    {
+      notice: expectedNotice
+    })
+  t.is(wrapper.find('a').length, 4)
+  t.is(wrapper.find('a').last().text(), 'Sign in')
   t.snapshot()
 })

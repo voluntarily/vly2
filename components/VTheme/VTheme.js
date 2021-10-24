@@ -14,45 +14,37 @@ Also if you are working on new grids: https://www.youtube.com/watch?v=XtAhISkoJZ
 */
 
 export const PageBanner = styled.div`
- width: auto;
+  width: auto;
   margin: 0 0 2rem 0;
-  display: inline-block;
-/* 
-  padding: 1rem;
-  box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.7);
-  border-radius: 8px; */
+  // display: block;
 
-article {
-  display: grid;
-  grid-template-columns: 5rem 1fr;
-}
+  // padding: 1rem;
+  // box-shadow: 2px 2px 12px 0 rgba(190, 190, 190, 0.7);
+  // border-radius: 8px; 
+
+  article {
+    display: flex;
+    // grid-template-columns: 5rem 1fr;
+  }
 
 
-img{
-    width: 5rem;
-    height: 5rem;
-    object-fit: cover;
-    border-radius: 100%;
+  div{
+    margin-left: 1rem;
+    margin-right: 3rem;
     align-self: center;
   }
 
-div{
-  margin-left: 1rem;
-  margin-right: 3rem;
-  align-self: center;
-}
-
-h1 {
-  align-self: center;
-  font-size: 1.5rem;
-  line-height: 1;
-  margin-bottom: 0.25rem;
-}
-p {
-  margin: 0;
-  font-size: 1.25rem;
-  color: #333;
-}
+  h1 {
+    align-self: center;
+    font-size: 1.5rem;
+    line-height: 1;
+    margin-bottom: 0.25rem;
+  }
+  p {
+    margin: 0;
+    font-size: 1.25rem;
+    color: #333;
+  }
 
  
   @media screen and (max-width: 767px) {
@@ -67,15 +59,15 @@ p {
   }
 `
 export const AlertContainer = styled.div`
-margin-top: 3.5rem;
-width: 100%;
-background-color: #ffcc00;
-height: auto;
-min-height: 2rem;
-padding: 1rem;
-font-size: 1.5rem;
-font-weight: 700;
-color: black;
+  margin-top: 3.5rem;
+  width: 100%;
+  background-color: #ffcc00;
+  height: auto;
+  min-height: 2rem;
+  padding: 1rem;
+  font-size: 1.5rem;
+  font-weight: 700;
+  color: black;
 `
 
 export const PageBannerNoTabs = styled.div`
@@ -953,19 +945,20 @@ export const A5 = styled.div`
   so that the page looks like a piece of paper.
 */
 export const FullPage = styled.div`
+  width: calc(100vw - 6rem);
   margin: 6rem auto;
-  max-width: 80rem;
+
+  max-width: 90rem;
   overflow: visible;
   height: auto;
 
   @media screen and (min-width: 768px) and (max-width: 1280px) {
     width: calc(100vw - 4rem);
-    margin-left: 2rem;
-    margin-right: 2rem;
+    margin: 6rem 2rem;
   }
   @media screen and (max-width: 767px) {
-    margin: 4rem auto;
     width: calc(100vw - 2rem);
+    margin: 6rem auto;
   }
 ` // end fullpage
 
@@ -1002,9 +995,6 @@ export const Landscape = styled.section`
   }
 ` // end fullpage
 
-export const FillWindow = styled.div`
-  min-height: calc(100vh - 220px);
-`
 /* Styled Card - an image followed by a title and some content
 */
 export const Card = styled.figure`

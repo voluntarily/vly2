@@ -9,6 +9,7 @@ This major set of changes has the goal of bringing the Voluntarily code base up 
 * Remove any package warnings and use of deprecated features.
 * Remove any redundant packages.
 * increase version n in package.json to 1.1.0
+
 ## Node - 14 -> 16
 
 * Updated Dockerfile
@@ -879,4 +880,3 @@ Note these tests start the full server and mongo db so are slow to run.
     ○  (Static)  automatically rendered as static HTML (uses no initial props)
     ●  (SSG)     automatically generated as static HTML + JSON (uses getStaticProps)
     (ISR)     incremental static regeneration (uses revalidate in getStaticProps)
-

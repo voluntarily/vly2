@@ -7,10 +7,17 @@ import { Role } from '../server/services/authorize/role'
 import { IntlProvider } from 'react-intl'
 import { Layout } from 'antd'
 import Footer from '../components/Footer/Footer'
-import Header from '../components/Header/Header'
-import { FillWindow } from '../components/VTheme/VTheme'
+// import Header from '../components/Header/Header'
 import reduxWrapper from '../lib/redux/store'
 import { RouteGuard } from '../components/RouteGuard'
+
+import dynamic from 'next/dynamic'
+
+// stop SSR and load the navigation on the client side so that the menu size is calculated by the client window.
+const Header = dynamic(
+  () => import('../components/Header/Header'),
+  { ssr: false }
+)
 
 function MyApp ({
   Component,
@@ -24,11 +31,9 @@ function MyApp ({
         <Layout>
           <Header {...pageProps} />
           <Layout.Content>
-            <FillWindow>
-              <RouteGuard>
-                <Component {...pageProps} />
-              </RouteGuard>
-            </FillWindow>
+            <RouteGuard>
+              <Component {...pageProps} />
+            </RouteGuard>
           </Layout.Content>
           <Footer {...pageProps} />
         </Layout>

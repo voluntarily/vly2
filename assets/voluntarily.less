@@ -1,7 +1,15 @@
+// Note the loader in next.config.js imports antd-custom.less into all .less files loaded. 
 @import '~antd/dist/antd.less';
 
 /* Global Voluntarily Theme styles */
 
+
+main.ant-layout-content {
+  /* push the footer to the bottom of the page on short pages.  
+   * replaces FillPage
+   * 540 is the footer height.  */
+  min-height: calc(100vh - 540px);
+}
 
 /* 
 ==================================

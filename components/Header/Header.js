@@ -1,19 +1,25 @@
-import { UserOutlined, WarningOutlined } from '@ant-design/icons'
-
-import { Avatar, Layout } from 'antd'
+import { useState, useEffect, useMemo } from 'react'
+import { useRouter } from 'next/router'
 import Link from 'next/link'
-import React from 'react'
 import styled from 'styled-components'
-import { HeaderMenu, MenuShowState } from './HeaderMenu'
 import { useIntl } from 'react-intl'
-import { Role } from '../../server/services/authorize/role.js'
 import { useSelector } from 'react-redux'
+import { Menu, Layout } from 'antd'
 
-const Brand = styled.h1`
-  font-weight: 300;
-  font-size: 2em;
-  float: left;
+import { MenuOutlined, WarningOutlined } from '@ant-design/icons'
+import { headerMenu, MenuShowState } from './HeaderMenu'
+import { Role } from '../../server/services/authorize/role.js'
+
+const VMenu = styled(Menu)`
+  // border-bottom: 2px solid transparent;
+  // border-right: none;
+  // font-weight: 700;
+  // .ant-menu-item {
+  //   border: none;
+  // }
+
 `
+
 const Notice = styled.div`
   font-weight: 600;
   font-size: 1.2em;
@@ -22,113 +28,106 @@ const Notice = styled.div`
   padding-left: 1rem;
 `
 
-const MenuGrid = styled.div`
-  display: grid;
-  align-self: center;
-  grid-template-columns: 2fr 1fr 2fr 3rem;
-  @media screen and (max-width: 767px) {
-    grid-template-columns: 0fr 1fr 2fr 0.25rem;
-
-  }
-`
-
-const LogoContainer = styled.a`
-  margin: 0 auto;
-  @media screen and (max-width: 767px) {
-    margin: 0;
-  }
-`
 const Logo = styled.img`
-  height: 3rem;
-  width: 14rem;
-  margin: 0.7rem;
+  height: 2rem;
+  width: 12rem;
 
   background-image: url('/static/vlogolong.svg');
   background-repeat: no-repeat;
   background-position: left top;
   @media screen and (max-width: 767px) {
     background-image: url('/static/vlogo.svg');
-  
     width: 2rem;
   }
 `
 
-const StyledAvatar = styled(Avatar)`
-  background-color: #fff;
-  margin: 0.5rem 1rem 0 0;
-  @media screen and (max-width: 767px) {
-    display: none;
-  }
-  .anticon-user {
-    margin-right: 0px;
-  }
-
-  .ant-imgUrl > i {
-    margin-right: 0px;
-  }
-`
-// eslint-disable-next-line no-unused-vars
 const Header = () => {
   const intl = useIntl()
+  const router = useRouter()
   const me = useSelector(state => state.session.me)
   const isAuthenticated = useSelector(state => state.session.isAuthenticated)
+  const [menuState, setMenuState] = useState(MenuShowState.ANON)
+
+  useEffect(() => {
+    let state = isAuthenticated ? MenuShowState.AUTH : MenuShowState.ANON
+    if (me.role.includes(Role.BASIC)) state = MenuShowState.BASIC
+    if (me.role.includes(Role.VOLUNTEER)) state = MenuShowState.VOLUNTEER
+    if (me.role.includes(Role.VOLUNTEER) && me.role.includes(Role.BASIC)) state = MenuShowState.BOTH
+    if (me.role.includes(Role.ADMIN) || me.role.includes(Role.SUPPORT)) state = MenuShowState.ADMIN
+    setMenuState(state)
+  }, [me, isAuthenticated])
+
   let notice = intl.formatMessage({ id: 'notice', defaultMessage: 'none' })
   if (notice === 'none') notice = '' // wipe notice if its set to none
   const height = '56px'
-  const headerColor = isAuthenticated ? me.role.includes(Role.SUPPORT) ? 'solid 10px #faad14' : me.role.includes(Role.ADMIN) ? 'solid 10px #7826ff' : 'none' : 'none'
+  const headerColor = isAuthenticated
+    ? me.role.includes(Role.SUPPORT)
+        ? 'solid 10px #faad14'
+        : me.role.includes(Role.ADMIN)
+          ? 'solid 10px #7826ff'
+          : 'none'
+    : 'none'
   const headerStyle = {
     borderTop: headerColor,
     position: 'fixed',
     height,
     zIndex: 1000000,
     width: '100%',
-    backgroundColor: 'white'
+    backgroundColor: 'black'
   }
 
-  let state = isAuthenticated ? MenuShowState.AUTH : MenuShowState.ANON
-  if (me.role.includes(Role.BASIC)) state = MenuShowState.BASIC
-  if (me.role.includes(Role.VOLUNTEER)) state = MenuShowState.VOLUNTEER
-  if (me.role.includes(Role.VOLUNTEER) && me.role.includes(Role.BASIC)) state = MenuShowState.BOTH
-  if (me.role.includes(Role.ADMIN) || me.role.includes(Role.SUPPORT)) state = MenuShowState.ADMIN
+  const activeItem = router.pathname.slice(1)
+
+  const menuItems = useMemo(() => headerMenu(menuState), [menuState])
+
   return (
     <Layout.Header style={headerStyle}>
-      {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><WarningOutlined /> {notice}</Notice>}
-      <MenuGrid>
-        <div>
-          <Link href='/landing' passHref>
-            <LogoContainer>
+
+      <VMenu
+        theme='light'
+        mode='horizontal'
+        selectedKeys={[activeItem]}
+        overflowedIndicator={<MenuOutlined />}
+      >
+        <Menu.Item key='voluntarily'>
+          <Link href='/landing'>
+            <a>
               <Logo
                 src='data:image/gif;base64,R0lGODlhAQABAIAAAAAAAP///yH5BAEAAAAALAAAAAABAAEAAAIBRAA7'
                 alt='Voluntarily logo'
               />
-            </LogoContainer>
+            </a>
           </Link>
-          <Brand className='site-name' aria-hidden='true' />
-          {/* <SearchInput
-            placeholder='Search for cool ways to help out'
-            onSearch={handleSearch}
-            aria-label='Search for volunteering opportunties here'
+        </Menu.Item>
+        {menuItems.map(item => (
+          <Menu.Item key={item.key}>
+            {
+            item.href.startsWith('http')
+              ? <a key={item.href} href={item.href}>{item.text}</a>
+              : (
+                <Link key={item.href} href={item.href} as={item.href}>
+                  <a>{item.text}</a>
+                </Link>)
+          }
+          </Menu.Item>
+        ))}
+        {/* {isAuthenticated &&
+          <Menu.Item key='avatar'>
+            <StyledAvatar>
+              <Link href='/home' passHref>
+                <Avatar
+                  size='small'
+                  src={me.imgUrlSm}
+                  icon={<UserOutlined />}
+                  alt='profile photo'
+                />
+              </Link>
+            </StyledAvatar>
+          </Menu.Item>
+        } */}
+      </VMenu>
 
-          /> */}
-        </div>
-        <div />
-
-        <div>
-          <HeaderMenu state={state} />
-
-        </div>
-        {isAuthenticated &&
-          <StyledAvatar>
-            <Link href='/home' passHref>
-              <Avatar
-                size='small'
-                src={me.imgUrlSm}
-                icon={<UserOutlined />}
-                alt='profile photo'
-              />
-            </Link>
-          </StyledAvatar>}
-      </MenuGrid>
+      {notice && <Notice style={{ position: 'fixed', bottom: '0' }}><WarningOutlined /> {notice}</Notice>}
     </Layout.Header>
   )
 }

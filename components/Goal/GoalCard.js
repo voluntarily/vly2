@@ -16,6 +16,7 @@ import Link from 'next/link'
 const CardContainer = styled.div`
   width: 18.5rem;
   height: 23rem;
+  margin: 1rem;
   border-radius: 0.5rem;
   box-shadow: 2px 2px 24px 0 rgba(118, 118, 118, 0.5);
   background-color: #fff;
