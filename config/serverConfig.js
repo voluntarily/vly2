@@ -13,7 +13,7 @@ const completeConfig = {
     appName: process.env.APPNAME || 'Voluntarily NZ',
     serverPort,
     env: process.env.NODE_ENV || 'development',
-    databaseUrl: process.env.MONGODB_URI || `mongodb://127.0.0.1/${databaseName}`,
+    databaseUrl: process.env.MONGODB_URI || `mongodb://localhost/${databaseName}`,
     revision: process.env.REVISION || 'local-build',
     jsonOptions: {
       headers: {
