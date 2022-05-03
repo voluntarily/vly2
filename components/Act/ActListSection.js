@@ -67,7 +67,7 @@ export const ActListSection = () => {
     setSearch(e)
     if (e) {
       const value = escapeRegex(e)
-      router.replace(router.pathname, { query: { search: value } }, { shallow: true })
+      router.replace(router.asPath, { query: { search: value} }, { shallow: true })
     }
   }
 
