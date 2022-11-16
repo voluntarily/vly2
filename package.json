@@ -49,7 +49,7 @@
     "@babel/polyfill": "^7.8.3",
     "@casl/ability": "^5.4.3",
     "@casl/mongoose": "^5.0.0",
-    "@mdx-js/loader": "^1.6.22",
+    "@mdx-js/loader": "^2.1.5",
     "@next/bundle-analyzer": "^11.1.2",
     "@next/mdx": "^11.1.2",
     "@storybook/addon-knobs": "^6.3.1",
