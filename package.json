@@ -159,7 +159,7 @@
     "sinon": "^11.1.2",
     "standard": "^16.0.4",
     "supertest": "^6.1.6",
-    "testcafe": "^1.16.1",
+    "testcafe": "^15.1.317922",
     "testcafe-react-selectors": "^4.1.5",
     "wait-on": "^6.0.0",
     "webdriverio": "^7.14.1"
